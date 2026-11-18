@@ -4,16 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RU Assignment Cover Page Generator</title>
-  <!-- Tw Cen MT web fallback (Jost) & UI font (Inter) -->
+  <!-- Geometric sans-serif web fallback (Jost) for Tw Cen MT + clean UI font (Inter) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- html2canvas & jsPDF for HD PNG & A4 PDF export -->
+  <!-- html2canvas & jsPDF for HD PNG and A4 PDF download -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 
   <style>
     :root {
+      /* RU Cover Page Palette */
       --ru-green: #073721;
       --ru-red: #770526;
       --sage-bg: #DCE2DD;
@@ -21,13 +22,18 @@
       --navy-text: #141D2E;
       --cover-font: 'Tw Cen MT', 'Jost', 'Century Gothic', sans-serif;
 
-      /* Dashboard UI Theme */
-      --bg-dark: #0B1120;
-      --panel-bg: #111827;
-      --card-bg: #1E293B;
-      --border-ui: #334155;
-      --text-ui: #F8FAFC;
-      --text-muted: #94A3B8;
+      /* Light Vibe Studio UI Palette */
+      --bg-page: #F1F5F9;
+      --bg-sidebar: #FFFFFF;
+      --bg-card: #F8FAFC;
+      --border-light: #E2E8F0;
+      --border-input: #CBD5E1;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --accent-green: #0B5E38;
+      --accent-green-hover: #08482B;
+      --accent-red: #9E1B32;
+      --accent-red-hover: #801427;
     }
 
     * {
@@ -38,67 +44,95 @@
 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-ui);
+      background-color: var(--bg-page);
+      color: var(--text-primary);
       min-height: 100vh;
     }
 
     .app-layout {
       display: grid;
-      grid-template-columns: 410px 1fr;
+      grid-template-columns: 415px 1fr;
       min-height: 100vh;
     }
 
     /* =========================================================
-       LEFT SIDEBAR EDITOR
+       LEFT SIDEBAR: CLEAN LIGHT EDITOR
        ========================================================= */
     .editor-panel {
-      background: var(--panel-bg);
-      border-right: 1px solid var(--border-ui);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-light);
       display: flex;
       flex-direction: column;
       height: 100vh;
       position: sticky;
       top: 0;
+      box-shadow: 4px 0 24px rgba(15, 23, 42, 0.03);
+      z-index: 10;
     }
 
     .panel-header {
       padding: 20px 22px 14px;
-      border-bottom: 1px solid var(--border-ui);
+      border-bottom: 1px solid var(--border-light);
+      background: #FFFFFF;
     }
 
-    .brand-badge {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: #34D399;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 3px 9px;
-      border-radius: 999px;
+    .header-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 8px;
     }
 
-    .panel-header h1 {
-      font-size: 19px;
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
       font-weight: 700;
-      color: #FFFFFF;
+      letter-spacing: 0.06em;
+      color: var(--accent-green);
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .autosave-pill {
+      font-size: 11px;
+      font-weight: 600;
+      color: #059669;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .autosave-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10B981;
+    }
+
+    .panel-header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
     }
 
     .panel-header p {
       font-size: 12.5px;
-      color: var(--text-muted);
-      margin-top: 4px;
+      color: var(--text-secondary);
+      margin-top: 3px;
     }
 
+    /* Action Buttons */
     .action-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       padding: 14px 22px;
-      background: rgba(15, 23, 42, 0.65);
-      border-bottom: 1px solid var(--border-ui);
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--border-light);
     }
 
     .btn {
@@ -106,13 +140,13 @@
       align-items: center;
       justify-content: center;
       gap: 7px;
-      padding: 10px 12px;
+      padding: 9px 12px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       border: 1px solid transparent;
-      transition: all 0.18s ease;
+      transition: all 0.16s ease;
     }
 
     .btn:active {
@@ -120,34 +154,34 @@
     }
 
     .btn-primary {
-      background: #0D6E43;
+      background: var(--accent-green);
       color: #FFFFFF;
-      box-shadow: 0 2px 8px rgba(13, 110, 67, 0.35);
+      box-shadow: 0 2px 6px rgba(11, 94, 56, 0.22);
     }
 
     .btn-primary:hover {
-      background: #0A5936;
+      background: var(--accent-green-hover);
     }
 
     .btn-crimson {
-      background: #9E1B32;
+      background: var(--accent-red);
       color: #FFFFFF;
-      box-shadow: 0 2px 8px rgba(158, 27, 50, 0.35);
+      box-shadow: 0 2px 6px rgba(158, 27, 50, 0.22);
     }
 
     .btn-crimson:hover {
-      background: #801427;
+      background: var(--accent-red-hover);
     }
 
-    .btn-ghost {
-      background: var(--card-bg);
-      color: #E2E8F0;
-      border-color: var(--border-ui);
+    .btn-light {
+      background: #FFFFFF;
+      color: var(--text-primary);
+      border-color: var(--border-input);
     }
 
-    .btn-ghost:hover {
-      background: #273549;
-      border-color: #475569;
+    .btn-light:hover {
+      background: #F1F5F9;
+      border-color: #94A3B8;
     }
 
     .form-scroll {
@@ -160,8 +194,8 @@
     }
 
     .form-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-ui);
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
       border-radius: 10px;
       padding: 14px 16px;
     }
@@ -169,8 +203,8 @@
     .form-card h2 {
       font-size: 11.5px;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #34D399;
+      letter-spacing: 0.06em;
+      color: var(--accent-green);
       margin-bottom: 12px;
       font-weight: 700;
     }
@@ -195,32 +229,99 @@
 
     label {
       font-size: 12px;
-      color: #CBD5E1;
-      font-weight: 500;
+      color: var(--text-secondary);
+      font-weight: 600;
     }
 
     input[type="text"],
+    input[type="date"],
+    select,
     textarea {
       width: 100%;
-      background: #0F172A;
-      border: 1px solid #334155;
-      color: #F8FAFC;
+      background: #FFFFFF;
+      border: 1px solid var(--border-input);
+      color: var(--text-primary);
       border-radius: 7px;
       padding: 8px 10px;
       font-size: 13px;
       font-family: inherit;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
 
     input[type="text"]:focus,
+    input[type="date"]:focus,
+    select:focus,
     textarea:focus {
       outline: none;
-      border-color: #10B981;
+      border-color: var(--accent-green);
+      box-shadow: 0 0 0 3px rgba(11, 94, 56, 0.1);
     }
 
     input[type="range"] {
       width: 100%;
-      accent-color: #10B981;
+      accent-color: var(--accent-green);
+      cursor: pointer;
+    }
+
+    /* Toggle Switch for Transparent Topic Box */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-input);
+      border-radius: 7px;
+      margin-top: 4px;
+    }
+
+    .toggle-row span {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #CBD5E1;
+      transition: 0.2s;
+      border-radius: 999px;
+    }
+
+    .slider::before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #FFFFFF;
+      transition: 0.2s;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .switch input:checked + .slider {
+      background-color: var(--accent-green);
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(18px);
     }
 
     .logo-controls {
@@ -235,35 +336,40 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      background: #0F172A;
-      border: 1px dashed #475569;
-      color: #E2E8F0;
+      background: #FFFFFF;
+      border: 1px dashed #94A3B8;
+      color: var(--text-primary);
       padding: 8px 10px;
       border-radius: 7px;
       font-size: 12px;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.15s;
     }
 
     .file-upload-btn:hover {
-      border-color: #10B981;
-      color: #34D399;
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+      background: #F0FDF4;
     }
 
     .btn-mini {
-      background: #0F172A;
-      border: 1px solid #475569;
-      color: #CBD5E1;
+      background: #FFFFFF;
+      border: 1px solid var(--border-input);
+      color: var(--text-secondary);
       padding: 7px 10px;
       border-radius: 7px;
       font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
+      transition: all 0.15s;
     }
 
     .btn-mini:hover {
-      border-color: #10B981;
-      color: #FFFFFF;
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+      background: #F0FDF4;
     }
 
     .date-input-wrap {
@@ -271,25 +377,21 @@
       gap: 6px;
     }
 
-    .mt-10 {
-      margin-top: 10px;
-    }
-
     /* =========================================================
-       RIGHT PREVIEW WORKSPACE & EXACT A4 COVER SHEET
+       RIGHT PREVIEW STUDIO (LIGHT VIBE) & EXACT A4 COVER SHEET
        ========================================================= */
     .preview-stage {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 24px 40px;
+      padding: 20px 24px 44px;
       overflow-x: hidden;
-      background: radial-gradient(circle at top, #17223B 0%, #0B1120 75%);
+      background: linear-gradient(180deg, #E2E8F0 0%, #EEF2F6 100%);
     }
 
     .preview-toolbar {
       width: 100%;
-      max-width: 820px;
+      max-width: 794px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -298,16 +400,18 @@
 
     .badge-a4 {
       font-size: 12px;
-      color: #94A3B8;
-      background: rgba(30, 41, 59, 0.85);
-      border: 1px solid #334155;
-      padding: 5px 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: #FFFFFF;
+      border: 1px solid var(--border-input);
+      padding: 5px 13px;
       border-radius: 999px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
     }
 
     .status-msg {
       font-size: 12.5px;
-      color: #34D399;
+      color: var(--accent-green);
       font-weight: 600;
     }
 
@@ -324,7 +428,7 @@
       height: 1123px;
       background: #FFFFFF;
       padding: 28px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 23, 42, 0.06);
       font-family: var(--cover-font);
       color: var(--navy-text);
       position: relative;
@@ -352,8 +456,9 @@
       text-align: center;
     }
 
+    /* Official RU Logo */
     .crest-container {
-      width: 136px;
+      width: 134px;
       height: 136px;
       display: flex;
       align-items: center;
@@ -368,7 +473,7 @@
     }
 
     .uni-title {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 38px;
       font-weight: 700;
       color: var(--ru-green);
@@ -378,13 +483,14 @@
     }
 
     .dept-title {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 17.5px;
       font-weight: 700;
       color: var(--navy-text);
       letter-spacing: 0.6px;
       line-height: 1.25;
       margin-bottom: 16px;
+      text-transform: uppercase;
     }
 
     /* Double Horizontal Divider Bar */
@@ -409,7 +515,7 @@
     }
 
     .assign-label {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 25px;
       font-weight: 700;
       color: var(--ru-red);
@@ -417,7 +523,7 @@
       margin-bottom: 16px;
     }
 
-    /* Sage-Tinted Topic Box */
+    /* Topic Box (Supports Tinted & Transparent Modes) */
     .topic-box {
       width: 90%;
       min-height: 132px;
@@ -428,10 +534,16 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 26px;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .topic-box.is-transparent {
+      background-color: transparent !important;
+      border: 1.5px solid var(--ru-green);
     }
 
     .topic-text {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 32px;
       font-weight: 700;
       color: var(--ru-green);
@@ -442,7 +554,7 @@
     }
 
     .course-meta {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 19px;
       color: var(--navy-text);
       line-height: 1.55;
@@ -465,7 +577,7 @@
     }
 
     .sub-col h3 {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 20px;
       font-weight: 700;
       color: var(--ru-green);
@@ -474,15 +586,15 @@
     }
 
     .sub-col p {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 16.5px;
       color: var(--navy-text);
-      line-height: 1.42;
+      line-height: 1.44;
       margin-bottom: 4px;
     }
 
     .date-footer {
-      font-family: var(--cover-font);
+      font-family: inherit;
       font-size: 18px;
       color: var(--navy-text);
       letter-spacing: 0.6px;
@@ -535,72 +647,61 @@
 </head>
 <body>
   <div class="app-layout">
-    <!-- LEFT SIDEBAR: CUSTOMIZATION CONTROLS -->
+    <!-- LEFT SIDEBAR: LIGHT VIBE CUSTOMIZATION PANEL -->
     <aside class="editor-panel">
       <header class="panel-header">
-        <div class="brand-badge">RU COVER STUDIO</div>
+        <div class="header-top-row">
+          <span class="brand-badge">UNIVERSITY OF RAJSHAHI</span>
+          <span class="autosave-pill"><span class="autosave-dot"></span> Auto-saved</span>
+        </div>
         <h1>Assignment Cover Generator</h1>
-        <p>Customize fields live and export HD PNG or A4 PDF.</p>
+        <p>Customize details live &amp; download HD PNG or A4 PDF.</p>
       </header>
 
-      <!-- Export & Action Buttons -->
+      <!-- Action Buttons -->
       <div class="action-bar">
         <button id="btn-download-png" class="btn btn-primary" type="button">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download PNG</span>
         </button>
         <button id="btn-download-pdf" class="btn btn-crimson" type="button">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           <span>Download PDF</span>
         </button>
-        <button id="btn-print" class="btn btn-ghost" type="button" title="Print A4">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          <span>Print</span>
+        <button id="btn-print" class="btn btn-light" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Print A4</span>
         </button>
-        <button id="btn-reset" class="btn btn-ghost" type="button" title="Reset Defaults">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-          <span>Reset</span>
+        <button id="btn-reset" class="btn btn-light" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          <span>Reset All</span>
         </button>
       </div>
 
       <div class="form-scroll">
-        <!-- Logo & Style Group -->
+        <!-- Department & Assignment Details -->
         <section class="form-card">
-          <h2>Logo &amp; Typography</h2>
-          <div class="logo-controls">
-            <label class="file-upload-btn" for="logo-upload">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              Upload Logo (ru.ac.bd/logo)
-            </label>
-            <input type="file" id="logo-upload" accept="image/*" hidden />
-            <button id="btn-reset-logo" class="btn-mini" type="button">Default Crest</button>
-          </div>
-          <div class="field-group mt-10">
-            <label for="topic-size">Topic Font Size: <span id="topic-size-val">32px</span></label>
-            <input type="range" id="topic-size" min="22" max="42" value="32" />
-          </div>
-        </section>
-
-        <!-- University & Course Info -->
-        <section class="form-card">
-          <h2>Header &amp; Course Details</h2>
-          <div class="field-group">
-            <label for="in-uni">University Name</label>
-            <input type="text" id="in-uni" value="UNIVERSITY OF RAJSHAHI" />
-          </div>
+          <h2>Department &amp; Assignment</h2>
           <div class="field-group">
             <label for="in-dept">Department Name</label>
-            <input type="text" id="in-dept" value="DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT" />
+            <input type="text" id="in-dept" value="Information Science and Library Management" />
           </div>
           <div class="field-group">
-            <label for="in-label">Assignment Heading</label>
+            <label for="in-label">Heading Label</label>
             <input type="text" id="in-label" value="ASSIGNMENT ON" />
           </div>
           <div class="field-group">
             <label for="in-topic">Assignment Topic / Title</label>
             <textarea id="in-topic" rows="2" placeholder="Enter assignment topic...">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</textarea>
           </div>
-          <div class="field-row">
+          <div class="toggle-row">
+            <span>Transparent Assignment Title Box</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-transparent" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="field-row" style="margin-top: 10px;">
             <div class="field-group">
               <label for="in-course-title">Course Title</label>
               <input type="text" id="in-course-title" value="[INSERT COURSE TITLE]" />
@@ -621,15 +722,18 @@
           </div>
           <div class="field-group">
             <label for="in-teacher-desig">Designation</label>
-            <input type="text" id="in-teacher-desig" value="[DESIGNATION]" />
-          </div>
-          <div class="field-group">
-            <label for="in-teacher-dept">Department</label>
-            <input type="text" id="in-teacher-dept" value="Department of Information Science and Library Management" />
-          </div>
-          <div class="field-group">
-            <label for="in-teacher-uni">University</label>
-            <input type="text" id="in-teacher-uni" value="University of Rajshahi" />
+            <select id="in-teacher-desig">
+              <option value="Professor">Professor</option>
+              <option value="Associate Professor">Associate Professor</option>
+              <option value="Assistant Professor">Assistant Professor</option>
+              <option value="Lecturer">Lecturer</option>
+              <option value="Professor & Chairman">Professor &amp; Chairman</option>
+              <option value="Associate Professor & Chairman">Associate Professor &amp; Chairman</option>
+              <option value="Assistant Professor & Chairman">Assistant Professor &amp; Chairman</option>
+              <option value="Emeritus Professor">Emeritus Professor</option>
+              <option value="Adjunct Faculty">Adjunct Faculty</option>
+              <option value="Teaching Assistant">Teaching Assistant</option>
+            </select>
           </div>
         </section>
 
@@ -646,26 +750,43 @@
               <input type="text" id="in-student-id" value="2610647104" />
             </div>
             <div class="field-group">
-              <label for="in-reg-no">Registration No</label>
-              <input type="text" id="in-reg-no" value="[YOUR REG. NO]" />
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field-group">
               <label for="in-session">Session</label>
               <input type="text" id="in-session" value="2025-2026" />
             </div>
-            <div class="field-group">
-              <label for="in-date">Submission Date</label>
-              <div class="date-input-wrap">
-                <input type="text" id="in-date" value="[DD/MM/YYYY]" />
-                <button type="button" id="btn-today" class="btn-mini">Today</button>
-              </div>
-            </div>
           </div>
           <div class="field-group">
-            <label for="in-student-dept">Department</label>
-            <input type="text" id="in-student-dept" value="Department of Information Science and Library Management" />
+            <label for="in-date">Submission Date (Calendar)</label>
+            <div class="date-input-wrap">
+              <input type="date" id="in-date" />
+              <button type="button" id="btn-today" class="btn-mini">Today</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Font & Logo Settings -->
+        <section class="form-card">
+          <h2>Font &amp; Logo Settings</h2>
+          <div class="field-row">
+            <div class="field-group">
+              <label for="in-font">Cover Font (Saved)</label>
+              <select id="in-font">
+                <option value="'Tw Cen MT', 'Jost', 'Century Gothic', sans-serif" selected>Tw Cen MT (Default)</option>
+                <option value="Georgia, 'Times New Roman', serif">Georgia (Classic Serif)</option>
+                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label for="topic-size">Title Size: <span id="topic-size-val">32px</span></label>
+              <input type="range" id="topic-size" min="22" max="42" value="32" style="margin-top: 8px;" />
+            </div>
+          </div>
+          <div class="logo-controls">
+            <label class="file-upload-btn" for="logo-upload">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Change Logo (Optional)
+            </label>
+            <input type="file" id="logo-upload" accept="image/*" hidden />
+            <button id="btn-reset-logo" class="btn-mini" type="button">Official RU Logo</button>
           </div>
         </section>
       </div>
@@ -682,36 +803,18 @@
         <div id="cover-page" class="cover-page">
           <div class="outer-green-frame">
             <div class="inner-red-frame">
-              <!-- 1. Official RU Crest Logo -->
-              <div class="crest-container" id="crest-container">
-                <svg id="default-ru-svg" width="136" height="136" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <path id="topArc" d="M 22,100 A 78,78 0 1,1 178,100" />
-                    <path id="botArc" d="M 18,100 A 82,82 0 0,0 182,100" />
-                  </defs>
-                  <circle cx="100" cy="100" r="93" fill="#FFFFFF" stroke="#19345E" stroke-width="3.5" />
-                  <circle cx="100" cy="100" r="64" fill="#FFFFFF" stroke="#19345E" stroke-width="2.5" />
-                  <text fill="#19345E" font-family="'Tw Cen MT', 'Jost', sans-serif" font-size="13.2" font-weight="700" letter-spacing="1.6">
-                    <textPath href="#topArc" startOffset="50%" text-anchor="middle">UNIVERSITY OF RAJSHAHI</textPath>
-                  </text>
-                  <text fill="#19345E" font-family="'Tw Cen MT', 'Jost', sans-serif" font-size="13.2" font-weight="700" letter-spacing="1.6">
-                    <textPath href="#botArc" startOffset="50%" text-anchor="middle">UNIVERSITY OF RAJSHAHI</textPath>
-                  </text>
-                  <!-- Open Book -->
-                  <path d="M 56,55 Q 84,57 100,63 Q 116,57 144,55 L 144,145 Q 116,143 100,138 Q 84,143 56,145 Z" fill="#8C1127" />
-                  <path d="M 59.5,58.5 Q 85,60.5 100,66 Q 115,60.5 140.5,58.5 L 140.5,141.5 Q 115,139.5 100,135 Q 85,139.5 59.5,141.5 Z" fill="#D4A017" />
-                  <path d="M 63,62 Q 86,64 100,69 Q 114,64 137,62 L 137,138 Q 114,136 100,132 Q 86,136 63,138 Z" fill="#FFFFFF" />
-                  <!-- Navy Blue Square -->
-                  <rect x="73" y="73" width="54" height="54" fill="#19345E" />
-                  <!-- 16-Pointed White Star (populated via JS for exact symmetry) -->
-                  <polygon id="ru-star-poly" fill="#FFFFFF" />
-                </svg>
-                <img id="custom-logo-img" alt="University of Rajshahi Logo" hidden />
+              <!-- 1. Official RU Logo -->
+              <div class="crest-container">
+                <img
+                  id="cover-logo-img"
+                  src="https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg"
+                  alt="University of Rajshahi Official Logo"
+                />
               </div>
 
-              <!-- 2. University & Department Header -->
-              <h1 id="out-uni" class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
-              <p id="out-dept" class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
+              <!-- 2. Fixed University Name & Synced Department -->
+              <h1 class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
+              <p id="out-dept-header" class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
 
               <!-- 3. Double Horizontal Divider Bar -->
               <div class="double-divider">
@@ -722,8 +825,8 @@
               <!-- 4. Assignment Heading -->
               <h2 id="out-label" class="assign-label">ASSIGNMENT ON</h2>
 
-              <!-- 5. Sage-Tinted Topic Box -->
-              <div class="topic-box">
+              <!-- 5. Assignment Topic Box (Tinted or Transparent) -->
+              <div id="topic-box" class="topic-box">
                 <div id="out-topic" class="topic-text">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</div>
               </div>
 
@@ -738,18 +841,18 @@
                 <div class="sub-col">
                   <h3>SUBMITTED TO:</h3>
                   <p id="out-teacher-name">[INSTRUCTOR'S NAME]</p>
-                  <p id="out-teacher-desig">[DESIGNATION]</p>
+                  <p id="out-teacher-desig">Professor</p>
                   <p id="out-teacher-dept">Department of Information Science and Library Management</p>
-                  <p id="out-teacher-uni">University of Rajshahi</p>
+                  <p>University of Rajshahi</p>
                 </div>
 
                 <div class="sub-col">
                   <h3>SUBMITTED BY:</h3>
                   <p>Name: <span id="out-student-name">Salim Hosen Shohan</span></p>
                   <p>Student ID: <span id="out-student-id">2610647104</span></p>
-                  <p>Registration No: <span id="out-reg-no">[YOUR REG. NO]</span></p>
                   <p>Session: <span id="out-session">2025-2026</span></p>
                   <p id="out-student-dept">Department of Information Science and Library Management</p>
+                  <p>University of Rajshahi</p>
                 </div>
               </div>
 
@@ -766,174 +869,250 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const STORAGE_KEY = "ru_cover_page_singlefile_v1";
+      const STORAGE_KEY = "ru_cover_generator_light_v2";
+      const OFFICIAL_LOGO_URL = "https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg";
 
-      // Generate mathematically symmetric 16-pointed star in the RU SVG crest
-      const starPoly = document.getElementById("ru-star-poly");
-      if (starPoly) {
-        const pts = [];
-        const cx = 100, cy = 100, rOut = 23, rIn = 9.5, spikes = 16;
-        for (let i = 0; i < spikes * 2; i++) {
-          const angle = (i * Math.PI) / spikes - Math.PI / 2;
-          const r = i % 2 === 0 ? rOut : rIn;
-          pts.push(`${(cx + r * Math.cos(angle)).toFixed(2)},${(cy + r * Math.sin(angle)).toFixed(2)}`);
-        }
-        starPoly.setAttribute("points", pts.join(" "));
-      }
+      const coverPage = document.getElementById("cover-page");
+      const logoImg = document.getElementById("cover-logo-img");
+      const topicBox = document.getElementById("topic-box");
+      const outTopic = document.getElementById("out-topic");
+      const topicSlider = document.getElementById("topic-size");
+      const topicSizeVal = document.getElementById("topic-size-val");
+      const toggleTransparent = document.getElementById("toggle-transparent");
+      const fontSelect = document.getElementById("in-font");
+      const deptInput = document.getElementById("in-dept");
+      const dateInput = document.getElementById("in-date");
+      const outDate = document.getElementById("out-date");
 
-      const fieldBindings = [
-        { input: "in-uni", target: "out-uni" },
-        { input: "in-dept", target: "out-dept" },
+      // Direct 1-to-1 text bindings
+      const directBindings = [
         { input: "in-label", target: "out-label" },
         { input: "in-topic", target: "out-topic" },
         { input: "in-course-title", target: "out-course-title" },
         { input: "in-course-code", target: "out-course-code" },
         { input: "in-teacher-name", target: "out-teacher-name" },
         { input: "in-teacher-desig", target: "out-teacher-desig" },
-        { input: "in-teacher-dept", target: "out-teacher-dept" },
-        { input: "in-teacher-uni", target: "out-teacher-uni" },
         { input: "in-student-name", target: "out-student-name" },
         { input: "in-student-id", target: "out-student-id" },
-        { input: "in-reg-no", target: "out-reg-no" },
         { input: "in-session", target: "out-session" },
-        { input: "in-student-dept", target: "out-student-dept" },
-        { input: "in-date", target: "out-date" },
       ];
 
-      const defaultValues = {};
-      fieldBindings.forEach(({ input }) => {
+      // Capture defaults for Reset
+      const defaults = {
+        dept: deptInput.value,
+        font: fontSelect.value,
+        topicSize: "32",
+        transparent: false,
+        date: "",
+      };
+      directBindings.forEach(({ input }) => {
         const el = document.getElementById(input);
-        if (el) defaultValues[input] = el.value;
+        if (el) defaults[input] = el.value;
       });
 
-      const topicSlider = document.getElementById("topic-size");
-      const topicSizeVal = document.getElementById("topic-size-val");
-      const outTopic = document.getElementById("out-topic");
-      const logoUpload = document.getElementById("logo-upload");
-      const defaultSvg = document.getElementById("default-ru-svg");
-      const customLogoImg = document.getElementById("custom-logo-img");
+      // Normalize Department name so it cleanly updates Header + Submitted To + Submitted By
+      function syncDepartment() {
+        const raw = deptInput.value.trim();
+        const cleanName = raw.replace(/^department\s+of\s+/i, "").trim();
+        const fullTitle = cleanName ? `Department of ${cleanName}` : "Department of [Department Name]";
+        document.getElementById("out-dept-header").textContent = fullTitle.toUpperCase();
+        document.getElementById("out-teacher-dept").textContent = fullTitle;
+        document.getElementById("out-student-dept").textContent = fullTitle;
+      }
+
+      // Format YYYY-MM-DD from calendar input into DD/MM/YYYY
+      function syncDate() {
+        const val = dateInput.value;
+        if (!val) {
+          outDate.textContent = "[DD/MM/YYYY]";
+          return;
+        }
+        const parts = val.split("-");
+        if (parts.length === 3) {
+          outDate.textContent = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        } else {
+          outDate.textContent = val;
+        }
+      }
 
       function applyTopicSize(px) {
         outTopic.style.fontSize = `${px}px`;
         topicSizeVal.textContent = `${px}px`;
       }
 
-      function showCustomLogo(dataUrl) {
-        customLogoImg.src = dataUrl;
-        customLogoImg.hidden = false;
-        defaultSvg.style.display = "none";
+      function applyTransparentMode(isTransparent) {
+        if (isTransparent) {
+          topicBox.classList.add("is-transparent");
+        } else {
+          topicBox.classList.remove("is-transparent");
+        }
       }
 
-      function loadSavedData() {
+      function applyCoverFont(fontStack) {
+        coverPage.style.fontFamily = fontStack;
+      }
+
+      // Save all state automatically to localStorage
+      function saveState() {
+        try {
+          const state = {
+            dept: deptInput.value,
+            date: dateInput.value,
+            font: fontSelect.value,
+            topicSize: topicSlider.value,
+            transparent: toggleTransparent.checked,
+            customLogo: logoImg.dataset.isCustom === "true" ? logoImg.src : "",
+          };
+          directBindings.forEach(({ input }) => {
+            const el = document.getElementById(input);
+            if (el) state[input] = el.value;
+          });
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (err) {
+          console.warn("Auto-save skipped:", err);
+        }
+      }
+
+      // Restore state on page refresh
+      function loadState() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) return;
           const saved = JSON.parse(raw);
-          fieldBindings.forEach(({ input }) => {
+
+          if (typeof saved.dept === "string") deptInput.value = saved.dept;
+          if (typeof saved.date === "string") dateInput.value = saved.date;
+          if (typeof saved.font === "string") fontSelect.value = saved.font;
+          if (saved.topicSize) topicSlider.value = saved.topicSize;
+          if (typeof saved.transparent === "boolean") toggleTransparent.checked = saved.transparent;
+
+          directBindings.forEach(({ input }) => {
             const el = document.getElementById(input);
             if (el && typeof saved[input] === "string") {
               el.value = saved[input];
             }
           });
-          if (saved.topicSize) {
-            topicSlider.value = saved.topicSize;
-            applyTopicSize(saved.topicSize);
-          }
-          if (saved.customLogoDataUrl) {
-            showCustomLogo(saved.customLogoDataUrl);
+
+          if (saved.customLogo) {
+            logoImg.src = saved.customLogo;
+            logoImg.dataset.isCustom = "true";
           }
         } catch (err) {
-          console.warn("Could not load saved data:", err);
+          console.warn("Could not restore saved state:", err);
         }
       }
 
-      function saveData() {
-        try {
-          const data = { topicSize: topicSlider.value };
-          fieldBindings.forEach(({ input }) => {
-            const el = document.getElementById(input);
-            if (el) data[input] = el.value;
-          });
-          if (!customLogoImg.hidden && customLogoImg.src) {
-            data.customLogoDataUrl = customLogoImg.src;
-          }
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        } catch (err) {
-          console.warn("Save skipped:", err);
-        }
-      }
-
-      function syncAllFields() {
-        fieldBindings.forEach(({ input, target }) => {
+      function syncAllUI() {
+        directBindings.forEach(({ input, target }) => {
           const inEl = document.getElementById(input);
           const outEl = document.getElementById(target);
           if (inEl && outEl) outEl.textContent = inEl.value;
         });
+        syncDepartment();
+        syncDate();
+        applyTopicSize(topicSlider.value);
+        applyTransparentMode(toggleTransparent.checked);
+        applyCoverFont(fontSelect.value);
       }
 
-      fieldBindings.forEach(({ input, target }) => {
+      // Event Listeners
+      directBindings.forEach(({ input, target }) => {
         const inEl = document.getElementById(input);
         const outEl = document.getElementById(target);
         if (!inEl || !outEl) return;
         inEl.addEventListener("input", () => {
           outEl.textContent = inEl.value;
-          saveData();
+          saveState();
+        });
+        inEl.addEventListener("change", () => {
+          outEl.textContent = inEl.value;
+          saveState();
         });
       });
 
-      topicSlider.addEventListener("input", (e) => {
-        applyTopicSize(e.target.value);
-        saveData();
+      deptInput.addEventListener("input", () => {
+        syncDepartment();
+        saveState();
       });
 
+      dateInput.addEventListener("input", () => {
+        syncDate();
+        saveState();
+      });
+      dateInput.addEventListener("change", () => {
+        syncDate();
+        saveState();
+      });
+
+      document.getElementById("btn-today").addEventListener("click", () => {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, "0");
+        const dd = String(now.getDate()).padStart(2, "0");
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+        syncDate();
+        saveState();
+      });
+
+      toggleTransparent.addEventListener("change", () => {
+        applyTransparentMode(toggleTransparent.checked);
+        saveState();
+      });
+
+      fontSelect.addEventListener("change", () => {
+        applyCoverFont(fontSelect.value);
+        saveState();
+      });
+
+      topicSlider.addEventListener("input", () => {
+        applyTopicSize(topicSlider.value);
+        saveState();
+      });
+
+      // Custom Logo Upload & Official RU Logo Reset
+      const logoUpload = document.getElementById("logo-upload");
       logoUpload.addEventListener("change", (e) => {
         const file = e.target.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = (ev) => {
-          showCustomLogo(ev.target.result);
-          saveData();
-          setStatus("Custom logo applied!");
+          logoImg.src = ev.target.result;
+          logoImg.dataset.isCustom = "true";
+          saveState();
+          setStatus("Custom logo saved!");
         };
         reader.readAsDataURL(file);
       });
 
       document.getElementById("btn-reset-logo").addEventListener("click", () => {
-        customLogoImg.hidden = true;
-        customLogoImg.src = "";
-        defaultSvg.style.display = "block";
+        logoImg.src = OFFICIAL_LOGO_URL;
+        logoImg.dataset.isCustom = "false";
         logoUpload.value = "";
-        saveData();
-        setStatus("Default RU crest restored.");
+        saveState();
+        setStatus("Official RU logo restored.");
       });
 
-      document.getElementById("btn-today").addEventListener("click", () => {
-        const now = new Date();
-        const formatted = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
-        document.getElementById("in-date").value = formatted;
-        document.getElementById("out-date").textContent = formatted;
-        saveData();
-      });
-
+      // Reset All
       document.getElementById("btn-reset").addEventListener("click", () => {
         if (!confirm("Reset all fields to default values?")) return;
         localStorage.removeItem(STORAGE_KEY);
-        fieldBindings.forEach(({ input }) => {
+        deptInput.value = defaults.dept;
+        dateInput.value = defaults.date;
+        fontSelect.value = defaults.font;
+        topicSlider.value = defaults.topicSize;
+        toggleTransparent.checked = defaults.transparent;
+        directBindings.forEach(({ input }) => {
           const el = document.getElementById(input);
-          if (el) el.value = defaultValues[input];
+          if (el) el.value = defaults[input];
         });
-        topicSlider.value = 32;
-        applyTopicSize(32);
-        customLogoImg.hidden = true;
-        customLogoImg.src = "";
-        defaultSvg.style.display = "block";
-        syncAllFields();
-        setStatus("Reset to defaults.");
+        logoImg.src = OFFICIAL_LOGO_URL;
+        logoImg.dataset.isCustom = "false";
+        syncAllUI();
+        setStatus("All fields reset.");
       });
 
+      // Responsive Scaling for Preview Sheet
       const scaler = document.getElementById("sheet-scaler");
-      const coverPage = document.getElementById("cover-page");
-
       function fitPreviewScale() {
         const stage = document.querySelector(".preview-stage");
         if (!stage) return;
@@ -948,9 +1127,9 @@
           scaler.style.height = "auto";
         }
       }
-
       window.addEventListener("resize", fitPreviewScale);
 
+      // Status Notification
       const statusMsg = document.getElementById("status-msg");
       let statusTimer;
       function setStatus(msg) {
@@ -961,11 +1140,39 @@
         }, 3500);
       }
 
+      // Helper: Convert external RU logo URL to CORS-safe DataURL if server permits, otherwise fallback cleanly on export
+      function getCorsSafeLogoDataUrl(url) {
+        return new Promise((resolve) => {
+          const testImg = new Image();
+          testImg.crossOrigin = "anonymous";
+          testImg.onload = () => {
+            try {
+              const c = document.createElement("canvas");
+              c.width = testImg.naturalWidth;
+              c.height = testImg.naturalHeight;
+              c.getContext("2d").drawImage(testImg, 0, 0);
+              resolve(c.toDataURL("image/png"));
+            } catch (e) {
+              resolve(null);
+            }
+          };
+          testImg.onerror = () => resolve(null);
+          testImg.src = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+        });
+      }
+
+      // Capture HD 3x Canvas for PNG & PDF Export
       async function renderHighResCanvas() {
         await document.fonts.ready;
+        let corsSafeDataUrl = null;
+        if (logoImg.dataset.isCustom !== "true") {
+          corsSafeDataUrl = await getCorsSafeLogoDataUrl(logoImg.src);
+        }
+
         return await html2canvas(coverPage, {
           scale: 3,
           useCORS: true,
+          allowTaint: false,
           backgroundColor: "#FFFFFF",
           width: 794,
           height: 1123,
@@ -975,10 +1182,20 @@
               clonedScaler.style.transform = "none";
               clonedScaler.style.height = "auto";
             }
+            const clonedLogo = clonedDoc.getElementById("cover-logo-img");
+            if (clonedLogo && logoImg.dataset.isCustom !== "true") {
+              if (corsSafeDataUrl) {
+                clonedLogo.src = corsSafeDataUrl;
+              } else {
+                // Prevent tainted canvas if ru.ac.bd blocks cross-origin pixel read
+                clonedLogo.removeAttribute("src");
+              }
+            }
           },
         });
       }
 
+      // Download HD PNG
       document.getElementById("btn-download-png").addEventListener("click", async () => {
         setStatus("Generating HD PNG...");
         try {
@@ -991,10 +1208,11 @@
           setStatus("PNG downloaded!");
         } catch (err) {
           console.error(err);
-          setStatus("PNG export failed.");
+          setStatus("Export failed. Try Print → Save as PDF.");
         }
       });
 
+      // Download A4 PDF
       document.getElementById("btn-download-pdf").addEventListener("click", async () => {
         setStatus("Generating A4 PDF...");
         try {
@@ -1012,16 +1230,18 @@
           setStatus("PDF downloaded!");
         } catch (err) {
           console.error(err);
-          setStatus("PDF export failed.");
+          setStatus("Export failed. Try Print → Save as PDF.");
         }
       });
 
+      // Print A4
       document.getElementById("btn-print").addEventListener("click", () => {
         window.print();
       });
 
-      loadSavedData();
-      syncAllFields();
+      // Initialize App
+      loadState();
+      syncAllUI();
       fitPreviewScale();
     });
   </script>
