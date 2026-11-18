@@ -3,54 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ISLM Cover Page Studio | University of Rajshahi</title>
-  <!-- Tw Cen MT geometric fallback (Jost) & crisp Light UI font (Plus Jakarta Sans) -->
+  <title>RU CoverCraft — Dept. of ISLM Cover Studio</title>
+  <!-- Tw Cen MT geometric fallback (Jost) & crisp UI font (Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <!-- html2canvas & jsPDF for HD PNG and A4 PDF export -->
+  <!-- html2canvas & jsPDF for HD PNG, JPG & A4 PDF export -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
   <div class="app-layout">
-    <!-- LEFT SIDEBAR: ISLM COVER STUDIO -->
+    <!-- LEFT SIDEBAR: RU COVERCRAFT STUDIO -->
     <aside class="editor-panel">
-      <header class="panel-header">
-        <div class="header-meta">
-          <span class="dept-pill">ISLM • University of Rajshahi</span>
-          <span class="save-indicator"><span class="save-dot"></span> Auto-Saved</span>
+      <header class="brand-header">
+        <div class="brand-identity">
+          <div class="brand-logo-mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+              <path d="M8 7h6" />
+              <path d="M8 11h8" />
+            </svg>
+          </div>
+          <div class="brand-titles">
+            <div class="brand-name-row">
+              <span class="brand-title">RU <span>CoverCraft</span></span>
+              <span class="version-tag">ISLM</span>
+            </div>
+            <p class="brand-sub">University of Rajshahi • Academic Cover Studio</p>
+          </div>
         </div>
-        <h1>Assignment Cover Generator</h1>
-        <p>Choose design, select course &amp; download HD PNG or A4 PDF.</p>
+        <div class="save-badge" title="Changes auto-saved in browser">
+          <span class="save-pulse"></span>
+          <span>Saved</span>
+        </div>
       </header>
 
-      <!-- Action Buttons -->
+      <!-- Export & Action Buttons -->
       <div class="action-bar">
         <button id="btn-download-png" class="btn btn-green" type="button">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Download PNG</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>PNG</span>
+        </button>
+        <button id="btn-download-jpg" class="btn btn-emerald-soft" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>JPG</span>
         </button>
         <button id="btn-download-pdf" class="btn btn-red" type="button">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          <span>Download PDF</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>PDF</span>
         </button>
-        <button id="btn-print" class="btn btn-secondary" type="button">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          <span>Print A4</span>
+        <button id="btn-print" class="btn btn-secondary" type="button" title="Print A4">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Print</span>
         </button>
-        <button id="btn-reset" class="btn btn-secondary" type="button">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-          <span>Reset Form</span>
+        <button id="btn-reset" class="btn btn-secondary" type="button" title="Clear Form">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          <span>Reset</span>
         </button>
       </div>
 
       <div class="form-scroll">
-        <!-- 5 Unique Cover Designs Switcher -->
+        <!-- 10 Unique Cover Designs Switcher -->
         <section class="form-card">
-          <h2>Cover Design Style (5 Templates)</h2>
+          <div class="card-heading">
+            <h2>Cover Design Style</h2>
+            <span class="card-pill">10 Templates</span>
+          </div>
           <div class="template-grid" id="template-grid">
             <button type="button" class="tpl-btn active" data-theme="theme-classic">
               <div class="tpl-thumb thumb-classic"></div>
@@ -72,15 +93,39 @@
               <div class="tpl-thumb thumb-oxford"></div>
               <span class="tpl-name">Oxford</span>
             </button>
+            <button type="button" class="tpl-btn" data-theme="theme-sovereign">
+              <div class="tpl-thumb thumb-sovereign"></div>
+              <span class="tpl-name">Sovereign</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-heritage">
+              <div class="tpl-thumb thumb-heritage"></div>
+              <span class="tpl-name">Heritage</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-monolith">
+              <div class="tpl-thumb thumb-monolith"></div>
+              <span class="tpl-name">Monolith</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-laurel">
+              <div class="tpl-thumb thumb-laurel"></div>
+              <span class="tpl-name">Laurel</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-chancellor">
+              <div class="tpl-thumb thumb-chancellor"></div>
+              <span class="tpl-name">Chancellor</span>
+            </button>
           </div>
         </section>
 
         <!-- Course & Assignment Card -->
         <section class="form-card">
-          <h2>Course &amp; Assignment Topic</h2>
+          <div class="card-heading">
+            <h2>Course &amp; Assignment Topic</h2>
+          </div>
           <div class="field-group">
             <label for="in-course-select">Select Course Code</label>
-            <select id="in-course-select"></select>
+            <div class="input-shell">
+              <select id="in-course-select"></select>
+            </div>
             <div class="auto-filled-hint">
               <span>Course Title:</span>
               <strong id="hint-course-title">Loading courses...</strong>
@@ -89,48 +134,70 @@
 
           <div class="field-group">
             <label for="in-topic">Assignment Topic / Title</label>
-            <textarea id="in-topic" rows="2" placeholder="Please enter your title."></textarea>
+            <div class="input-shell">
+              <textarea id="in-topic" rows="2" placeholder="Please enter your title."></textarea>
+            </div>
           </div>
         </section>
 
         <!-- Submitted To Card -->
         <section class="form-card">
-          <h2>Submitted To (Instructor)</h2>
+          <div class="card-heading">
+            <h2>Submitted To (Instructor)</h2>
+          </div>
           <div class="field-group">
             <label for="in-teacher-select">Instructor's Name</label>
-            <select id="in-teacher-select"></select>
-            <input type="text" id="in-teacher-custom" class="hidden" placeholder="Enter instructor's name" />
+            <div class="input-shell">
+              <select id="in-teacher-select"></select>
+              <input type="text" id="in-teacher-custom" class="hidden" placeholder="Enter instructor's name" />
+            </div>
           </div>
           <div class="field-group hidden" id="desig-field-group">
             <label for="in-teacher-desig">Designation</label>
-            <select id="in-teacher-desig"></select>
+            <div class="input-shell">
+              <select id="in-teacher-desig"></select>
+            </div>
           </div>
         </section>
 
         <!-- Submitted By Card -->
         <section class="form-card">
-          <h2>Submitted By (Student)</h2>
+          <div class="card-heading">
+            <h2>Submitted By (Student)</h2>
+            <span class="card-pill">1st Year • 2nd Sem</span>
+          </div>
           <div class="field-group">
             <label for="in-student-name">Student Name</label>
-            <input type="text" id="in-student-name" placeholder="Enter student name" />
+            <div class="input-shell">
+              <input type="text" id="in-student-name" placeholder="Enter student name" />
+            </div>
           </div>
           <div class="field-row">
             <div class="field-group">
-              <label for="in-student-id">Student ID</label>
-              <input type="text" id="in-student-id" placeholder="Enter student ID" />
+              <div class="label-row">
+                <label for="in-student-id">Student ID</label>
+                <span class="shortcut-tag">s104 / m158</span>
+              </div>
+              <div class="input-shell">
+                <input type="text" id="in-student-id" placeholder="Enter student ID" />
+              </div>
             </div>
             <div class="field-group">
               <label for="in-session">Session</label>
-              <select id="in-session">
-                <option value="2024-2025">2024-2025</option>
-                <option value="2025-2026" selected>2025-2026</option>
-              </select>
+              <div class="input-shell">
+                <select id="in-session">
+                  <option value="2024-2025">2024-2025</option>
+                  <option value="2025-2026" selected>2025-2026</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="field-group">
             <label for="in-date">Submission Date</label>
             <div class="date-input-wrap">
-              <input type="date" id="in-date" />
+              <div class="input-shell" style="flex: 1;">
+                <input type="date" id="in-date" />
+              </div>
               <button type="button" id="btn-today" class="btn-today">Today</button>
             </div>
           </div>
@@ -150,40 +217,42 @@
           <div id="cover-page" class="cover-page theme-classic">
             <div class="outer-green-frame">
               <div class="inner-red-frame">
-                <!-- 1. Fixed Official RU Logo -->
-                <div class="crest-container">
-                  <img
-                    id="cover-logo-img"
-                    src="https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg"
-                    alt="University of Rajshahi Official Logo"
-                  />
+                <!-- Header Wrapper (Supports Centered & Top-Split Layouts) -->
+                <div class="header-block">
+                  <div class="crest-container">
+                    <img
+                      id="cover-logo-img"
+                      src="https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg"
+                      alt="University of Rajshahi Official Logo"
+                    />
+                  </div>
+                  <div class="header-texts">
+                    <h1 class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
+                    <p class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
+                  </div>
                 </div>
 
-                <!-- 2. Fixed University & Department Header -->
-                <h1 class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
-                <p class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
-
-                <!-- 3. Double Horizontal Divider Bar -->
+                <!-- Double Horizontal Divider Bar -->
                 <div class="double-divider">
                   <div class="line-green"></div>
                   <div class="line-red"></div>
                 </div>
 
-                <!-- 4. Fixed Assignment Heading -->
+                <!-- Fixed Assignment Heading -->
                 <h2 class="assign-label">ASSIGNMENT ON</h2>
 
-                <!-- 5. Compact Transparent Assignment Topic Box (Black Title) -->
+                <!-- Compact Transparent Assignment Topic Box (Black Title) -->
                 <div class="topic-box">
                   <div id="out-topic" class="topic-text is-placeholder">Please enter your title.</div>
                 </div>
 
-                <!-- 6. Auto-Filled Course Title & Course Code -->
+                <!-- Auto-Filled Course Title & Course Code -->
                 <div class="course-meta">
                   <p><strong>COURSE TITLE:</strong> <span id="out-course-title"></span></p>
                   <p><strong>COURSE CODE:</strong> <span id="out-course-code"></span></p>
                 </div>
 
-                <!-- 7. Two-Column Submission Grid -->
+                <!-- Two-Column Submission Grid -->
                 <div class="submission-grid">
                   <div class="sub-col">
                     <h3>SUBMITTED TO:</h3>
@@ -197,13 +266,15 @@
                     <h3>SUBMITTED BY:</h3>
                     <p>Name: <span id="out-student-name">Enter student name</span></p>
                     <p>Student ID: <span id="out-student-id">Enter student ID</span></p>
+                    <p>Year: 1st Year</p>
+                    <p>Semester: 2nd Semester</p>
                     <p>Session: <span id="out-session">2025-2026</span></p>
                     <p>Department of Information Science and Library Management</p>
                     <p>University of Rajshahi</p>
                   </div>
                 </div>
 
-                <!-- 8. Submission Date Footer -->
+                <!-- Submission Date Footer -->
                 <div class="date-footer">
                   <strong>DATE OF SUBMISSION:</strong> <span id="out-date"></span>
                 </div>
