@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RU Assignment Cover Page Generator</title>
+  <!-- Tw Cen MT web fallback (Jost) & UI font (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- html2canvas & jsPDF for HD PNG & A4 PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+
+  <style>
+    :root {
+      --ru-green: #073721;
+      --ru-red: #770526;
+      --sage-bg: #DCE2DD;
+      --sage-border: #7E9687;
+      --navy-text: #141D2E;
+      --cover-font: 'Tw Cen MT', 'Jost', 'Century Gothic', sans-serif;
+
+      /* Dashboard UI Theme */
+      --bg-dark: #0B1120;
+      --panel-bg: #111827;
+      --card-bg: #1E293B;
+      --border-ui: #334155;
+      --text-ui: #F8FAFC;
+      --text-muted: #94A3B8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-ui);
+      min-height: 100vh;
+    }
+
+    .app-layout {
+      display: grid;
+      grid-template-columns: 410px 1fr;
+      min-height: 100vh;
+    }
+
+    /* =========================================================
+       LEFT SIDEBAR EDITOR
+       ========================================================= */
+    .editor-panel {
+      background: var(--panel-bg);
+      border-right: 1px solid var(--border-ui);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+
+    .panel-header {
+      padding: 20px 22px 14px;
+      border-bottom: 1px solid var(--border-ui);
+    }
+
+    .brand-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #34D399;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    .panel-header h1 {
+      font-size: 19px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .panel-header p {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .action-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 14px 22px;
+      background: rgba(15, 23, 42, 0.65);
+      border-bottom: 1px solid var(--border-ui);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: #0D6E43;
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(13, 110, 67, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: #0A5936;
+    }
+
+    .btn-crimson {
+      background: #9E1B32;
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(158, 27, 50, 0.35);
+    }
+
+    .btn-crimson:hover {
+      background: #801427;
+    }
+
+    .btn-ghost {
+      background: var(--card-bg);
+      color: #E2E8F0;
+      border-color: var(--border-ui);
+    }
+
+    .btn-ghost:hover {
+      background: #273549;
+      border-color: #475569;
+    }
+
+    .form-scroll {
+      padding: 16px 22px 32px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-ui);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .form-card h2 {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #34D399;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+
+    .field-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 12px;
+      color: #CBD5E1;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      background: #0F172A;
+      border: 1px solid #334155;
+      color: #F8FAFC;
+      border-radius: 7px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #10B981;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #10B981;
+    }
+
+    .logo-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .file-upload-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #0F172A;
+      border: 1px dashed #475569;
+      color: #E2E8F0;
+      padding: 8px 10px;
+      border-radius: 7px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .file-upload-btn:hover {
+      border-color: #10B981;
+      color: #34D399;
+    }
+
+    .btn-mini {
+      background: #0F172A;
+      border: 1px solid #475569;
+      color: #CBD5E1;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-mini:hover {
+      border-color: #10B981;
+      color: #FFFFFF;
+    }
+
+    .date-input-wrap {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mt-10 {
+      margin-top: 10px;
+    }
+
+    /* =========================================================
+       RIGHT PREVIEW WORKSPACE & EXACT A4 COVER SHEET
+       ========================================================= */
+    .preview-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 24px 40px;
+      overflow-x: hidden;
+      background: radial-gradient(circle at top, #17223B 0%, #0B1120 75%);
+    }
+
+    .preview-toolbar {
+      width: 100%;
+      max-width: 820px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .badge-a4 {
+      font-size: 12px;
+      color: #94A3B8;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid #334155;
+      padding: 5px 12px;
+      border-radius: 999px;
+    }
+
+    .status-msg {
+      font-size: 12.5px;
+      color: #34D399;
+      font-weight: 600;
+    }
+
+    .sheet-scaler {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      transform-origin: top center;
+    }
+
+    /* EXACT A4 SHEET (794px x 1123px) */
+    .cover-page {
+      width: 794px;
+      height: 1123px;
+      background: #FFFFFF;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+      font-family: var(--cover-font);
+      color: var(--navy-text);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    /* Outer Thick Forest Green Border */
+    .outer-green-frame {
+      width: 100%;
+      height: 100%;
+      border: 6px solid var(--ru-green);
+      padding: 4px;
+      display: flex;
+    }
+
+    /* Inner Thin Crimson Red Border */
+    .inner-red-frame {
+      width: 100%;
+      height: 100%;
+      border: 2.5px solid var(--ru-red);
+      padding: 36px 46px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .crest-container {
+      width: 136px;
+      height: 136px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .crest-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .uni-title {
+      font-family: var(--cover-font);
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 1.2px;
+      line-height: 1.12;
+      margin-bottom: 6px;
+    }
+
+    .dept-title {
+      font-family: var(--cover-font);
+      font-size: 17.5px;
+      font-weight: 700;
+      color: var(--navy-text);
+      letter-spacing: 0.6px;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+
+    /* Double Horizontal Divider Bar */
+    .double-divider {
+      width: 84%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 34px;
+    }
+
+    .line-green {
+      height: 5px;
+      background-color: var(--ru-green);
+      width: 100%;
+    }
+
+    .line-red {
+      height: 3px;
+      background-color: var(--ru-red);
+      width: 100%;
+    }
+
+    .assign-label {
+      font-family: var(--cover-font);
+      font-size: 25px;
+      font-weight: 700;
+      color: var(--ru-red);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    /* Sage-Tinted Topic Box */
+    .topic-box {
+      width: 90%;
+      min-height: 132px;
+      background-color: var(--sage-bg);
+      border: 1.5px solid var(--sage-border);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 26px;
+    }
+
+    .topic-text {
+      font-family: var(--cover-font);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--ru-green);
+      line-height: 1.22;
+      letter-spacing: 0.5px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .course-meta {
+      font-family: var(--cover-font);
+      font-size: 19px;
+      color: var(--navy-text);
+      line-height: 1.55;
+      margin-bottom: 44px;
+    }
+
+    .course-meta strong {
+      font-weight: 700;
+    }
+
+    /* Two-Column Grid: SUBMITTED TO & SUBMITTED BY */
+    .submission-grid {
+      width: 92%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      text-align: left;
+      margin-top: auto;
+      margin-bottom: 38px;
+    }
+
+    .sub-col h3 {
+      font-family: var(--cover-font);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .sub-col p {
+      font-family: var(--cover-font);
+      font-size: 16.5px;
+      color: var(--navy-text);
+      line-height: 1.42;
+      margin-bottom: 4px;
+    }
+
+    .date-footer {
+      font-family: var(--cover-font);
+      font-size: 18px;
+      color: var(--navy-text);
+      letter-spacing: 0.6px;
+      padding-bottom: 6px;
+    }
+
+    .date-footer strong {
+      font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+      .editor-panel {
+        position: static;
+        height: auto;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+      body {
+        background: #FFFFFF !important;
+      }
+      .editor-panel,
+      .preview-toolbar {
+        display: none !important;
+      }
+      .app-layout,
+      .preview-stage,
+      .sheet-scaler {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        transform: none !important;
+        background: #FFFFFF !important;
+      }
+      .cover-page {
+        width: 210mm !important;
+        height: 297mm !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- LEFT SIDEBAR: CUSTOMIZATION CONTROLS -->
+    <aside class="editor-panel">
+      <header class="panel-header">
+        <div class="brand-badge">RU COVER STUDIO</div>
+        <h1>Assignment Cover Generator</h1>
+        <p>Customize fields live and export HD PNG or A4 PDF.</p>
+      </header>
+
+      <!-- Export & Action Buttons -->
+      <div class="action-bar">
+        <button id="btn-download-png" class="btn btn-primary" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Download PNG</span>
+        </button>
+        <button id="btn-download-pdf" class="btn btn-crimson" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Download PDF</span>
+        </button>
+        <button id="btn-print" class="btn btn-ghost" type="button" title="Print A4">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Print</span>
+        </button>
+        <button id="btn-reset" class="btn btn-ghost" type="button" title="Reset Defaults">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          <span>Reset</span>
+        </button>
+      </div>
+
+      <div class="form-scroll">
+        <!-- Logo & Style Group -->
+        <section class="form-card">
+          <h2>Logo &amp; Typography</h2>
+          <div class="logo-controls">
+            <label class="file-upload-btn" for="logo-upload">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Upload Logo (ru.ac.bd/logo)
+            </label>
+            <input type="file" id="logo-upload" accept="image/*" hidden />
+            <button id="btn-reset-logo" class="btn-mini" type="button">Default Crest</button>
+          </div>
+          <div class="field-group mt-10">
+            <label for="topic-size">Topic Font Size: <span id="topic-size-val">32px</span></label>
+            <input type="range" id="topic-size" min="22" max="42" value="32" />
+          </div>
+        </section>
+
+        <!-- University & Course Info -->
+        <section class="form-card">
+          <h2>Header &amp; Course Details</h2>
+          <div class="field-group">
+            <label for="in-uni">University Name</label>
+            <input type="text" id="in-uni" value="UNIVERSITY OF RAJSHAHI" />
+          </div>
+          <div class="field-group">
+            <label for="in-dept">Department Name</label>
+            <input type="text" id="in-dept" value="DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT" />
+          </div>
+          <div class="field-group">
+            <label for="in-label">Assignment Heading</label>
+            <input type="text" id="in-label" value="ASSIGNMENT ON" />
+          </div>
+          <div class="field-group">
+            <label for="in-topic">Assignment Topic / Title</label>
+            <textarea id="in-topic" rows="2" placeholder="Enter assignment topic...">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</textarea>
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label for="in-course-title">Course Title</label>
+              <input type="text" id="in-course-title" value="[INSERT COURSE TITLE]" />
+            </div>
+            <div class="field-group">
+              <label for="in-course-code">Course Code</label>
+              <input type="text" id="in-course-code" value="[INSERT COURSE CODE]" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Submitted To -->
+        <section class="form-card">
+          <h2>Submitted To (Instructor)</h2>
+          <div class="field-group">
+            <label for="in-teacher-name">Instructor's Name</label>
+            <input type="text" id="in-teacher-name" value="[INSTRUCTOR'S NAME]" />
+          </div>
+          <div class="field-group">
+            <label for="in-teacher-desig">Designation</label>
+            <input type="text" id="in-teacher-desig" value="[DESIGNATION]" />
+          </div>
+          <div class="field-group">
+            <label for="in-teacher-dept">Department</label>
+            <input type="text" id="in-teacher-dept" value="Department of Information Science and Library Management" />
+          </div>
+          <div class="field-group">
+            <label for="in-teacher-uni">University</label>
+            <input type="text" id="in-teacher-uni" value="University of Rajshahi" />
+          </div>
+        </section>
+
+        <!-- Submitted By -->
+        <section class="form-card">
+          <h2>Submitted By (Student)</h2>
+          <div class="field-group">
+            <label for="in-student-name">Student Name</label>
+            <input type="text" id="in-student-name" value="Salim Hosen Shohan" />
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label for="in-student-id">Student ID</label>
+              <input type="text" id="in-student-id" value="2610647104" />
+            </div>
+            <div class="field-group">
+              <label for="in-reg-no">Registration No</label>
+              <input type="text" id="in-reg-no" value="[YOUR REG. NO]" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label for="in-session">Session</label>
+              <input type="text" id="in-session" value="2025-2026" />
+            </div>
+            <div class="field-group">
+              <label for="in-date">Submission Date</label>
+              <div class="date-input-wrap">
+                <input type="text" id="in-date" value="[DD/MM/YYYY]" />
+                <button type="button" id="btn-today" class="btn-mini">Today</button>
+              </div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="in-student-dept">Department</label>
+            <input type="text" id="in-student-dept" value="Department of Information Science and Library Management" />
+          </div>
+        </section>
+      </div>
+    </aside>
+
+    <!-- RIGHT PREVIEW CANVAS: EXACT A4 COVER SHEET -->
+    <main class="preview-stage">
+      <div class="preview-toolbar">
+        <span class="badge-a4">A4 Portrait (210 × 297 mm) • Live Preview</span>
+        <span id="status-msg" class="status-msg"></span>
+      </div>
+
+      <div class="sheet-scaler" id="sheet-scaler">
+        <div id="cover-page" class="cover-page">
+          <div class="outer-green-frame">
+            <div class="inner-red-frame">
+              <!-- 1. Official RU Crest Logo -->
+              <div class="crest-container" id="crest-container">
+                <svg id="default-ru-svg" width="136" height="136" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <path id="topArc" d="M 22,100 A 78,78 0 1,1 178,100" />
+                    <path id="botArc" d="M 18,100 A 82,82 0 0,0 182,100" />
+                  </defs>
+                  <circle cx="100" cy="100" r="93" fill="#FFFFFF" stroke="#19345E" stroke-width="3.5" />
+                  <circle cx="100" cy="100" r="64" fill="#FFFFFF" stroke="#19345E" stroke-width="2.5" />
+                  <text fill="#19345E" font-family="'Tw Cen MT', 'Jost', sans-serif" font-size="13.2" font-weight="700" letter-spacing="1.6">
+                    <textPath href="#topArc" startOffset="50%" text-anchor="middle">UNIVERSITY OF RAJSHAHI</textPath>
+                  </text>
+                  <text fill="#19345E" font-family="'Tw Cen MT', 'Jost', sans-serif" font-size="13.2" font-weight="700" letter-spacing="1.6">
+                    <textPath href="#botArc" startOffset="50%" text-anchor="middle">UNIVERSITY OF RAJSHAHI</textPath>
+                  </text>
+                  <!-- Open Book -->
+                  <path d="M 56,55 Q 84,57 100,63 Q 116,57 144,55 L 144,145 Q 116,143 100,138 Q 84,143 56,145 Z" fill="#8C1127" />
+                  <path d="M 59.5,58.5 Q 85,60.5 100,66 Q 115,60.5 140.5,58.5 L 140.5,141.5 Q 115,139.5 100,135 Q 85,139.5 59.5,141.5 Z" fill="#D4A017" />
+                  <path d="M 63,62 Q 86,64 100,69 Q 114,64 137,62 L 137,138 Q 114,136 100,132 Q 86,136 63,138 Z" fill="#FFFFFF" />
+                  <!-- Navy Blue Square -->
+                  <rect x="73" y="73" width="54" height="54" fill="#19345E" />
+                  <!-- 16-Pointed White Star (populated via JS for exact symmetry) -->
+                  <polygon id="ru-star-poly" fill="#FFFFFF" />
+                </svg>
+                <img id="custom-logo-img" alt="University of Rajshahi Logo" hidden />
+              </div>
+
+              <!-- 2. University & Department Header -->
+              <h1 id="out-uni" class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
+              <p id="out-dept" class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
+
+              <!-- 3. Double Horizontal Divider Bar -->
+              <div class="double-divider">
+                <div class="line-green"></div>
+                <div class="line-red"></div>
+              </div>
+
+              <!-- 4. Assignment Heading -->
+              <h2 id="out-label" class="assign-label">ASSIGNMENT ON</h2>
+
+              <!-- 5. Sage-Tinted Topic Box -->
+              <div class="topic-box">
+                <div id="out-topic" class="topic-text">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</div>
+              </div>
+
+              <!-- 6. Course Title & Course Code -->
+              <div class="course-meta">
+                <p><strong>COURSE TITLE:</strong> <span id="out-course-title">[INSERT COURSE TITLE]</span></p>
+                <p><strong>COURSE CODE:</strong> <span id="out-course-code">[INSERT COURSE CODE]</span></p>
+              </div>
+
+              <!-- 7. Two-Column Submission Grid -->
+              <div class="submission-grid">
+                <div class="sub-col">
+                  <h3>SUBMITTED TO:</h3>
+                  <p id="out-teacher-name">[INSTRUCTOR'S NAME]</p>
+                  <p id="out-teacher-desig">[DESIGNATION]</p>
+                  <p id="out-teacher-dept">Department of Information Science and Library Management</p>
+                  <p id="out-teacher-uni">University of Rajshahi</p>
+                </div>
+
+                <div class="sub-col">
+                  <h3>SUBMITTED BY:</h3>
+                  <p>Name: <span id="out-student-name">Salim Hosen Shohan</span></p>
+                  <p>Student ID: <span id="out-student-id">2610647104</span></p>
+                  <p>Registration No: <span id="out-reg-no">[YOUR REG. NO]</span></p>
+                  <p>Session: <span id="out-session">2025-2026</span></p>
+                  <p id="out-student-dept">Department of Information Science and Library Management</p>
+                </div>
+              </div>
+
+              <!-- 8. Submission Date Footer -->
+              <div class="date-footer">
+                <strong>DATE OF SUBMISSION:</strong> <span id="out-date">[DD/MM/YYYY]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const STORAGE_KEY = "ru_cover_page_singlefile_v1";
+
+      // Generate mathematically symmetric 16-pointed star in the RU SVG crest
+      const starPoly = document.getElementById("ru-star-poly");
+      if (starPoly) {
+        const pts = [];
+        const cx = 100, cy = 100, rOut = 23, rIn = 9.5, spikes = 16;
+        for (let i = 0; i < spikes * 2; i++) {
+          const angle = (i * Math.PI) / spikes - Math.PI / 2;
+          const r = i % 2 === 0 ? rOut : rIn;
+          pts.push(`${(cx + r * Math.cos(angle)).toFixed(2)},${(cy + r * Math.sin(angle)).toFixed(2)}`);
+        }
+        starPoly.setAttribute("points", pts.join(" "));
+      }
+
+      const fieldBindings = [
+        { input: "in-uni", target: "out-uni" },
+        { input: "in-dept", target: "out-dept" },
+        { input: "in-label", target: "out-label" },
+        { input: "in-topic", target: "out-topic" },
+        { input: "in-course-title", target: "out-course-title" },
+        { input: "in-course-code", target: "out-course-code" },
+        { input: "in-teacher-name", target: "out-teacher-name" },
+        { input: "in-teacher-desig", target: "out-teacher-desig" },
+        { input: "in-teacher-dept", target: "out-teacher-dept" },
+        { input: "in-teacher-uni", target: "out-teacher-uni" },
+        { input: "in-student-name", target: "out-student-name" },
+        { input: "in-student-id", target: "out-student-id" },
+        { input: "in-reg-no", target: "out-reg-no" },
+        { input: "in-session", target: "out-session" },
+        { input: "in-student-dept", target: "out-student-dept" },
+        { input: "in-date", target: "out-date" },
+      ];
+
+      const defaultValues = {};
+      fieldBindings.forEach(({ input }) => {
+        const el = document.getElementById(input);
+        if (el) defaultValues[input] = el.value;
+      });
+
+      const topicSlider = document.getElementById("topic-size");
+      const topicSizeVal = document.getElementById("topic-size-val");
+      const outTopic = document.getElementById("out-topic");
+      const logoUpload = document.getElementById("logo-upload");
+      const defaultSvg = document.getElementById("default-ru-svg");
+      const customLogoImg = document.getElementById("custom-logo-img");
+
+      function applyTopicSize(px) {
+        outTopic.style.fontSize = `${px}px`;
+        topicSizeVal.textContent = `${px}px`;
+      }
+
+      function showCustomLogo(dataUrl) {
+        customLogoImg.src = dataUrl;
+        customLogoImg.hidden = false;
+        defaultSvg.style.display = "none";
+      }
+
+      function loadSavedData() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return;
+          const saved = JSON.parse(raw);
+          fieldBindings.forEach(({ input }) => {
+            const el = document.getElementById(input);
+            if (el && typeof saved[input] === "string") {
+              el.value = saved[input];
+            }
+          });
+          if (saved.topicSize) {
+            topicSlider.value = saved.topicSize;
+            applyTopicSize(saved.topicSize);
+          }
+          if (saved.customLogoDataUrl) {
+            showCustomLogo(saved.customLogoDataUrl);
+          }
+        } catch (err) {
+          console.warn("Could not load saved data:", err);
+        }
+      }
+
+      function saveData() {
+        try {
+          const data = { topicSize: topicSlider.value };
+          fieldBindings.forEach(({ input }) => {
+            const el = document.getElementById(input);
+            if (el) data[input] = el.value;
+          });
+          if (!customLogoImg.hidden && customLogoImg.src) {
+            data.customLogoDataUrl = customLogoImg.src;
+          }
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (err) {
+          console.warn("Save skipped:", err);
+        }
+      }
+
+      function syncAllFields() {
+        fieldBindings.forEach(({ input, target }) => {
+          const inEl = document.getElementById(input);
+          const outEl = document.getElementById(target);
+          if (inEl && outEl) outEl.textContent = inEl.value;
+        });
+      }
+
+      fieldBindings.forEach(({ input, target }) => {
+        const inEl = document.getElementById(input);
+        const outEl = document.getElementById(target);
+        if (!inEl || !outEl) return;
+        inEl.addEventListener("input", () => {
+          outEl.textContent = inEl.value;
+          saveData();
+        });
+      });
+
+      topicSlider.addEventListener("input", (e) => {
+        applyTopicSize(e.target.value);
+        saveData();
+      });
+
+      logoUpload.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          showCustomLogo(ev.target.result);
+          saveData();
+          setStatus("Custom logo applied!");
+        };
+        reader.readAsDataURL(file);
+      });
+
+      document.getElementById("btn-reset-logo").addEventListener("click", () => {
+        customLogoImg.hidden = true;
+        customLogoImg.src = "";
+        defaultSvg.style.display = "block";
+        logoUpload.value = "";
+        saveData();
+        setStatus("Default RU crest restored.");
+      });
+
+      document.getElementById("btn-today").addEventListener("click", () => {
+        const now = new Date();
+        const formatted = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
+        document.getElementById("in-date").value = formatted;
+        document.getElementById("out-date").textContent = formatted;
+        saveData();
+      });
+
+      document.getElementById("btn-reset").addEventListener("click", () => {
+        if (!confirm("Reset all fields to default values?")) return;
+        localStorage.removeItem(STORAGE_KEY);
+        fieldBindings.forEach(({ input }) => {
+          const el = document.getElementById(input);
+          if (el) el.value = defaultValues[input];
+        });
+        topicSlider.value = 32;
+        applyTopicSize(32);
+        customLogoImg.hidden = true;
+        customLogoImg.src = "";
+        defaultSvg.style.display = "block";
+        syncAllFields();
+        setStatus("Reset to defaults.");
+      });
+
+      const scaler = document.getElementById("sheet-scaler");
+      const coverPage = document.getElementById("cover-page");
+
+      function fitPreviewScale() {
+        const stage = document.querySelector(".preview-stage");
+        if (!stage) return;
+        const availableWidth = stage.clientWidth - 36;
+        const sheetWidth = 794;
+        if (availableWidth < sheetWidth) {
+          const scale = Math.max(0.35, availableWidth / sheetWidth);
+          scaler.style.transform = `scale(${scale})`;
+          scaler.style.height = `${1123 * scale}px`;
+        } else {
+          scaler.style.transform = "none";
+          scaler.style.height = "auto";
+        }
+      }
+
+      window.addEventListener("resize", fitPreviewScale);
+
+      const statusMsg = document.getElementById("status-msg");
+      let statusTimer;
+      function setStatus(msg) {
+        statusMsg.textContent = msg;
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(() => {
+          statusMsg.textContent = "";
+        }, 3500);
+      }
+
+      async function renderHighResCanvas() {
+        await document.fonts.ready;
+        return await html2canvas(coverPage, {
+          scale: 3,
+          useCORS: true,
+          backgroundColor: "#FFFFFF",
+          width: 794,
+          height: 1123,
+          onclone: (clonedDoc) => {
+            const clonedScaler = clonedDoc.getElementById("sheet-scaler");
+            if (clonedScaler) {
+              clonedScaler.style.transform = "none";
+              clonedScaler.style.height = "auto";
+            }
+          },
+        });
+      }
+
+      document.getElementById("btn-download-png").addEventListener("click", async () => {
+        setStatus("Generating HD PNG...");
+        try {
+          const canvas = await renderHighResCanvas();
+          const link = document.createElement("a");
+          const code = document.getElementById("in-course-code").value.replace(/[^a-zA-Z0-9_-]/g, "");
+          link.download = code && !code.includes("INSERT") ? `RU_Cover_${code}.png` : "RU_Assignment_Cover.png";
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+          setStatus("PNG downloaded!");
+        } catch (err) {
+          console.error(err);
+          setStatus("PNG export failed.");
+        }
+      });
+
+      document.getElementById("btn-download-pdf").addEventListener("click", async () => {
+        setStatus("Generating A4 PDF...");
+        try {
+          const canvas = await renderHighResCanvas();
+          const imgData = canvas.toDataURL("image/jpeg", 0.98);
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+          });
+          pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+          const code = document.getElementById("in-course-code").value.replace(/[^a-zA-Z0-9_-]/g, "");
+          pdf.save(code && !code.includes("INSERT") ? `RU_Cover_${code}.pdf` : "RU_Assignment_Cover.pdf");
+          setStatus("PDF downloaded!");
+        } catch (err) {
+          console.error(err);
+          setStatus("PDF export failed.");
+        }
+      });
+
+      document.getElementById("btn-print").addEventListener("click", () => {
+        window.print();
+      });
+
+      loadSavedData();
+      syncAllFields();
+      fitPreviewScale();
+    });
+  </script>
+</body>
+</html>
