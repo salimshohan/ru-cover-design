@@ -4,13 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ISLM Cover Page Generator | University of Rajshahi</title>
-  <!-- Geometric sans-serif web fallback (Jost) for Tw Cen MT + clean UI font (Plus Jakarta Sans) -->
+  <!-- Tw Cen MT geometric fallback (Jost) & crisp Light UI font (Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- html2canvas & jsPDF for HD PNG & A4 PDF export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+  <!-- html2canvas & jsPDF for HD PNG and A4 PDF export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
   <style>
     :root {
@@ -23,7 +23,7 @@
       /* Light Studio UI Palette */
       --bg-canvas: #EEF2F6;
       --bg-sidebar: #FFFFFF;
-      --bg-section: #F8FAFC;
+      --bg-card: #F8FAFC;
       --border-subtle: #E2E8F0;
       --border-control: #CBD5E1;
       --text-main: #0F172A;
@@ -50,7 +50,7 @@
 
     .app-layout {
       display: grid;
-      grid-template-columns: 425px 1fr;
+      grid-template-columns: 420px minmax(0, 1fr);
       min-height: 100vh;
     }
 
@@ -65,6 +65,7 @@
       height: 100vh;
       position: sticky;
       top: 0;
+      min-width: 0;
       box-shadow: 6px 0 30px rgba(15, 23, 42, 0.04);
       z-index: 10;
     }
@@ -124,7 +125,7 @@
       margin-top: 3px;
     }
 
-    /* Elevated Export & Utility Buttons */
+    /* Elevated Action Buttons */
     .action-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -140,7 +141,7 @@
       justify-content: center;
       gap: 7px;
       padding: 10px 14px;
-      border-radius: 9px;
+      border-radius: 10px;
       font-family: inherit;
       font-size: 13px;
       font-weight: 600;
@@ -160,23 +161,23 @@
     .btn-green {
       background: linear-gradient(180deg, #0E7043 0%, var(--brand-green) 100%);
       color: #FFFFFF;
-      box-shadow: 0 2px 8px rgba(11, 94, 56, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      box-shadow: 0 3px 10px rgba(11, 94, 56, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.18);
     }
 
     .btn-green:hover {
       background: linear-gradient(180deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
-      box-shadow: 0 4px 12px rgba(11, 94, 56, 0.32);
+      box-shadow: 0 5px 14px rgba(11, 94, 56, 0.32);
     }
 
     .btn-red {
       background: linear-gradient(180deg, #B3203A 0%, var(--brand-crimson) 100%);
       color: #FFFFFF;
-      box-shadow: 0 2px 8px rgba(158, 27, 50, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      box-shadow: 0 3px 10px rgba(158, 27, 50, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.18);
     }
 
     .btn-red:hover {
       background: linear-gradient(180deg, var(--brand-crimson) 0%, var(--brand-crimson-dark) 100%);
-      box-shadow: 0 4px 12px rgba(158, 27, 50, 0.32);
+      box-shadow: 0 5px 14px rgba(158, 27, 50, 0.32);
     }
 
     .btn-secondary {
@@ -202,7 +203,7 @@
     }
 
     .form-card {
-      background: var(--bg-section);
+      background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       padding: 16px;
@@ -216,9 +217,6 @@
       color: var(--brand-green);
       margin-bottom: 13px;
       font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .field-group {
@@ -258,13 +256,13 @@
       background: #FFFFFF;
       border: 1.5px solid var(--border-control);
       color: var(--text-main);
-      border-radius: 9px;
-      padding: 9px 12px;
+      border-radius: 10px;
+      padding: 9.5px 12px;
       font-size: 13px;
       font-weight: 500;
       font-family: inherit;
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
-      transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
     }
 
     input::placeholder,
@@ -310,8 +308,8 @@
       color: #475569;
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
-      border-radius: 7px;
-      padding: 7px 10px;
+      border-radius: 8px;
+      padding: 7.5px 10px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -331,8 +329,8 @@
       background: #ECFDF5;
       border: 1.5px solid #A7F3D0;
       color: var(--brand-green);
-      padding: 0 12px;
-      border-radius: 9px;
+      padding: 0 13px;
+      border-radius: 10px;
       font-family: inherit;
       font-size: 12px;
       font-weight: 700;
@@ -347,6 +345,10 @@
       color: #FFFFFF;
     }
 
+    .mt-8 {
+      margin-top: 8px;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -355,11 +357,12 @@
        RIGHT PREVIEW STUDIO & EXACT A4 COVER PAGE
        ========================================================= */
     .preview-stage {
+      min-width: 0;
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 24px 48px;
-      overflow-x: hidden;
+      padding: 20px 20px 48px;
       background: radial-gradient(circle at top, #F8FAFC 0%, #E2E8F0 100%);
     }
 
@@ -369,6 +372,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
       margin-bottom: 16px;
     }
 
@@ -389,11 +393,20 @@
       font-weight: 700;
     }
 
-    .sheet-scaler {
+    /* Exact Bounding Wrapper for Responsive Scaling */
+    .sheet-viewport {
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      transform-origin: top center;
+      overflow: hidden;
+    }
+
+    .sheet-scaler {
+      width: 794px;
+      height: 1123px;
+      position: relative;
+      flex-shrink: 0;
     }
 
     /* EXACT A4 SHEET (794px x 1123px) */
@@ -405,8 +418,7 @@
       box-shadow: 0 22px 55px rgba(15, 23, 42, 0.13), 0 4px 14px rgba(15, 23, 42, 0.05);
       font-family: var(--cover-font);
       color: var(--navy-text);
-      position: relative;
-      flex-shrink: 0;
+      transform-origin: top left;
     }
 
     /* Outer Thick Forest Green Border */
@@ -500,11 +512,11 @@
 
     /* Compact & Always Transparent Assignment Topic Box */
     .topic-box {
-      width: 82%;
-      min-height: 82px;
+      width: 80%;
+      min-height: 76px;
       background-color: transparent;
       border: 1.5px solid var(--ru-green);
-      padding: 15px 22px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -513,13 +525,18 @@
 
     .topic-text {
       font-family: var(--cover-font);
-      font-size: 26px;
+      font-size: 25px;
       font-weight: 700;
       color: var(--ru-green);
       line-height: 1.25;
       letter-spacing: 0.4px;
       white-space: pre-wrap;
       word-break: break-word;
+    }
+
+    .topic-text.is-placeholder {
+      opacity: 0.55;
+      font-weight: 600;
     }
 
     /* Course Title & Course Code */
@@ -577,11 +594,14 @@
 
     @media (max-width: 1024px) {
       .app-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
       .editor-panel {
         position: static;
         height: auto;
+      }
+      .preview-stage {
+        padding: 16px 12px 40px;
       }
     }
 
@@ -599,16 +619,19 @@
       }
       .app-layout,
       .preview-stage,
+      .sheet-viewport,
       .sheet-scaler {
         display: block !important;
+        width: 210mm !important;
+        height: 297mm !important;
         padding: 0 !important;
         margin: 0 !important;
-        transform: none !important;
         background: #FFFFFF !important;
       }
       .cover-page {
         width: 210mm !important;
         height: 297mm !important;
+        transform: none !important;
         box-shadow: none !important;
         margin: 0 !important;
       }
@@ -625,7 +648,7 @@
           <span class="save-indicator"><span class="save-dot"></span> Auto-Saved</span>
         </div>
         <h1>Assignment Cover Generator</h1>
-        <p>Select course code, fill details &amp; download PNG or A4 PDF.</p>
+        <p>Select course code, enter details &amp; export PNG or A4 PDF.</p>
       </header>
 
       <!-- Action Buttons -->
@@ -678,10 +701,10 @@
           <h2>Submitted To (Instructor)</h2>
           <div class="field-group">
             <label for="in-teacher-select">Instructor's Name</label>
-            <!-- Course-specific preset dropdown (shown for 0322ISLM 121 & 0322ISLM 122) -->
+            <!-- Course-specific preset dropdown (for 0322ISLM 121 & 0322ISLM 122) -->
             <select id="in-teacher-select"></select>
-            <!-- Text input (shown for other courses or when "Custom" is selected) -->
-            <input type="text" id="in-teacher-custom" class="hidden" placeholder="Enter instructor's name" />
+            <!-- Text box (for other courses or when Custom is chosen) -->
+            <input type="text" id="in-teacher-custom" class="hidden mt-8" placeholder="Enter instructor's name" />
           </div>
           <div class="field-group">
             <label for="in-teacher-desig">Designation</label>
@@ -704,12 +727,12 @@
           <h2>Submitted By (Student)</h2>
           <div class="field-group">
             <label for="in-student-name">Student Name</label>
-            <input type="text" id="in-student-name" value="Salim Hosen Shohan" placeholder="Enter your full name" />
+            <input type="text" id="in-student-name" placeholder="Enter student name" />
           </div>
           <div class="field-row">
             <div class="field-group">
               <label for="in-student-id">Student ID</label>
-              <input type="text" id="in-student-id" value="2610647104" placeholder="Enter student ID" />
+              <input type="text" id="in-student-id" placeholder="Enter student ID" />
             </div>
             <div class="field-group">
               <label for="in-session">Session</label>
@@ -737,32 +760,544 @@
         <span id="status-msg" class="status-msg"></span>
       </div>
 
-      <div class="sheet-scaler" id="sheet-scaler">
-        <div id="cover-page" class="cover-page">
-          <div class="outer-green-frame">
-            <div class="inner-red-frame">
-              <!-- 1. Fixed Official RU Logo -->
-              <div class="crest-container">
-                <img
-                  id="cover-logo-img"
-                  src="https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg"
-                  alt="University of Rajshahi Official Logo"
-                />
+      <div class="sheet-viewport" id="sheet-viewport">
+        <div class="sheet-scaler" id="sheet-scaler">
+          <div id="cover-page" class="cover-page">
+            <div class="outer-green-frame">
+              <div class="inner-red-frame">
+                <!-- 1. Fixed Official RU Logo -->
+                <div class="crest-container">
+                  <img
+                    id="cover-logo-img"
+                    src="https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg"
+                    alt="University of Rajshahi Official Logo"
+                  />
+                </div>
+
+                <!-- 2. Fixed University & Department Header -->
+                <h1 class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
+                <p class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
+
+                <!-- 3. Double Horizontal Divider Bar -->
+                <div class="double-divider">
+                  <div class="line-green"></div>
+                  <div class="line-red"></div>
+                </div>
+
+                <!-- 4. Fixed Assignment Heading -->
+                <h2 class="assign-label">ASSIGNMENT ON</h2>
+
+                <!-- 5. Compact Transparent Assignment Topic Box -->
+                <div class="topic-box">
+                  <div id="out-topic" class="topic-text is-placeholder">Please enter your title.</div>
+                </div>
+
+                <!-- 6. Auto-Filled Course Title & Course Code -->
+                <div class="course-meta">
+                  <p><strong>COURSE TITLE:</strong> <span id="out-course-title">Information Resources Development</span></p>
+                  <p><strong>COURSE CODE:</strong> <span id="out-course-code">0322ISLM 121</span></p>
+                </div>
+
+                <!-- 7. Two-Column Submission Grid -->
+                <div class="submission-grid">
+                  <div class="sub-col">
+                    <h3>SUBMITTED TO:</h3>
+                    <p id="out-teacher-name">Dr. Purnima Banik</p>
+                    <p id="out-teacher-desig">Associate Professor</p>
+                    <p>Department of Information Science and Library Management</p>
+                    <p>University of Rajshahi</p>
+                  </div>
+
+                  <div class="sub-col">
+                    <h3>SUBMITTED BY:</h3>
+                    <p>Name: <span id="out-student-name">Student Name</span></p>
+                    <p>Student ID: <span id="out-student-id">Student ID</span></p>
+                    <p>Session: <span id="out-session">2025-2026</span></p>
+                    <p>Department of Information Science and Library Management</p>
+                    <p>University of Rajshahi</p>
+                  </div>
+                </div>
+
+                <!-- 8. Submission Date Footer -->
+                <div class="date-footer">
+                  <strong>DATE OF SUBMISSION:</strong> <span id="out-date">18/11/2026</span>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 
-              <!-- 2. Fixed University & Department Header -->
-              <h1 class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
-              <p class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
+  <script>
+    function initCoverStudio() {
+      const STORAGE_KEY = "ru_islm_cover_studio_v3";
+      const TOPIC_PLACEHOLDER = "Please enter your title.";
 
-              <!-- 3. Double Horizontal Divider Bar -->
-              <div class="double-divider">
-                <div class="line-green"></div>
-                <div class="line-red"></div>
-              </div>
+      // Safe localStorage wrapper (never crashes in sandboxed iframes or strict privacy modes)
+      const safeStorage = {
+        get(key) {
+          try {
+            return window.localStorage.getItem(key);
+          } catch (e) {
+            return null;
+          }
+        },
+        set(key, val) {
+          try {
+            window.localStorage.setItem(key, val);
+          } catch (e) {}
+        },
+        remove(key) {
+          try {
+            window.localStorage.removeItem(key);
+          } catch (e) {}
+        },
+      };
 
-              <!-- 4. Fixed Assignment Heading -->
-              <h2 class="assign-label">ASSIGNMENT ON</h2>
+      // Course Code -> Course Title Map
+      const COURSE_MAP = {
+        "0322ISLM 121": "Information Resources Development",
+        "0322ISLM 122": "Referencing and Citation Management",
+        "0222ISLM 123": "Bangladesh Studies",
+        "0611ISLM 124": "Computer Applications (Practical)",
+        "0232ISLM 125": "English Skills Development",
+      };
 
-              <!-- 5. Compact Transparent Assignment Topic Box -->
-              <div class="topic-box">
-                <div id="out-topic" class="topic-text">Please enter your title
+      // Course-Specific Faculty Presets (Exact Serial Order)
+      const COURSE_INSTRUCTORS = {
+        "0322ISLM 121": [
+          { name: "Dr. Purnima Banik", desig: "Associate Professor" },
+          { name: "Dr. Jayanti Rani Basak", desig: "Professor" },
+        ],
+        "0322ISLM 122": [
+          { name: "Dr. Md. Nazmul Islam", desig: "Professor" },
+          { name: "Dr. Md. Armanul Haque", desig: "Professor" },
+        ],
+      };
+
+      const courseSelect = document.getElementById("in-course-select");
+      const hintCourseTitle = document.getElementById("hint-course-title");
+      const outCourseTitle = document.getElementById("out-course-title");
+      const outCourseCode = document.getElementById("out-course-code");
+
+      const topicInput = document.getElementById("in-topic");
+      const outTopic = document.getElementById("out-topic");
+
+      const teacherSelect = document.getElementById("in-teacher-select");
+      const teacherCustomInput = document.getElementById("in-teacher-custom");
+      const outTeacherName = document.getElementById("out-teacher-name");
+
+      const teacherDesigSelect = document.getElementById("in-teacher-desig");
+      const outTeacherDesig = document.getElementById("out-teacher-desig");
+
+      const studentNameInput = document.getElementById("in-student-name");
+      const outStudentName = document.getElementById("out-student-name");
+
+      const studentIdInput = document.getElementById("in-student-id");
+      const outStudentId = document.getElementById("out-student-id");
+
+      const sessionSelect = document.getElementById("in-session");
+      const outSession = document.getElementById("out-session");
+
+      const dateInput = document.getElementById("in-date");
+      const outDate = document.getElementById("out-date");
+
+      const coverPage = document.getElementById("cover-page");
+      const logoImg = document.getElementById("cover-logo-img");
+      const sheetViewport = document.getElementById("sheet-viewport");
+      const sheetScaler = document.getElementById("sheet-scaler");
+
+      function getTodayISO() {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, "0");
+        const dd = String(now.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      }
+
+      function setTodayDate() {
+        dateInput.value = getTodayISO();
+        syncDate();
+      }
+
+      function syncDate() {
+        const val = dateInput.value;
+        if (!val) {
+          outDate.textContent = "DD/MM/YYYY";
+          return;
+        }
+        const parts = val.split("-");
+        if (parts.length === 3) {
+          outDate.textContent = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        } else {
+          outDate.textContent = val;
+        }
+      }
+
+      function syncTopic() {
+        const val = topicInput.value.trim();
+        if (val) {
+          outTopic.textContent = topicInput.value;
+          outTopic.classList.remove("is-placeholder");
+        } else {
+          outTopic.textContent = TOPIC_PLACEHOLDER;
+          outTopic.classList.add("is-placeholder");
+        }
+      }
+
+      function syncStudent() {
+        outStudentName.textContent = studentNameInput.value.trim() || "Enter student name";
+        outStudentId.textContent = studentIdInput.value.trim() || "Enter student ID";
+        outSession.textContent = sessionSelect.value;
+      }
+
+      function configureInstructorControl(courseCode, savedChoice = null, savedCustomName = "", savedDesig = null) {
+        const presets = COURSE_INSTRUCTORS[courseCode];
+
+        if (presets && presets.length > 0) {
+          teacherSelect.classList.remove("hidden");
+          teacherSelect.innerHTML = "";
+
+          presets.forEach((inst) => {
+            const opt = document.createElement("option");
+            opt.value = inst.name;
+            opt.textContent = `${inst.name} — ${inst.desig}`;
+            opt.dataset.desig = inst.desig;
+            teacherSelect.appendChild(opt);
+          });
+
+          const customOpt = document.createElement("option");
+          customOpt.value = "__CUSTOM__";
+          customOpt.textContent = "Custom Instructor (Type Name)";
+          teacherSelect.appendChild(customOpt);
+
+          if (savedChoice === "__CUSTOM__") {
+            teacherSelect.value = "__CUSTOM__";
+            teacherCustomInput.value = savedCustomName;
+            teacherCustomInput.classList.remove("hidden");
+            if (savedDesig) teacherDesigSelect.value = savedDesig;
+          } else if (savedChoice && presets.some((p) => p.name === savedChoice)) {
+            teacherSelect.value = savedChoice;
+            teacherCustomInput.classList.add("hidden");
+            const matched = presets.find((p) => p.name === savedChoice);
+            teacherDesigSelect.value = savedDesig || matched.desig;
+          } else {
+            // Default to 1st faculty member in serial order
+            teacherSelect.value = presets[0].name;
+            teacherCustomInput.classList.add("hidden");
+            teacherDesigSelect.value = presets[0].desig;
+          }
+        } else {
+          // Non-preset course: show clean empty text box with placeholder
+          teacherSelect.classList.add("hidden");
+          teacherSelect.innerHTML = "";
+          teacherCustomInput.classList.remove("hidden");
+          teacherCustomInput.value = savedCustomName || "";
+          teacherDesigSelect.value = savedDesig || "Professor";
+        }
+
+        syncInstructorPreview();
+      }
+
+      function syncInstructorPreview() {
+        const courseCode = courseSelect.value;
+        const hasPresets = Boolean(COURSE_INSTRUCTORS[courseCode]);
+
+        if (hasPresets && teacherSelect.value !== "__CUSTOM__") {
+          outTeacherName.textContent = teacherSelect.value;
+        } else {
+          const customVal = teacherCustomInput.value.trim();
+          outTeacherName.textContent = customVal || "Instructor's Name";
+        }
+        outTeacherDesig.textContent = teacherDesigSelect.value;
+      }
+
+      function syncCourse(savedState = null) {
+        const code = courseSelect.value;
+        const title = COURSE_MAP[code] || "";
+        hintCourseTitle.textContent = title;
+        outCourseCode.textContent = code;
+        outCourseTitle.textContent = title;
+
+        if (savedState) {
+          configureInstructorControl(
+            code,
+            savedState.teacherChoice,
+            savedState.teacherCustomName,
+            savedState.teacherDesig
+          );
+        } else {
+          configureInstructorControl(code, null, teacherCustomInput.value, null);
+        }
+      }
+
+      function saveToStorage() {
+        const payload = {
+          courseCode: courseSelect.value,
+          topic: topicInput.value,
+          teacherChoice: teacherSelect.value || "",
+          teacherCustomName: teacherCustomInput.value,
+          teacherDesig: teacherDesigSelect.value,
+          studentName: studentNameInput.value,
+          studentId: studentIdInput.value,
+          session: sessionSelect.value,
+        };
+        safeStorage.set(STORAGE_KEY, JSON.stringify(payload));
+      }
+
+      function loadFromStorage() {
+        const raw = safeStorage.get(STORAGE_KEY);
+        if (!raw) {
+          syncCourse();
+          syncTopic();
+          syncStudent();
+          setTodayDate();
+          return;
+        }
+        try {
+          const saved = JSON.parse(raw);
+          if (saved.courseCode && COURSE_MAP[saved.courseCode]) {
+            courseSelect.value = saved.courseCode;
+          }
+          if (typeof saved.topic === "string") topicInput.value = saved.topic;
+          if (typeof saved.studentName === "string") studentNameInput.value = saved.studentName;
+          if (typeof saved.studentId === "string") studentIdInput.value = saved.studentId;
+          if (saved.session === "2024-2025" || saved.session === "2025-2026") {
+            sessionSelect.value = saved.session;
+          }
+
+          syncCourse(saved);
+          syncTopic();
+          syncStudent();
+          setTodayDate(); // Always Today selected by default
+        } catch (err) {
+          syncCourse();
+          syncTopic();
+          syncStudent();
+          setTodayDate();
+        }
+      }
+
+      // Live Event Listeners + Auto-Save
+      courseSelect.addEventListener("change", () => {
+        syncCourse();
+        saveToStorage();
+      });
+
+      topicInput.addEventListener("input", () => {
+        syncTopic();
+        saveToStorage();
+      });
+
+      teacherSelect.addEventListener("change", () => {
+        if (teacherSelect.value === "__CUSTOM__") {
+          teacherCustomInput.classList.remove("hidden");
+          teacherCustomInput.focus();
+        } else {
+          teacherCustomInput.classList.add("hidden");
+          const selectedOpt = teacherSelect.options[teacherSelect.selectedIndex];
+          if (selectedOpt && selectedOpt.dataset.desig) {
+            teacherDesigSelect.value = selectedOpt.dataset.desig;
+          }
+        }
+        syncInstructorPreview();
+        saveToStorage();
+      });
+
+      teacherCustomInput.addEventListener("input", () => {
+        syncInstructorPreview();
+        saveToStorage();
+      });
+
+      teacherDesigSelect.addEventListener("change", () => {
+        syncInstructorPreview();
+        saveToStorage();
+      });
+
+      studentNameInput.addEventListener("input", () => {
+        syncStudent();
+        saveToStorage();
+      });
+
+      studentIdInput.addEventListener("input", () => {
+        syncStudent();
+        saveToStorage();
+      });
+
+      sessionSelect.addEventListener("change", () => {
+        syncStudent();
+        saveToStorage();
+      });
+
+      dateInput.addEventListener("input", syncDate);
+      dateInput.addEventListener("change", syncDate);
+
+      document.getElementById("btn-today").addEventListener("click", () => {
+        setTodayDate();
+      });
+
+      // Reset Form
+      document.getElementById("btn-reset").addEventListener("click", () => {
+        safeStorage.remove(STORAGE_KEY);
+        courseSelect.value = "0322ISLM 121";
+        topicInput.value = "";
+        teacherCustomInput.value = "";
+        studentNameInput.value = "";
+        studentIdInput.value = "";
+        sessionSelect.value = "2025-2026";
+        syncCourse();
+        syncTopic();
+        syncStudent();
+        setTodayDate();
+        setStatus("Form cleared!");
+      });
+
+      // Rock-Solid Responsive A4 Preview Scaling (Works on Mobile, Tablet & Desktop)
+      function fitPreviewScale() {
+        if (!sheetViewport || !sheetScaler || !coverPage) return;
+        const availableWidth = sheetViewport.clientWidth;
+        const sheetWidth = 794;
+        const sheetHeight = 1123;
+
+        if (availableWidth > 0 && availableWidth < sheetWidth) {
+          const scale = availableWidth / sheetWidth;
+          coverPage.style.transform = `scale(${scale})`;
+          sheetScaler.style.width = `${Math.floor(sheetWidth * scale)}px`;
+          sheetScaler.style.height = `${Math.floor(sheetHeight * scale)}px`;
+        } else {
+          coverPage.style.transform = "none";
+          sheetScaler.style.width = `${sheetWidth}px`;
+          sheetScaler.style.height = `${sheetHeight}px`;
+        }
+      }
+
+      window.addEventListener("resize", fitPreviewScale);
+
+      // Status Notification Helper
+      const statusMsg = document.getElementById("status-msg");
+      let statusTimer;
+      function setStatus(msg) {
+        statusMsg.textContent = msg;
+        clearTimeout(statusTimer);
+        statusTimer = setTimeout(() => {
+          statusMsg.textContent = "";
+        }, 3500);
+      }
+
+      // Convert external RU logo URL to CORS-safe DataURL for crisp PNG/PDF export
+      function loadCorsSafeLogo(url) {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            try {
+              const c = document.createElement("canvas");
+              c.width = img.naturalWidth;
+              c.height = img.naturalHeight;
+              c.getContext("2d").drawImage(img, 0, 0);
+              resolve(c.toDataURL("image/png"));
+            } catch (e) {
+              resolve(null);
+            }
+          };
+          img.onerror = () => resolve(null);
+          img.src = url;
+        });
+      }
+
+      async function renderHighResCanvas() {
+        if (typeof html2canvas === "undefined") {
+          throw new Error("html2canvas library not loaded");
+        }
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+
+        let safeLogoData = await loadCorsSafeLogo(logoImg.src);
+        if (!safeLogoData) {
+          safeLogoData = await loadCorsSafeLogo(`https://corsproxy.io/?${encodeURIComponent(logoImg.src)}`);
+        }
+
+        return await html2canvas(coverPage, {
+          scale: 3,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: "#FFFFFF",
+          width: 794,
+          height: 1123,
+          onclone: (clonedDoc) => {
+            const clonedCover = clonedDoc.getElementById("cover-page");
+            if (clonedCover) {
+              clonedCover.style.transform = "none";
+            }
+            const clonedImg = clonedDoc.getElementById("cover-logo-img");
+            if (clonedImg) {
+              if (safeLogoData) {
+                clonedImg.src = safeLogoData;
+              } else {
+                clonedImg.removeAttribute("src");
+              }
+            }
+          },
+        });
+      }
+
+      // Download HD PNG
+      document.getElementById("btn-download-png").addEventListener("click", async () => {
+        setStatus("Generating HD PNG...");
+        try {
+          const canvas = await renderHighResCanvas();
+          const link = document.createElement("a");
+          const cleanCode = courseSelect.value.replace(/\s+/g, "_");
+          link.download = `RU_ISLM_Cover_${cleanCode}.png`;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+          setStatus("PNG downloaded!");
+        } catch (err) {
+          console.error(err);
+          setStatus("Use 'Print A4' → Save as PDF.");
+        }
+      });
+
+      // Download A4 PDF
+      document.getElementById("btn-download-pdf").addEventListener("click", async () => {
+        setStatus("Generating A4 PDF...");
+        try {
+          const canvas = await renderHighResCanvas();
+          const imgData = canvas.toDataURL("image/jpeg", 0.98);
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+          });
+          pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+          const cleanCode = courseSelect.value.replace(/\s+/g, "_");
+          pdf.save(`RU_ISLM_Cover_${cleanCode}.pdf`);
+          setStatus("PDF downloaded!");
+        } catch (err) {
+          console.error(err);
+          setStatus("Use 'Print A4' → Save as PDF.");
+        }
+      });
+
+      // Print A4
+      document.getElementById("btn-print").addEventListener("click", () => {
+        window.print();
+      });
+
+      // Run Initialization Immediately
+      loadFromStorage();
+      fitPreviewScale();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initCoverStudio);
+    } else {
+      initCoverStudio();
+    }
+  </script>
+</body>
+</html>
