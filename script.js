@@ -2,6 +2,7 @@ async function initCoverStudio() {
   const STORAGE_KEY = "ru_covercraft_islm_v2";
   const TOPIC_PLACEHOLDER = "Please enter your title.";
   const OFFICIAL_RU_LOGO = "https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg";
+  const WHATSAPP_TARGET_NUMBER = "8801722630014";
 
   const VALID_THEMES = [
     "theme-classic",
@@ -36,7 +37,7 @@ async function initCoverStudio() {
     },
   };
 
-  // High-precision vector RU Crest DataURL fallback so PNG/JPG/PDF NEVER lose the logo even offline
+  // Vector RU Crest fallback so PNG/PDF/Share NEVER miss the logo
   function buildFallbackCrestDataUrl() {
     const spikes = 16;
     const pts = [];
@@ -67,7 +68,6 @@ async function initCoverStudio() {
     return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
   }
 
-  // Convert external image URL into a same-origin Base64 DataURL so html2canvas exports PNG/JPG/PDF cleanly
   function imageUrlToBase64(url) {
     return new Promise((resolve) => {
       const img = new Image();
@@ -89,7 +89,6 @@ async function initCoverStudio() {
     });
   }
 
-  // Preload official RU logo into Base64 DataURL on startup
   const logoImg = document.getElementById("cover-logo-img");
   let readyLogoDataUrl = null;
 
@@ -110,12 +109,10 @@ async function initCoverStudio() {
       }
     }
 
-    // Fallback to crisp vector RU Crest DataURL if external network/proxy is blocked
     readyLogoDataUrl = buildFallbackCrestDataUrl();
     logoImg.src = readyLogoDataUrl;
   }
 
-  // Start preloading logo immediately (non-blocking)
   const logoReadyPromise = prepareExportSafeLogo();
 
   // Load external JSON files
@@ -420,7 +417,7 @@ async function initCoverStudio() {
     if (studentShortcuts[key]) {
       studentNameInput.value = studentShortcuts[key].name;
       studentIdInput.value = studentShortcuts[key].id;
-      setStatus(`Shortcut "${key}" applied!`);
+      setStatus("Student profile auto-filled!");
     }
     syncStudent();
     saveToStorage();
@@ -482,7 +479,7 @@ async function initCoverStudio() {
     clearTimeout(statusTimer);
     statusTimer = setTimeout(() => {
       statusMsg.textContent = "";
-    }, 3500);
+    }, 4500);
   }
 
   // Render 3x HD Canvas with guaranteed embedded Base64 RU Logo
@@ -517,6 +514,21 @@ async function initCoverStudio() {
     });
   }
 
+  async function buildPdfDocument() {
+    const canvas = await renderHighResCanvas();
+    const imgData = canvas.toDataURL("image/jpeg", 0.98);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+    pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+    const cleanCode = courseSelect.value.replace(/\s+/g, "_");
+    const fileName = `RU_ISLM_Cover_${cleanCode}.pdf`;
+    return { pdf, fileName };
+  }
+
   // Download HD PNG
   document.getElementById("btn-download-png").addEventListener("click", async () => {
     setStatus("Generating HD PNG...");
@@ -534,42 +546,52 @@ async function initCoverStudio() {
     }
   });
 
-  // Download HD JPG
-  document.getElementById("btn-download-jpg").addEventListener("click", async () => {
-    setStatus("Generating HD JPG...");
+  // Download Print-Ready A4 PDF
+  document.getElementById("btn-download-pdf").addEventListener("click", async () => {
+    setStatus("Generating A4 PDF...");
     try {
-      const canvas = await renderHighResCanvas();
-      const link = document.createElement("a");
-      const cleanCode = courseSelect.value.replace(/\s+/g, "_");
-      link.download = `RU_ISLM_Cover_${cleanCode}.jpg`;
-      link.href = canvas.toDataURL("image/jpeg", 0.96);
-      link.click();
-      setStatus("JPG downloaded!");
+      const { pdf, fileName } = await buildPdfDocument();
+      pdf.save(fileName);
+      setStatus("PDF downloaded!");
     } catch (err) {
       console.error(err);
       setStatus("Use 'Print' → Save as PDF.");
     }
   });
 
-  // Download Print-Ready A4 PDF
-  document.getElementById("btn-download-pdf").addEventListener("click", async () => {
-    setStatus("Generating A4 PDF...");
+  // Share PDF to WhatsApp (+880 1722-630014)
+  document.getElementById("btn-share").addEventListener("click", async () => {
+    setStatus("Preparing PDF & opening WhatsApp...");
     try {
-      const canvas = await renderHighResCanvas();
-      const imgData = canvas.toDataURL("image/jpeg", 0.98);
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
-      pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-      const cleanCode = courseSelect.value.replace(/\s+/g, "_");
-      pdf.save(`RU_ISLM_Cover_${cleanCode}.pdf`);
-      setStatus("PDF downloaded!");
+      const { pdf, fileName } = await buildPdfDocument();
+      // Save PDF immediately so user can attach it directly in the opened WhatsApp chat
+      pdf.save(fileName);
+
+      const code = courseSelect.value;
+      const title = courseMap[code] || "";
+      const topic = topicInput.value.trim();
+      const sName = studentNameInput.value.trim();
+      const sId = studentIdInput.value.trim();
+
+      const lines = [
+        `*Assignment Cover Page — Dept. of ISLM, RU*`,
+        `• *Course:* ${code} (${title})`,
+      ];
+      if (topic) lines.push(`• *Topic:* ${topic}`);
+      if (sName) lines.push(`• *Name:* ${sName}`);
+      if (sId) lines.push(`• *Student ID:* ${sId}`);
+      lines.push(`• *Year & Semester:* 1st Year, 2nd Semester (${sessionSelect.value})`);
+      lines.push(`\n_(PDF saved as ${fileName} — please attach it here)_`);
+
+      const waUrl = `https://wa.me/${WHATSAPP_TARGET_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+      const win = window.open(waUrl, "_blank");
+      if (!win) {
+        window.location.href = waUrl;
+      }
+      setStatus("PDF saved! Opening WhatsApp (+880 1722-630014)...");
     } catch (err) {
       console.error(err);
-      setStatus("Use 'Print' → Save as PDF.");
+      setStatus("Could not prepare PDF for sharing.");
     }
   });
 
