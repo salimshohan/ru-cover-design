@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ISLM Cover Page Generator | University of Rajshahi</title>
+  <title>ISLM Cover Page Studio | University of Rajshahi</title>
   <!-- Tw Cen MT geometric fallback (Jost) & crisp Light UI font (Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,12 +18,13 @@
       --ru-green: #073721;
       --ru-red: #770526;
       --navy-text: #141D2E;
+      --title-black: #000000;
       --cover-font: 'Tw Cen MT', 'Jost', 'Century Gothic', sans-serif;
 
       /* Light Studio UI Palette */
       --bg-canvas: #EEF2F6;
       --bg-sidebar: #FFFFFF;
-      --bg-card: #F8FAFC;
+      --bg-section: #F8FAFC;
       --border-subtle: #E2E8F0;
       --border-control: #CBD5E1;
       --text-main: #0F172A;
@@ -50,7 +51,7 @@
 
     .app-layout {
       display: grid;
-      grid-template-columns: 420px minmax(0, 1fr);
+      grid-template-columns: 430px minmax(0, 1fr);
       min-height: 100vh;
     }
 
@@ -71,7 +72,7 @@
     }
 
     .panel-header {
-      padding: 20px 24px 16px;
+      padding: 18px 24px 14px;
       border-bottom: 1px solid var(--border-subtle);
       background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFF 100%);
     }
@@ -80,7 +81,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
 
     .dept-pill {
@@ -113,24 +114,24 @@
     }
 
     .panel-header h1 {
-      font-size: 18.5px;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text-main);
       letter-spacing: -0.01em;
     }
 
     .panel-header p {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text-muted);
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     /* Elevated Action Buttons */
     .action-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 9px;
-      padding: 14px 24px;
+      gap: 8px;
+      padding: 13px 24px;
       background: #F8FAFC;
       border-bottom: 1px solid var(--border-subtle);
     }
@@ -140,7 +141,7 @@
       align-items: center;
       justify-content: center;
       gap: 7px;
-      padding: 10px 14px;
+      padding: 9.5px 14px;
       border-radius: 10px;
       font-family: inherit;
       font-size: 13px;
@@ -194,19 +195,19 @@
 
     /* Form Scroll Area & Cards */
     .form-scroll {
-      padding: 18px 24px 36px;
+      padding: 16px 24px 36px;
       overflow-y: auto;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 15px;
     }
 
     .form-card {
-      background: var(--bg-card);
+      background: var(--bg-section);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
-      padding: 16px;
+      padding: 15px 16px;
       box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
     }
 
@@ -215,8 +216,121 @@
       text-transform: uppercase;
       letter-spacing: 0.07em;
       color: var(--brand-green);
-      margin-bottom: 13px;
+      margin-bottom: 12px;
       font-weight: 700;
+    }
+
+    /* 5-Design Template Selector Grid */
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+    }
+
+    .tpl-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 4px;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-control);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.16s ease;
+      font-family: inherit;
+    }
+
+    .tpl-btn:hover {
+      border-color: #94A3B8;
+      transform: translateY(-1px);
+    }
+
+    .tpl-btn.active {
+      border-color: var(--brand-green);
+      background: #ECFDF5;
+      box-shadow: 0 0 0 3px rgba(11, 94, 56, 0.12);
+    }
+
+    .tpl-thumb {
+      width: 28px;
+      height: 36px;
+      border-radius: 3px;
+      background: #FFFFFF;
+      position: relative;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Miniature CSS Icons for Each of the 5 Templates */
+    .thumb-classic {
+      border: 2.5px solid #073721;
+      outline: 1px solid #770526;
+      outline-offset: -4px;
+    }
+    .thumb-modern {
+      border-top: 5px solid #073721;
+      border-left: 1px solid #CBD5E1;
+      border-right: 1px solid #CBD5E1;
+      border-bottom: 1px solid #CBD5E1;
+    }
+    .thumb-modern::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 12px;
+      width: 3px;
+      height: 10px;
+      background: #770526;
+    }
+    .thumb-royal {
+      border: 1.5px solid #073721;
+    }
+    .thumb-royal::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      top: 13px;
+      height: 9px;
+      border-top: 1.5px solid #073721;
+      border-bottom: 1.5px solid #770526;
+    }
+    .thumb-sidebar {
+      border: 1px solid #CBD5E1;
+      border-left: 6px solid #073721;
+    }
+    .thumb-sidebar::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #770526;
+    }
+    .thumb-oxford {
+      border: 2px solid #141D2E;
+    }
+    .thumb-oxford::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      bottom: 5px;
+      height: 8px;
+      border: 1px solid #64748B;
+    }
+
+    .tpl-name {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      text-align: center;
+      line-height: 1.15;
+    }
+
+    .tpl-btn.active .tpl-name {
+      color: var(--brand-green);
     }
 
     .field-group {
@@ -299,7 +413,7 @@
 
     textarea {
       resize: vertical;
-      min-height: 68px;
+      min-height: 66px;
       line-height: 1.45;
     }
 
@@ -345,16 +459,12 @@
       color: #FFFFFF;
     }
 
-    .mt-8 {
-      margin-top: 8px;
-    }
-
     .hidden {
       display: none !important;
     }
 
     /* =========================================================
-       RIGHT PREVIEW STUDIO & EXACT A4 COVER PAGE
+       RIGHT PREVIEW STUDIO & 5 UNIQUE A4 COVER DESIGNS
        ========================================================= */
     .preview-stage {
       min-width: 0;
@@ -393,7 +503,6 @@
       font-weight: 700;
     }
 
-    /* Exact Bounding Wrapper for Responsive Scaling */
     .sheet-viewport {
       width: 100%;
       display: flex;
@@ -409,7 +518,7 @@
       flex-shrink: 0;
     }
 
-    /* EXACT A4 SHEET (794px x 1123px) */
+    /* BASE A4 SHEET (794px x 1123px) */
     .cover-page {
       width: 794px;
       height: 1123px;
@@ -419,10 +528,30 @@
       font-family: var(--cover-font);
       color: var(--navy-text);
       transform-origin: top left;
+      transition: padding 0.2s ease;
     }
 
-    /* Outer Thick Forest Green Border */
-    .outer-green-frame {
+    /* Assignment Title is ALWAYS Black (#000000) across all 5 designs */
+    .topic-text {
+      font-family: var(--cover-font);
+      font-size: 25px;
+      font-weight: 700;
+      color: #000000 !important;
+      line-height: 1.26;
+      letter-spacing: 0.4px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .topic-text.is-placeholder {
+      opacity: 0.48;
+      font-weight: 600;
+    }
+
+    /* ---------------------------------------------------------
+       DESIGN 1 (DEFAULT): CLASSIC DOUBLE FRAME
+       --------------------------------------------------------- */
+    .cover-page.theme-classic .outer-green-frame {
       width: 100%;
       height: 100%;
       border: 6px solid var(--ru-green);
@@ -430,8 +559,7 @@
       display: flex;
     }
 
-    /* Inner Thin Crimson Red Border */
-    .inner-red-frame {
+    .cover-page.theme-classic .inner-red-frame {
       width: 100%;
       height: 100%;
       border: 2.5px solid var(--ru-red);
@@ -442,8 +570,7 @@
       text-align: center;
     }
 
-    /* Fixed Official RU Logo */
-    .crest-container {
+    .cover-page.theme-classic .crest-container {
       width: 134px;
       height: 136px;
       display: flex;
@@ -458,9 +585,7 @@
       object-fit: contain;
     }
 
-    /* Fixed University & Department Header */
-    .uni-title {
-      font-family: var(--cover-font);
+    .cover-page.theme-classic .uni-title {
       font-size: 38px;
       font-weight: 700;
       color: var(--ru-green);
@@ -469,8 +594,7 @@
       margin-bottom: 6px;
     }
 
-    .dept-title {
-      font-family: var(--cover-font);
+    .cover-page.theme-classic .dept-title {
       font-size: 17.5px;
       font-weight: 700;
       color: var(--navy-text);
@@ -479,8 +603,7 @@
       margin-bottom: 16px;
     }
 
-    /* Double Horizontal Divider Bar */
-    .double-divider {
+    .cover-page.theme-classic .double-divider {
       width: 84%;
       display: flex;
       flex-direction: column;
@@ -488,21 +611,19 @@
       margin-bottom: 36px;
     }
 
-    .line-green {
+    .cover-page.theme-classic .line-green {
       height: 5px;
       background-color: var(--ru-green);
       width: 100%;
     }
 
-    .line-red {
+    .cover-page.theme-classic .line-red {
       height: 3px;
       background-color: var(--ru-red);
       width: 100%;
     }
 
-    /* Fixed Heading Level: ASSIGNMENT ON */
-    .assign-label {
-      font-family: var(--cover-font);
+    .cover-page.theme-classic .assign-label {
       font-size: 24px;
       font-weight: 700;
       color: var(--ru-red);
@@ -510,8 +631,7 @@
       margin-bottom: 14px;
     }
 
-    /* Compact & Always Transparent Assignment Topic Box */
-    .topic-box {
+    .cover-page.theme-classic .topic-box {
       width: 80%;
       min-height: 76px;
       background-color: transparent;
@@ -523,37 +643,14 @@
       margin-bottom: 26px;
     }
 
-    .topic-text {
-      font-family: var(--cover-font);
-      font-size: 25px;
-      font-weight: 700;
-      color: var(--ru-green);
-      line-height: 1.25;
-      letter-spacing: 0.4px;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .topic-text.is-placeholder {
-      opacity: 0.55;
-      font-weight: 600;
-    }
-
-    /* Course Title & Course Code */
-    .course-meta {
-      font-family: var(--cover-font);
+    .cover-page.theme-classic .course-meta {
       font-size: 19px;
       color: var(--navy-text);
       line-height: 1.58;
       margin-bottom: 46px;
     }
 
-    .course-meta strong {
-      font-weight: 700;
-    }
-
-    /* Two-Column Grid: SUBMITTED TO & SUBMITTED BY */
-    .submission-grid {
+    .cover-page.theme-classic .submission-grid {
       width: 92%;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -563,8 +660,7 @@
       margin-bottom: 40px;
     }
 
-    .sub-col h3 {
-      font-family: var(--cover-font);
+    .cover-page.theme-classic .sub-col h3 {
       font-size: 20px;
       font-weight: 700;
       color: var(--ru-green);
@@ -572,24 +668,607 @@
       margin-bottom: 10px;
     }
 
-    .sub-col p {
-      font-family: var(--cover-font);
+    .cover-page.theme-classic .sub-col p {
       font-size: 16.5px;
       color: var(--navy-text);
       line-height: 1.44;
       margin-bottom: 4px;
     }
 
-    .date-footer {
-      font-family: var(--cover-font);
+    .cover-page.theme-classic .date-footer {
       font-size: 18px;
       color: var(--navy-text);
       letter-spacing: 0.6px;
       padding-bottom: 6px;
     }
 
-    .date-footer strong {
+    /* ---------------------------------------------------------
+       DESIGN 2: MODERN EXECUTIVE SPLIT
+       --------------------------------------------------------- */
+    .cover-page.theme-modern {
+      padding: 0;
+    }
+
+    .cover-page.theme-modern .outer-green-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-top: 14px solid var(--ru-green);
+      border-bottom: 10px solid var(--ru-green);
+      padding: 0;
+      display: flex;
+    }
+
+    .cover-page.theme-modern .inner-red-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-top: 4px solid var(--ru-red);
+      padding: 44px 58px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cover-page.theme-modern .crest-container {
+      width: 124px;
+      height: 126px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .cover-page.theme-modern .uni-title {
+      font-size: 37px;
       font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 2px;
+      line-height: 1.12;
+      margin-bottom: 6px;
+    }
+
+    .cover-page.theme-modern .dept-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--ru-red);
+      letter-spacing: 0.8px;
+      margin-bottom: 18px;
+    }
+
+    .cover-page.theme-modern .double-divider {
+      width: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 42px;
+    }
+
+    .cover-page.theme-modern .line-green {
+      height: 3.5px;
+      background-color: var(--ru-green);
+      width: 100%;
+    }
+
+    .cover-page.theme-modern .line-red {
+      display: none;
+    }
+
+    .cover-page.theme-modern .assign-label {
+      width: 92%;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ru-red);
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .cover-page.theme-modern .topic-box {
+      width: 92%;
+      min-height: 82px;
+      background: transparent;
+      border: 1px solid #CBD5E1;
+      border-left: 6px solid var(--ru-green);
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      margin-bottom: 26px;
+    }
+
+    .cover-page.theme-modern .course-meta {
+      width: 92%;
+      text-align: left;
+      font-size: 18.5px;
+      color: var(--navy-text);
+      line-height: 1.65;
+      padding-left: 6px;
+      margin-bottom: 44px;
+    }
+
+    .cover-page.theme-modern .course-meta strong {
+      color: var(--ru-green);
+    }
+
+    .cover-page.theme-modern .submission-grid {
+      width: 92%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      text-align: left;
+      margin-top: auto;
+      margin-bottom: 36px;
+    }
+
+    .cover-page.theme-modern .sub-col {
+      border-top: 3px solid var(--ru-green);
+      padding-top: 14px;
+    }
+
+    .cover-page.theme-modern .sub-col:last-child {
+      border-top-color: var(--ru-red);
+    }
+
+    .cover-page.theme-modern .sub-col h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+
+    .cover-page.theme-modern .sub-col:last-child h3 {
+      color: var(--ru-red);
+    }
+
+    .cover-page.theme-modern .sub-col p {
+      font-size: 16.5px;
+      color: var(--navy-text);
+      line-height: 1.46;
+      margin-bottom: 4px;
+    }
+
+    .cover-page.theme-modern .date-footer {
+      width: 92%;
+      border-top: 1px solid #CBD5E1;
+      padding-top: 14px;
+      font-size: 17.5px;
+      color: var(--navy-text);
+      letter-spacing: 0.8px;
+    }
+
+    /* ---------------------------------------------------------
+       DESIGN 3: ROYAL ARCHITECTURAL SEAL & HAIRLINE SHOWCASE
+       --------------------------------------------------------- */
+    .cover-page.theme-royal {
+      padding: 32px;
+    }
+
+    .cover-page.theme-royal .outer-green-frame {
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--ru-green);
+      padding: 8px;
+      display: flex;
+    }
+
+    .cover-page.theme-royal .inner-red-frame {
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(119, 5, 38, 0.5);
+      padding: 36px 48px 34px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .cover-page.theme-royal .inner-red-frame::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      width: 34px;
+      height: 34px;
+      border-top: 5px solid var(--ru-red);
+      border-left: 5px solid var(--ru-red);
+    }
+
+    .cover-page.theme-royal .inner-red-frame::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      width: 34px;
+      height: 34px;
+      border-bottom: 5px solid var(--ru-red);
+      border-right: 5px solid var(--ru-red);
+    }
+
+    .cover-page.theme-royal .crest-container {
+      width: 130px;
+      height: 132px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .cover-page.theme-royal .uni-title {
+      font-size: 37px;
+      font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 1.6px;
+      margin-bottom: 6px;
+    }
+
+    .cover-page.theme-royal .dept-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy-text);
+      letter-spacing: 0.7px;
+      margin-bottom: 18px;
+    }
+
+    .cover-page.theme-royal .double-divider {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-bottom: 38px;
+    }
+
+    .cover-page.theme-royal .line-green {
+      height: 3px;
+      background: var(--ru-red);
+    }
+
+    .cover-page.theme-royal .line-red {
+      height: 1.5px;
+      background: var(--ru-green);
+    }
+
+    .cover-page.theme-royal .assign-label {
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 2.5px;
+      margin-bottom: 14px;
+    }
+
+    .cover-page.theme-royal .topic-box {
+      width: 86%;
+      min-height: 76px;
+      background: transparent;
+      border: none;
+      border-top: 2px solid var(--ru-green);
+      border-bottom: 2px solid var(--ru-red);
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .cover-page.theme-royal .course-meta {
+      font-size: 18.5px;
+      line-height: 1.6;
+      margin-bottom: 44px;
+    }
+
+    .cover-page.theme-royal .submission-grid {
+      width: 92%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      text-align: left;
+      margin-top: auto;
+      margin-bottom: 36px;
+    }
+
+    .cover-page.theme-royal .sub-col:first-child {
+      border-right: 1px solid #CBD5E1;
+      padding-right: 20px;
+    }
+
+    .cover-page.theme-royal .sub-col h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--ru-red);
+      margin-bottom: 10px;
+    }
+
+    .cover-page.theme-royal .sub-col p {
+      font-size: 16.5px;
+      line-height: 1.45;
+      margin-bottom: 4px;
+    }
+
+    .cover-page.theme-royal .date-footer {
+      border: 1.5px solid var(--ru-green);
+      padding: 8px 28px;
+      font-size: 17px;
+      letter-spacing: 0.8px;
+    }
+
+    /* ---------------------------------------------------------
+       DESIGN 4: ARCHITECTURAL SIDEBAR RIBBON
+       --------------------------------------------------------- */
+    .cover-page.theme-sidebar {
+      padding: 0;
+    }
+
+    .cover-page.theme-sidebar .outer-green-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-left: 28px solid var(--ru-green);
+      padding: 0;
+      display: flex;
+    }
+
+    .cover-page.theme-sidebar .inner-red-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-left: 6px solid var(--ru-red);
+      padding: 48px 54px 44px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .cover-page.theme-sidebar .crest-container {
+      width: 118px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 18px;
+    }
+
+    .cover-page.theme-sidebar .uni-title {
+      font-size: 37px;
+      font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 1px;
+      line-height: 1.12;
+      margin-bottom: 6px;
+    }
+
+    .cover-page.theme-sidebar .dept-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--navy-text);
+      letter-spacing: 0.5px;
+      margin-bottom: 18px;
+    }
+
+    .cover-page.theme-sidebar .double-divider {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 38px;
+    }
+
+    .cover-page.theme-sidebar .line-green {
+      height: 4px;
+      background: var(--ru-green);
+      width: 100%;
+    }
+
+    .cover-page.theme-sidebar .line-red {
+      height: 2px;
+      background: var(--ru-red);
+      width: 45%;
+    }
+
+    .cover-page.theme-sidebar .assign-label {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ru-red);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .cover-page.theme-sidebar .topic-box {
+      width: 100%;
+      min-height: 80px;
+      background: transparent;
+      border: 1.5px solid var(--ru-green);
+      border-left: 6px solid var(--ru-red);
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      margin-bottom: 26px;
+    }
+
+    .cover-page.theme-sidebar .course-meta {
+      font-size: 18.5px;
+      line-height: 1.6;
+      margin-bottom: 44px;
+    }
+
+    .cover-page.theme-sidebar .submission-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      text-align: left;
+      margin-top: auto;
+      margin-bottom: 36px;
+    }
+
+    .cover-page.theme-sidebar .sub-col h3 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--ru-green);
+      margin-bottom: 10px;
+    }
+
+    .cover-page.theme-sidebar .sub-col p {
+      font-size: 16.5px;
+      line-height: 1.45;
+      margin-bottom: 4px;
+    }
+
+    .cover-page.theme-sidebar .date-footer {
+      width: 100%;
+      border-top: 2px solid var(--ru-green);
+      padding-top: 14px;
+      font-size: 17.5px;
+      letter-spacing: 0.6px;
+    }
+
+    /* ---------------------------------------------------------
+       DESIGN 5: MINIMALIST OXFORD GRID
+       --------------------------------------------------------- */
+    .cover-page.theme-oxford {
+      padding: 30px;
+    }
+
+    .cover-page.theme-oxford .outer-green-frame {
+      width: 100%;
+      height: 100%;
+      border: 3.5px solid var(--navy-text);
+      padding: 5px;
+      display: flex;
+    }
+
+    .cover-page.theme-oxford .inner-red-frame {
+      width: 100%;
+      height: 100%;
+      border: 1.5px solid var(--ru-green);
+      padding: 36px 46px 34px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cover-page.theme-oxford .crest-container {
+      width: 126px;
+      height: 128px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .cover-page.theme-oxford .uni-title {
+      font-size: 37px;
+      font-weight: 700;
+      color: var(--navy-text);
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+
+    .cover-page.theme-oxford .dept-title {
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--ru-green);
+      letter-spacing: 0.7px;
+      margin-bottom: 16px;
+    }
+
+    .cover-page.theme-oxford .double-divider {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-bottom: 36px;
+    }
+
+    .cover-page.theme-oxford .line-green {
+      height: 2px;
+      background: var(--navy-text);
+    }
+
+    .cover-page.theme-oxford .line-red {
+      height: 2px;
+      background: var(--ru-red);
+    }
+
+    .cover-page.theme-oxford .assign-label {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--ru-red);
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+
+    .cover-page.theme-oxford .topic-box {
+      width: 100%;
+      min-height: 78px;
+      background: transparent;
+      border: 2px solid var(--navy-text);
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+
+    .cover-page.theme-oxford .course-meta {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-size: 17px;
+      border-bottom: 1.5px solid #CBD5E1;
+      padding-bottom: 14px;
+      margin-bottom: 36px;
+      text-align: left;
+    }
+
+    .cover-page.theme-oxford .submission-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1.5px solid var(--navy-text);
+      text-align: left;
+      margin-top: auto;
+      margin-bottom: 30px;
+    }
+
+    .cover-page.theme-oxford .sub-col {
+      padding: 18px 20px;
+    }
+
+    .cover-page.theme-oxford .sub-col:first-child {
+      border-right: 1.5px solid var(--navy-text);
+    }
+
+    .cover-page.theme-oxford .sub-col h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ru-green);
+      border-bottom: 1px solid #CBD5E1;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+
+    .cover-page.theme-oxford .sub-col p {
+      font-size: 16px;
+      line-height: 1.44;
+      margin-bottom: 4px;
+    }
+
+    .cover-page.theme-oxford .date-footer {
+      width: 100%;
+      text-align: right;
+      font-size: 17px;
+      letter-spacing: 0.6px;
     }
 
     @media (max-width: 1024px) {
@@ -648,7 +1327,7 @@
           <span class="save-indicator"><span class="save-dot"></span> Auto-Saved</span>
         </div>
         <h1>Assignment Cover Generator</h1>
-        <p>Select course code, enter details &amp; export PNG or A4 PDF.</p>
+        <p>Choose design, select course &amp; download HD PNG or A4 PDF.</p>
       </header>
 
       <!-- Action Buttons -->
@@ -672,6 +1351,33 @@
       </div>
 
       <div class="form-scroll">
+        <!-- 5 Unique Cover Designs Switcher -->
+        <section class="form-card">
+          <h2>Cover Design Style (5 Templates)</h2>
+          <div class="template-grid" id="template-grid">
+            <button type="button" class="tpl-btn active" data-theme="theme-classic">
+              <div class="tpl-thumb thumb-classic"></div>
+              <span class="tpl-name">Classic</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-modern">
+              <div class="tpl-thumb thumb-modern"></div>
+              <span class="tpl-name">Modern</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-royal">
+              <div class="tpl-thumb thumb-royal"></div>
+              <span class="tpl-name">Royal</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-sidebar">
+              <div class="tpl-thumb thumb-sidebar"></div>
+              <span class="tpl-name">Sidebar</span>
+            </button>
+            <button type="button" class="tpl-btn" data-theme="theme-oxford">
+              <div class="tpl-thumb thumb-oxford"></div>
+              <span class="tpl-name">Oxford</span>
+            </button>
+          </div>
+        </section>
+
         <!-- Course & Assignment Card -->
         <section class="form-card">
           <h2>Course &amp; Assignment Topic</h2>
@@ -701,12 +1407,13 @@
           <h2>Submitted To (Instructor)</h2>
           <div class="field-group">
             <label for="in-teacher-select">Instructor's Name</label>
-            <!-- Course-specific preset dropdown (for 0322ISLM 121 & 0322ISLM 122) -->
+            <!-- Preset dropdown (shown for 0322ISLM 121, 0322ISLM 122 & 0611ISLM 124) -->
             <select id="in-teacher-select"></select>
-            <!-- Text box (for other courses or when Custom is chosen) -->
-            <input type="text" id="in-teacher-custom" class="hidden mt-8" placeholder="Enter instructor's name" />
+            <!-- Text box (shown ONLY for courses without preset instructors) -->
+            <input type="text" id="in-teacher-custom" class="hidden" placeholder="Enter instructor's name" />
           </div>
-          <div class="field-group">
+          <!-- Designation (shown ONLY when custom text box is active) -->
+          <div class="field-group hidden" id="desig-field-group">
             <label for="in-teacher-desig">Designation</label>
             <select id="in-teacher-desig">
               <option value="Professor">Professor</option>
@@ -762,7 +1469,7 @@
 
       <div class="sheet-viewport" id="sheet-viewport">
         <div class="sheet-scaler" id="sheet-scaler">
-          <div id="cover-page" class="cover-page">
+          <div id="cover-page" class="cover-page theme-classic">
             <div class="outer-green-frame">
               <div class="inner-red-frame">
                 <!-- 1. Fixed Official RU Logo -->
@@ -787,7 +1494,7 @@
                 <!-- 4. Fixed Assignment Heading -->
                 <h2 class="assign-label">ASSIGNMENT ON</h2>
 
-                <!-- 5. Compact Transparent Assignment Topic Box -->
+                <!-- 5. Compact Transparent Assignment Topic Box (Black Title) -->
                 <div class="topic-box">
                   <div id="out-topic" class="topic-text is-placeholder">Please enter your title.</div>
                 </div>
@@ -810,8 +1517,8 @@
 
                   <div class="sub-col">
                     <h3>SUBMITTED BY:</h3>
-                    <p>Name: <span id="out-student-name">Student Name</span></p>
-                    <p>Student ID: <span id="out-student-id">Student ID</span></p>
+                    <p>Name: <span id="out-student-name">Enter student name</span></p>
+                    <p>Student ID: <span id="out-student-id">Enter student ID</span></p>
                     <p>Session: <span id="out-session">2025-2026</span></p>
                     <p>Department of Information Science and Library Management</p>
                     <p>University of Rajshahi</p>
@@ -832,10 +1539,10 @@
 
   <script>
     function initCoverStudio() {
-      const STORAGE_KEY = "ru_islm_cover_studio_v3";
+      const STORAGE_KEY = "ru_islm_cover_studio_v4";
       const TOPIC_PLACEHOLDER = "Please enter your title.";
+      const VALID_THEMES = ["theme-classic", "theme-modern", "theme-royal", "theme-sidebar", "theme-oxford"];
 
-      // Safe localStorage wrapper (never crashes in sandboxed iframes or strict privacy modes)
       const safeStorage = {
         get(key) {
           try {
@@ -865,7 +1572,7 @@
         "0232ISLM 125": "English Skills Development",
       };
 
-      // Course-Specific Faculty Presets (Exact Serial Order)
+      // Preset Faculty for 121, 122, and 124 (No custom option & no designation input needed for these)
       const COURSE_INSTRUCTORS = {
         "0322ISLM 121": [
           { name: "Dr. Purnima Banik", desig: "Associate Professor" },
@@ -875,7 +1582,16 @@
           { name: "Dr. Md. Nazmul Islam", desig: "Professor" },
           { name: "Dr. Md. Armanul Haque", desig: "Professor" },
         ],
+        "0611ISLM 124": [
+          { name: "Md Arman Hossain", desig: "Associate Professor" },
+        ],
       };
+
+      const coverPage = document.getElementById("cover-page");
+      const logoImg = document.getElementById("cover-logo-img");
+      const sheetViewport = document.getElementById("sheet-viewport");
+      const sheetScaler = document.getElementById("sheet-scaler");
+      const templateButtons = document.querySelectorAll(".tpl-btn");
 
       const courseSelect = document.getElementById("in-course-select");
       const hintCourseTitle = document.getElementById("hint-course-title");
@@ -887,9 +1603,9 @@
 
       const teacherSelect = document.getElementById("in-teacher-select");
       const teacherCustomInput = document.getElementById("in-teacher-custom");
-      const outTeacherName = document.getElementById("out-teacher-name");
-
+      const desigFieldGroup = document.getElementById("desig-field-group");
       const teacherDesigSelect = document.getElementById("in-teacher-desig");
+      const outTeacherName = document.getElementById("out-teacher-name");
       const outTeacherDesig = document.getElementById("out-teacher-desig");
 
       const studentNameInput = document.getElementById("in-student-name");
@@ -904,10 +1620,23 @@
       const dateInput = document.getElementById("in-date");
       const outDate = document.getElementById("out-date");
 
-      const coverPage = document.getElementById("cover-page");
-      const logoImg = document.getElementById("cover-logo-img");
-      const sheetViewport = document.getElementById("sheet-viewport");
-      const sheetScaler = document.getElementById("sheet-scaler");
+      let currentTheme = "theme-classic";
+
+      function applyTheme(themeClass) {
+        if (!VALID_THEMES.includes(themeClass)) themeClass = "theme-classic";
+        currentTheme = themeClass;
+        coverPage.className = `cover-page ${themeClass}`;
+        templateButtons.forEach((btn) => {
+          btn.classList.toggle("active", btn.dataset.theme === themeClass);
+        });
+      }
+
+      templateButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          applyTheme(btn.dataset.theme);
+          saveToStorage();
+        });
+      });
 
       function getTodayISO() {
         const now = new Date();
@@ -953,13 +1682,16 @@
         outSession.textContent = sessionSelect.value;
       }
 
-      function configureInstructorControl(courseCode, savedChoice = null, savedCustomName = "", savedDesig = null) {
+      function configureInstructorControl(courseCode, savedTeacherChoice = null, savedCustomName = "", savedDesig = null) {
         const presets = COURSE_INSTRUCTORS[courseCode];
 
         if (presets && presets.length > 0) {
+          // Preset course: show dropdown ONLY, hide custom input AND hide designation field
           teacherSelect.classList.remove("hidden");
-          teacherSelect.innerHTML = "";
+          teacherCustomInput.classList.add("hidden");
+          desigFieldGroup.classList.add("hidden");
 
+          teacherSelect.innerHTML = "";
           presets.forEach((inst) => {
             const opt = document.createElement("option");
             opt.value = inst.name;
@@ -968,32 +1700,18 @@
             teacherSelect.appendChild(opt);
           });
 
-          const customOpt = document.createElement("option");
-          customOpt.value = "__CUSTOM__";
-          customOpt.textContent = "Custom Instructor (Type Name)";
-          teacherSelect.appendChild(customOpt);
-
-          if (savedChoice === "__CUSTOM__") {
-            teacherSelect.value = "__CUSTOM__";
-            teacherCustomInput.value = savedCustomName;
-            teacherCustomInput.classList.remove("hidden");
-            if (savedDesig) teacherDesigSelect.value = savedDesig;
-          } else if (savedChoice && presets.some((p) => p.name === savedChoice)) {
-            teacherSelect.value = savedChoice;
-            teacherCustomInput.classList.add("hidden");
-            const matched = presets.find((p) => p.name === savedChoice);
-            teacherDesigSelect.value = savedDesig || matched.desig;
+          if (savedTeacherChoice && presets.some((p) => p.name === savedTeacherChoice)) {
+            teacherSelect.value = savedTeacherChoice;
           } else {
-            // Default to 1st faculty member in serial order
             teacherSelect.value = presets[0].name;
-            teacherCustomInput.classList.add("hidden");
-            teacherDesigSelect.value = presets[0].desig;
           }
         } else {
-          // Non-preset course: show clean empty text box with placeholder
+          // Non-preset course (123, 125): show text input AND designation dropdown
           teacherSelect.classList.add("hidden");
           teacherSelect.innerHTML = "";
           teacherCustomInput.classList.remove("hidden");
+          desigFieldGroup.classList.remove("hidden");
+
           teacherCustomInput.value = savedCustomName || "";
           teacherDesigSelect.value = savedDesig || "Professor";
         }
@@ -1003,15 +1721,17 @@
 
       function syncInstructorPreview() {
         const courseCode = courseSelect.value;
-        const hasPresets = Boolean(COURSE_INSTRUCTORS[courseCode]);
+        const presets = COURSE_INSTRUCTORS[courseCode];
 
-        if (hasPresets && teacherSelect.value !== "__CUSTOM__") {
-          outTeacherName.textContent = teacherSelect.value;
+        if (presets && presets.length > 0) {
+          const selected = presets.find((p) => p.name === teacherSelect.value) || presets[0];
+          outTeacherName.textContent = selected.name;
+          outTeacherDesig.textContent = selected.desig;
         } else {
           const customVal = teacherCustomInput.value.trim();
           outTeacherName.textContent = customVal || "Instructor's Name";
+          outTeacherDesig.textContent = teacherDesigSelect.value;
         }
-        outTeacherDesig.textContent = teacherDesigSelect.value;
       }
 
       function syncCourse(savedState = null) {
@@ -1035,6 +1755,7 @@
 
       function saveToStorage() {
         const payload = {
+          theme: currentTheme,
           courseCode: courseSelect.value,
           topic: topicInput.value,
           teacherChoice: teacherSelect.value || "",
@@ -1050,6 +1771,7 @@
       function loadFromStorage() {
         const raw = safeStorage.get(STORAGE_KEY);
         if (!raw) {
+          applyTheme("theme-classic");
           syncCourse();
           syncTopic();
           syncStudent();
@@ -1058,6 +1780,8 @@
         }
         try {
           const saved = JSON.parse(raw);
+          applyTheme(saved.theme || "theme-classic");
+
           if (saved.courseCode && COURSE_MAP[saved.courseCode]) {
             courseSelect.value = saved.courseCode;
           }
@@ -1071,8 +1795,9 @@
           syncCourse(saved);
           syncTopic();
           syncStudent();
-          setTodayDate(); // Always Today selected by default
+          setTodayDate(); // Always Today selected
         } catch (err) {
+          applyTheme("theme-classic");
           syncCourse();
           syncTopic();
           syncStudent();
@@ -1092,16 +1817,6 @@
       });
 
       teacherSelect.addEventListener("change", () => {
-        if (teacherSelect.value === "__CUSTOM__") {
-          teacherCustomInput.classList.remove("hidden");
-          teacherCustomInput.focus();
-        } else {
-          teacherCustomInput.classList.add("hidden");
-          const selectedOpt = teacherSelect.options[teacherSelect.selectedIndex];
-          if (selectedOpt && selectedOpt.dataset.desig) {
-            teacherDesigSelect.value = selectedOpt.dataset.desig;
-          }
-        }
         syncInstructorPreview();
         saveToStorage();
       });
@@ -1121,7 +1836,13 @@
         saveToStorage();
       });
 
+      // Magic Shortcut: Typing "s104" in Student ID auto-fills Md. Salim Hosen Shohan & 2610647104
       studentIdInput.addEventListener("input", () => {
+        if (studentIdInput.value.trim().toLowerCase() === "s104") {
+          studentNameInput.value = "Md. Salim Hosen Shohan";
+          studentIdInput.value = "2610647104";
+          setStatus("Profile auto-filled!");
+        }
         syncStudent();
         saveToStorage();
       });
@@ -1141,6 +1862,7 @@
       // Reset Form
       document.getElementById("btn-reset").addEventListener("click", () => {
         safeStorage.remove(STORAGE_KEY);
+        applyTheme("theme-classic");
         courseSelect.value = "0322ISLM 121";
         topicInput.value = "";
         teacherCustomInput.value = "";
@@ -1154,7 +1876,7 @@
         setStatus("Form cleared!");
       });
 
-      // Rock-Solid Responsive A4 Preview Scaling (Works on Mobile, Tablet & Desktop)
+      // Responsive A4 Preview Scaling
       function fitPreviewScale() {
         if (!sheetViewport || !sheetScaler || !coverPage) return;
         const availableWidth = sheetViewport.clientWidth;
@@ -1186,7 +1908,7 @@
         }, 3500);
       }
 
-      // Convert external RU logo URL to CORS-safe DataURL for crisp PNG/PDF export
+      // CORS-safe RU Logo loader for HD PNG & PDF export
       function loadCorsSafeLogo(url) {
         return new Promise((resolve) => {
           const img = new Image();
@@ -1209,7 +1931,7 @@
 
       async function renderHighResCanvas() {
         if (typeof html2canvas === "undefined") {
-          throw new Error("html2canvas library not loaded");
+          throw new Error("html2canvas not loaded");
         }
         if (document.fonts && document.fonts.ready) {
           await document.fonts.ready;
@@ -1288,7 +2010,7 @@
         window.print();
       });
 
-      // Run Initialization Immediately
+      // Initialize
       loadFromStorage();
       fitPreviewScale();
     }
