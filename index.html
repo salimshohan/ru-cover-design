@@ -3,37 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RU Assignment Cover Page Generator</title>
-  <!-- Geometric sans-serif web fallback (Jost) for Tw Cen MT + clean UI font (Inter) -->
+  <title>ISLM Cover Page Generator | University of Rajshahi</title>
+  <!-- Geometric sans-serif web fallback (Jost) for Tw Cen MT + crisp UI font (Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- html2canvas & jsPDF for HD PNG and A4 PDF download -->
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- html2canvas & jsPDF for HD PNG & A4 PDF export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 
   <style>
     :root {
-      /* RU Cover Page Palette */
+      /* Official RU Cover Palette */
       --ru-green: #073721;
       --ru-red: #770526;
-      --sage-bg: #DCE2DD;
-      --sage-border: #7E9687;
       --navy-text: #141D2E;
       --cover-font: 'Tw Cen MT', 'Jost', 'Century Gothic', sans-serif;
 
-      /* Light Vibe Studio UI Palette */
-      --bg-page: #F1F5F9;
+      /* Light Studio UI Palette */
+      --bg-canvas: #EEF2F6;
       --bg-sidebar: #FFFFFF;
-      --bg-card: #F8FAFC;
-      --border-light: #E2E8F0;
-      --border-input: #CBD5E1;
-      --text-primary: #0F172A;
-      --text-secondary: #475569;
-      --accent-green: #0B5E38;
-      --accent-green-hover: #08482B;
-      --accent-red: #9E1B32;
-      --accent-red-hover: #801427;
+      --bg-section: #F8FAFC;
+      --border-subtle: #E2E8F0;
+      --border-control: #CBD5E1;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --brand-green: #0B5E38;
+      --brand-green-dark: #074428;
+      --brand-crimson: #9E1B32;
+      --brand-crimson-dark: #7E1326;
     }
 
     * {
@@ -43,96 +41,97 @@
     }
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
     .app-layout {
       display: grid;
-      grid-template-columns: 415px 1fr;
+      grid-template-columns: 420px 1fr;
       min-height: 100vh;
     }
 
     /* =========================================================
-       LEFT SIDEBAR: CLEAN LIGHT EDITOR
+       LEFT SIDEBAR: HIGH-QUALITY LIGHT STUDIO CONTROLS
        ========================================================= */
     .editor-panel {
       background: var(--bg-sidebar);
-      border-right: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-subtle);
       display: flex;
       flex-direction: column;
       height: 100vh;
       position: sticky;
       top: 0;
-      box-shadow: 4px 0 24px rgba(15, 23, 42, 0.03);
+      box-shadow: 6px 0 30px rgba(15, 23, 42, 0.04);
       z-index: 10;
     }
 
     .panel-header {
-      padding: 20px 22px 14px;
-      border-bottom: 1px solid var(--border-light);
-      background: #FFFFFF;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: linear-gradient(180deg, #FFFFFF 0%, #FAFCFF 100%);
     }
 
-    .header-top-row {
+    .header-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 8px;
     }
 
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
+    .dept-pill {
+      font-size: 10.5px;
       font-weight: 700;
-      letter-spacing: 0.06em;
-      color: var(--accent-green);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--brand-green);
       background: #ECFDF5;
       border: 1px solid #A7F3D0;
       padding: 3px 10px;
       border-radius: 999px;
     }
 
-    .autosave-pill {
+    .save-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       font-size: 11px;
       font-weight: 600;
       color: #059669;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
     }
 
-    .autosave-dot {
-      width: 6px;
-      height: 6px;
+    .save-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: #10B981;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
     }
 
     .panel-header h1 {
-      font-size: 18px;
+      font-size: 18.5px;
       font-weight: 700;
-      color: var(--text-primary);
+      color: var(--text-main);
+      letter-spacing: -0.01em;
     }
 
     .panel-header p {
       font-size: 12.5px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       margin-top: 3px;
     }
 
-    /* Action Buttons */
+    /* Elevated Export & Utility Buttons */
     .action-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      padding: 14px 22px;
+      gap: 9px;
+      padding: 14px 24px;
       background: #F8FAFC;
-      border-bottom: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-subtle);
     }
 
     .btn {
@@ -140,80 +139,93 @@
       align-items: center;
       justify-content: center;
       gap: 7px;
-      padding: 9px 12px;
-      border-radius: 8px;
+      padding: 10px 14px;
+      border-radius: 9px;
+      font-family: inherit;
       font-size: 13px;
       font-weight: 600;
       cursor: pointer;
       border: 1px solid transparent;
-      transition: all 0.16s ease;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
     }
 
     .btn:active {
-      transform: scale(0.98);
+      transform: translateY(0) scale(0.985);
     }
 
-    .btn-primary {
-      background: var(--accent-green);
+    .btn-green {
+      background: linear-gradient(180deg, #0E7043 0%, var(--brand-green) 100%);
       color: #FFFFFF;
-      box-shadow: 0 2px 6px rgba(11, 94, 56, 0.22);
+      box-shadow: 0 2px 8px rgba(11, 94, 56, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
-    .btn-primary:hover {
-      background: var(--accent-green-hover);
+    .btn-green:hover {
+      background: linear-gradient(180deg, var(--brand-green) 0%, var(--brand-green-dark) 100%);
+      box-shadow: 0 4px 12px rgba(11, 94, 56, 0.32);
     }
 
-    .btn-crimson {
-      background: var(--accent-red);
+    .btn-red {
+      background: linear-gradient(180deg, #B3203A 0%, var(--brand-crimson) 100%);
       color: #FFFFFF;
-      box-shadow: 0 2px 6px rgba(158, 27, 50, 0.22);
+      box-shadow: 0 2px 8px rgba(158, 27, 50, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
-    .btn-crimson:hover {
-      background: var(--accent-red-hover);
+    .btn-red:hover {
+      background: linear-gradient(180deg, var(--brand-crimson) 0%, var(--brand-crimson-dark) 100%);
+      box-shadow: 0 4px 12px rgba(158, 27, 50, 0.32);
     }
 
-    .btn-light {
+    .btn-secondary {
       background: #FFFFFF;
-      color: var(--text-primary);
-      border-color: var(--border-input);
+      color: var(--text-main);
+      border-color: var(--border-control);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
-    .btn-light:hover {
+    .btn-secondary:hover {
       background: #F1F5F9;
       border-color: #94A3B8;
     }
 
+    /* Form Scroll Area & Cards */
     .form-scroll {
-      padding: 16px 22px 32px;
+      padding: 18px 24px 36px;
       overflow-y: auto;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
 
     .form-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      border-radius: 10px;
-      padding: 14px 16px;
+      background: var(--bg-section);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
     }
 
     .form-card h2 {
       font-size: 11.5px;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--accent-green);
-      margin-bottom: 12px;
+      letter-spacing: 0.07em;
+      color: var(--brand-green);
+      margin-bottom: 13px;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .field-group {
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      margin-bottom: 10px;
+      gap: 6px;
+      margin-bottom: 12px;
     }
 
     .field-group:last-child {
@@ -224,28 +236,42 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .field-row:last-child {
+      margin-bottom: 0;
     }
 
     label {
       font-size: 12px;
-      color: var(--text-secondary);
+      color: #334155;
       font-weight: 600;
     }
 
+    /* High-Quality Inputs & Custom Select */
     input[type="text"],
     input[type="date"],
     select,
     textarea {
       width: 100%;
       background: #FFFFFF;
-      border: 1px solid var(--border-input);
-      color: var(--text-primary);
-      border-radius: 7px;
-      padding: 8px 10px;
+      border: 1.5px solid var(--border-control);
+      color: var(--text-main);
+      border-radius: 9px;
+      padding: 9px 12px;
       font-size: 13px;
+      font-weight: 500;
       font-family: inherit;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+      transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+    }
+
+    input[type="text"]:hover,
+    input[type="date"]:hover,
+    select:hover,
+    textarea:hover {
+      border-color: #94A3B8;
     }
 
     input[type="text"]:focus,
@@ -253,123 +279,41 @@
     select:focus,
     textarea:focus {
       outline: none;
-      border-color: var(--accent-green);
-      box-shadow: 0 0 0 3px rgba(11, 94, 56, 0.1);
+      border-color: var(--brand-green);
+      box-shadow: 0 0 0 3.5px rgba(11, 94, 56, 0.12);
     }
 
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--accent-green);
+    select {
+      appearance: none;
+      padding-right: 34px;
       cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 15px;
     }
 
-    /* Toggle Switch for Transparent Topic Box */
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 10px;
+    textarea {
+      resize: vertical;
+      min-height: 68px;
+      line-height: 1.45;
+    }
+
+    .auto-filled-hint {
+      font-size: 11.5px;
+      color: #475569;
       background: #FFFFFF;
-      border: 1px solid var(--border-input);
+      border: 1px solid #E2E8F0;
       border-radius: 7px;
-      margin-top: 4px;
-    }
-
-    .toggle-row span {
-      font-size: 12.5px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 40px;
-      height: 22px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background-color: #CBD5E1;
-      transition: 0.2s;
-      border-radius: 999px;
-    }
-
-    .slider::before {
-      position: absolute;
-      content: "";
-      height: 16px;
-      width: 16px;
-      left: 3px;
-      bottom: 3px;
-      background-color: #FFFFFF;
-      transition: 0.2s;
-      border-radius: 50%;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    }
-
-    .switch input:checked + .slider {
-      background-color: var(--accent-green);
-    }
-
-    .switch input:checked + .slider::before {
-      transform: translateX(18px);
-    }
-
-    .logo-controls {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .file-upload-btn {
-      flex: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #FFFFFF;
-      border: 1px dashed #94A3B8;
-      color: var(--text-primary);
-      padding: 8px 10px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .file-upload-btn:hover {
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-      background: #F0FDF4;
-    }
-
-    .btn-mini {
-      background: #FFFFFF;
-      border: 1px solid var(--border-input);
-      color: var(--text-secondary);
       padding: 7px 10px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .btn-mini:hover {
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-      background: #F0FDF4;
+    .auto-filled-hint strong {
+      color: var(--brand-green);
+      font-weight: 600;
     }
 
     .date-input-wrap {
@@ -377,16 +321,36 @@
       gap: 6px;
     }
 
+    .btn-today {
+      background: #ECFDF5;
+      border: 1.5px solid #A7F3D0;
+      color: var(--brand-green);
+      padding: 0 12px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .btn-today:hover {
+      background: var(--brand-green);
+      border-color: var(--brand-green);
+      color: #FFFFFF;
+    }
+
     /* =========================================================
-       RIGHT PREVIEW STUDIO (LIGHT VIBE) & EXACT A4 COVER SHEET
+       RIGHT PREVIEW STUDIO & EXACT A4 COVER PAGE
        ========================================================= */
     .preview-stage {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px 24px 44px;
+      padding: 20px 24px 48px;
       overflow-x: hidden;
-      background: linear-gradient(180deg, #E2E8F0 0%, #EEF2F6 100%);
+      background: radial-gradient(circle at top, #F8FAFC 0%, #E2E8F0 100%);
     }
 
     .preview-toolbar {
@@ -401,18 +365,18 @@
     .badge-a4 {
       font-size: 12px;
       font-weight: 600;
-      color: var(--text-secondary);
+      color: #475569;
       background: #FFFFFF;
-      border: 1px solid var(--border-input);
-      padding: 5px 13px;
+      border: 1px solid var(--border-subtle);
+      padding: 5px 14px;
       border-radius: 999px;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
     }
 
     .status-msg {
       font-size: 12.5px;
-      color: var(--accent-green);
-      font-weight: 600;
+      color: var(--brand-green);
+      font-weight: 700;
     }
 
     .sheet-scaler {
@@ -428,7 +392,7 @@
       height: 1123px;
       background: #FFFFFF;
       padding: 28px;
-      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.13), 0 4px 14px rgba(15, 23, 42, 0.05);
       font-family: var(--cover-font);
       color: var(--navy-text);
       position: relative;
@@ -456,7 +420,7 @@
       text-align: center;
     }
 
-    /* Official RU Logo */
+    /* Fixed Official RU Logo */
     .crest-container {
       width: 134px;
       height: 136px;
@@ -472,8 +436,9 @@
       object-fit: contain;
     }
 
+    /* Fixed University & Department Header */
     .uni-title {
-      font-family: inherit;
+      font-family: var(--cover-font);
       font-size: 38px;
       font-weight: 700;
       color: var(--ru-green);
@@ -483,14 +448,13 @@
     }
 
     .dept-title {
-      font-family: inherit;
+      font-family: var(--cover-font);
       font-size: 17.5px;
       font-weight: 700;
       color: var(--navy-text);
       letter-spacing: 0.6px;
       line-height: 1.25;
       margin-bottom: 16px;
-      text-transform: uppercase;
     }
 
     /* Double Horizontal Divider Bar */
@@ -499,7 +463,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      margin-bottom: 34px;
+      margin-bottom: 36px;
     }
 
     .line-green {
@@ -514,51 +478,47 @@
       width: 100%;
     }
 
+    /* Fixed Heading Level: ASSIGNMENT ON */
     .assign-label {
-      font-family: inherit;
-      font-size: 25px;
+      font-family: var(--cover-font);
+      font-size: 24px;
       font-weight: 700;
       color: var(--ru-red);
       letter-spacing: 1px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
-    /* Topic Box (Supports Tinted & Transparent Modes) */
+    /* Compact & Always Transparent Assignment Topic Box */
     .topic-box {
-      width: 90%;
-      min-height: 132px;
-      background-color: var(--sage-bg);
-      border: 1.5px solid var(--sage-border);
-      padding: 24px 28px;
+      width: 82%;
+      min-height: 82px;
+      background-color: transparent;
+      border: 1.5px solid var(--ru-green);
+      padding: 15px 22px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 26px;
-      transition: background-color 0.2s ease, border-color 0.2s ease;
-    }
-
-    .topic-box.is-transparent {
-      background-color: transparent !important;
-      border: 1.5px solid var(--ru-green);
     }
 
     .topic-text {
-      font-family: inherit;
-      font-size: 32px;
+      font-family: var(--cover-font);
+      font-size: 26px;
       font-weight: 700;
       color: var(--ru-green);
-      line-height: 1.22;
-      letter-spacing: 0.5px;
+      line-height: 1.25;
+      letter-spacing: 0.4px;
       white-space: pre-wrap;
       word-break: break-word;
     }
 
+    /* Course Title & Course Code */
     .course-meta {
-      font-family: inherit;
+      font-family: var(--cover-font);
       font-size: 19px;
       color: var(--navy-text);
-      line-height: 1.55;
-      margin-bottom: 44px;
+      line-height: 1.58;
+      margin-bottom: 46px;
     }
 
     .course-meta strong {
@@ -573,11 +533,11 @@
       gap: 36px;
       text-align: left;
       margin-top: auto;
-      margin-bottom: 38px;
+      margin-bottom: 40px;
     }
 
     .sub-col h3 {
-      font-family: inherit;
+      font-family: var(--cover-font);
       font-size: 20px;
       font-weight: 700;
       color: var(--ru-green);
@@ -586,7 +546,7 @@
     }
 
     .sub-col p {
-      font-family: inherit;
+      font-family: var(--cover-font);
       font-size: 16.5px;
       color: var(--navy-text);
       line-height: 1.44;
@@ -594,7 +554,7 @@
     }
 
     .date-footer {
-      font-family: inherit;
+      font-family: var(--cover-font);
       font-size: 18px;
       color: var(--navy-text);
       letter-spacing: 0.6px;
@@ -647,78 +607,68 @@
 </head>
 <body>
   <div class="app-layout">
-    <!-- LEFT SIDEBAR: LIGHT VIBE CUSTOMIZATION PANEL -->
+    <!-- LEFT SIDEBAR: ISLM COVER STUDIO -->
     <aside class="editor-panel">
       <header class="panel-header">
-        <div class="header-top-row">
-          <span class="brand-badge">UNIVERSITY OF RAJSHAHI</span>
-          <span class="autosave-pill"><span class="autosave-dot"></span> Auto-saved</span>
+        <div class="header-meta">
+          <span class="dept-pill">ISLM • University of Rajshahi</span>
+          <span class="save-indicator"><span class="save-dot"></span> Auto-Saved</span>
         </div>
         <h1>Assignment Cover Generator</h1>
-        <p>Customize details live &amp; download HD PNG or A4 PDF.</p>
+        <p>Select course code, enter details &amp; export PNG or A4 PDF.</p>
       </header>
 
       <!-- Action Buttons -->
       <div class="action-bar">
-        <button id="btn-download-png" class="btn btn-primary" type="button">
+        <button id="btn-download-png" class="btn btn-green" type="button">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download PNG</span>
         </button>
-        <button id="btn-download-pdf" class="btn btn-crimson" type="button">
+        <button id="btn-download-pdf" class="btn btn-red" type="button">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           <span>Download PDF</span>
         </button>
-        <button id="btn-print" class="btn btn-light" type="button">
+        <button id="btn-print" class="btn btn-secondary" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           <span>Print A4</span>
         </button>
-        <button id="btn-reset" class="btn btn-light" type="button">
+        <button id="btn-reset" class="btn btn-secondary" type="button">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-          <span>Reset All</span>
+          <span>Reset Form</span>
         </button>
       </div>
 
       <div class="form-scroll">
-        <!-- Department & Assignment Details -->
+        <!-- Course & Assignment Card -->
         <section class="form-card">
-          <h2>Department &amp; Assignment</h2>
+          <h2>Course &amp; Assignment Topic</h2>
           <div class="field-group">
-            <label for="in-dept">Department Name</label>
-            <input type="text" id="in-dept" value="Information Science and Library Management" />
+            <label for="in-course-select">Select Course Code</label>
+            <select id="in-course-select">
+              <option value="0322ISLM 121">0322ISLM 121 — Information Resources Development</option>
+              <option value="0322ISLM">0322ISLM — Referencing and Citation Management</option>
+              <option value="0222ISLM 123">0222ISLM 123 — Bangladesh Studies</option>
+              <option value="0611ISLM">0611ISLM — Computer Applications (Practical)</option>
+              <option value="0232ISLM 125">0232ISLM 125 — English Skills Development</option>
+            </select>
+            <div class="auto-filled-hint">
+              <span>Course Title:</span>
+              <strong id="hint-course-title">Information Resources Development</strong>
+            </div>
           </div>
-          <div class="field-group">
-            <label for="in-label">Heading Label</label>
-            <input type="text" id="in-label" value="ASSIGNMENT ON" />
-          </div>
+
           <div class="field-group">
             <label for="in-topic">Assignment Topic / Title</label>
-            <textarea id="in-topic" rows="2" placeholder="Enter assignment topic...">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</textarea>
-          </div>
-          <div class="toggle-row">
-            <span>Transparent Assignment Title Box</span>
-            <label class="switch">
-              <input type="checkbox" id="toggle-transparent" />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div class="field-row" style="margin-top: 10px;">
-            <div class="field-group">
-              <label for="in-course-title">Course Title</label>
-              <input type="text" id="in-course-title" value="[INSERT COURSE TITLE]" />
-            </div>
-            <div class="field-group">
-              <label for="in-course-code">Course Code</label>
-              <input type="text" id="in-course-code" value="[INSERT COURSE CODE]" />
-            </div>
+            <textarea id="in-topic" rows="2" placeholder="Write your assignment topic here...">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</textarea>
           </div>
         </section>
 
-        <!-- Submitted To -->
+        <!-- Submitted To Card -->
         <section class="form-card">
           <h2>Submitted To (Instructor)</h2>
           <div class="field-group">
             <label for="in-teacher-name">Instructor's Name</label>
-            <input type="text" id="in-teacher-name" value="[INSTRUCTOR'S NAME]" />
+            <input type="text" id="in-teacher-name" value="[INSTRUCTOR'S NAME]" placeholder="e.g., Dr. Md. ..." />
           </div>
           <div class="field-group">
             <label for="in-teacher-desig">Designation</label>
@@ -732,12 +682,11 @@
               <option value="Assistant Professor & Chairman">Assistant Professor &amp; Chairman</option>
               <option value="Emeritus Professor">Emeritus Professor</option>
               <option value="Adjunct Faculty">Adjunct Faculty</option>
-              <option value="Teaching Assistant">Teaching Assistant</option>
             </select>
           </div>
         </section>
 
-        <!-- Submitted By -->
+        <!-- Submitted By Card -->
         <section class="form-card">
           <h2>Submitted By (Student)</h2>
           <div class="field-group">
@@ -751,48 +700,24 @@
             </div>
             <div class="field-group">
               <label for="in-session">Session</label>
-              <input type="text" id="in-session" value="2025-2026" />
+              <select id="in-session">
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026" selected>2025-2026</option>
+              </select>
             </div>
           </div>
           <div class="field-group">
-            <label for="in-date">Submission Date (Calendar)</label>
+            <label for="in-date">Submission Date</label>
             <div class="date-input-wrap">
               <input type="date" id="in-date" />
-              <button type="button" id="btn-today" class="btn-mini">Today</button>
+              <button type="button" id="btn-today" class="btn-today">Today</button>
             </div>
-          </div>
-        </section>
-
-        <!-- Font & Logo Settings -->
-        <section class="form-card">
-          <h2>Font &amp; Logo Settings</h2>
-          <div class="field-row">
-            <div class="field-group">
-              <label for="in-font">Cover Font (Saved)</label>
-              <select id="in-font">
-                <option value="'Tw Cen MT', 'Jost', 'Century Gothic', sans-serif" selected>Tw Cen MT (Default)</option>
-                <option value="Georgia, 'Times New Roman', serif">Georgia (Classic Serif)</option>
-                <option value="'Times New Roman', Times, serif">Times New Roman</option>
-              </select>
-            </div>
-            <div class="field-group">
-              <label for="topic-size">Title Size: <span id="topic-size-val">32px</span></label>
-              <input type="range" id="topic-size" min="22" max="42" value="32" style="margin-top: 8px;" />
-            </div>
-          </div>
-          <div class="logo-controls">
-            <label class="file-upload-btn" for="logo-upload">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              Change Logo (Optional)
-            </label>
-            <input type="file" id="logo-upload" accept="image/*" hidden />
-            <button id="btn-reset-logo" class="btn-mini" type="button">Official RU Logo</button>
           </div>
         </section>
       </div>
     </aside>
 
-    <!-- RIGHT PREVIEW CANVAS: EXACT A4 COVER SHEET -->
+    <!-- RIGHT PREVIEW CANVAS: EXACT A4 COVER PAGE -->
     <main class="preview-stage">
       <div class="preview-toolbar">
         <span class="badge-a4">A4 Portrait (210 × 297 mm) • Live Preview</span>
@@ -803,7 +728,7 @@
         <div id="cover-page" class="cover-page">
           <div class="outer-green-frame">
             <div class="inner-red-frame">
-              <!-- 1. Official RU Logo -->
+              <!-- 1. Fixed Official RU Logo -->
               <div class="crest-container">
                 <img
                   id="cover-logo-img"
@@ -812,9 +737,9 @@
                 />
               </div>
 
-              <!-- 2. Fixed University Name & Synced Department -->
+              <!-- 2. Fixed University & Department Header -->
               <h1 class="uni-title">UNIVERSITY OF RAJSHAHI</h1>
-              <p id="out-dept-header" class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
+              <p class="dept-title">DEPARTMENT OF INFORMATION SCIENCE AND LIBRARY MANAGEMENT</p>
 
               <!-- 3. Double Horizontal Divider Bar -->
               <div class="double-divider">
@@ -822,18 +747,18 @@
                 <div class="line-red"></div>
               </div>
 
-              <!-- 4. Assignment Heading -->
-              <h2 id="out-label" class="assign-label">ASSIGNMENT ON</h2>
+              <!-- 4. Fixed Assignment Heading -->
+              <h2 class="assign-label">ASSIGNMENT ON</h2>
 
-              <!-- 5. Assignment Topic Box (Tinted or Transparent) -->
-              <div id="topic-box" class="topic-box">
+              <!-- 5. Compact Transparent Assignment Topic Box -->
+              <div class="topic-box">
                 <div id="out-topic" class="topic-text">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</div>
               </div>
 
-              <!-- 6. Course Title & Course Code -->
+              <!-- 6. Auto-Filled Course Title & Course Code -->
               <div class="course-meta">
-                <p><strong>COURSE TITLE:</strong> <span id="out-course-title">[INSERT COURSE TITLE]</span></p>
-                <p><strong>COURSE CODE:</strong> <span id="out-course-code">[INSERT COURSE CODE]</span></p>
+                <p><strong>COURSE TITLE:</strong> <span id="out-course-title">Information Resources Development</span></p>
+                <p><strong>COURSE CODE:</strong> <span id="out-course-code">0322ISLM 121</span></p>
               </div>
 
               <!-- 7. Two-Column Submission Grid -->
@@ -842,7 +767,7 @@
                   <h3>SUBMITTED TO:</h3>
                   <p id="out-teacher-name">[INSTRUCTOR'S NAME]</p>
                   <p id="out-teacher-desig">Professor</p>
-                  <p id="out-teacher-dept">Department of Information Science and Library Management</p>
+                  <p>Department of Information Science and Library Management</p>
                   <p>University of Rajshahi</p>
                 </div>
 
@@ -851,7 +776,7 @@
                   <p>Name: <span id="out-student-name">Salim Hosen Shohan</span></p>
                   <p>Student ID: <span id="out-student-id">2610647104</span></p>
                   <p>Session: <span id="out-session">2025-2026</span></p>
-                  <p id="out-student-dept">Department of Information Science and Library Management</p>
+                  <p>Department of Information Science and Library Management</p>
                   <p>University of Rajshahi</p>
                 </div>
               </div>
@@ -869,58 +794,65 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const STORAGE_KEY = "ru_cover_generator_light_v2";
-      const OFFICIAL_LOGO_URL = "https://www.ru.ac.bd/wp-content/uploads/2025/04/RU_Official_Logo-768x782.jpg";
+      const STORAGE_KEY = "ru_islm_cover_data_v1";
 
-      const coverPage = document.getElementById("cover-page");
-      const logoImg = document.getElementById("cover-logo-img");
-      const topicBox = document.getElementById("topic-box");
+      // Course Code -> Course Title Map
+      const COURSE_MAP = {
+        "0322ISLM 121": "Information Resources Development",
+        "0322ISLM": "Referencing and Citation Management",
+        "0222ISLM 123": "Bangladesh Studies",
+        "0611ISLM": "Computer Applications (Practical)",
+        "0232ISLM 125": "English Skills Development",
+      };
+
+      const courseSelect = document.getElementById("in-course-select");
+      const hintCourseTitle = document.getElementById("hint-course-title");
+      const outCourseTitle = document.getElementById("out-course-title");
+      const outCourseCode = document.getElementById("out-course-code");
+
+      const topicInput = document.getElementById("in-topic");
       const outTopic = document.getElementById("out-topic");
-      const topicSlider = document.getElementById("topic-size");
-      const topicSizeVal = document.getElementById("topic-size-val");
-      const toggleTransparent = document.getElementById("toggle-transparent");
-      const fontSelect = document.getElementById("in-font");
-      const deptInput = document.getElementById("in-dept");
+
+      const teacherNameInput = document.getElementById("in-teacher-name");
+      const outTeacherName = document.getElementById("out-teacher-name");
+
+      const teacherDesigSelect = document.getElementById("in-teacher-desig");
+      const outTeacherDesig = document.getElementById("out-teacher-desig");
+
+      const studentNameInput = document.getElementById("in-student-name");
+      const outStudentName = document.getElementById("out-student-name");
+
+      const studentIdInput = document.getElementById("in-student-id");
+      const outStudentId = document.getElementById("out-student-id");
+
+      const sessionSelect = document.getElementById("in-session");
+      const outSession = document.getElementById("out-session");
+
       const dateInput = document.getElementById("in-date");
       const outDate = document.getElementById("out-date");
 
-      // Direct 1-to-1 text bindings
-      const directBindings = [
-        { input: "in-label", target: "out-label" },
-        { input: "in-topic", target: "out-topic" },
-        { input: "in-course-title", target: "out-course-title" },
-        { input: "in-course-code", target: "out-course-code" },
-        { input: "in-teacher-name", target: "out-teacher-name" },
-        { input: "in-teacher-desig", target: "out-teacher-desig" },
-        { input: "in-student-name", target: "out-student-name" },
-        { input: "in-student-id", target: "out-student-id" },
-        { input: "in-session", target: "out-session" },
-      ];
+      const coverPage = document.getElementById("cover-page");
+      const logoImg = document.getElementById("cover-logo-img");
 
-      // Capture defaults for Reset
-      const defaults = {
-        dept: deptInput.value,
-        font: fontSelect.value,
-        topicSize: "32",
-        transparent: false,
+      const DEFAULTS = {
+        courseCode: "0322ISLM 121",
+        topic: "[INSERT ASSIGNMENT TOPIC / TITLE HERE]",
+        teacherName: "[INSTRUCTOR'S NAME]",
+        teacherDesig: "Professor",
+        studentName: "Salim Hosen Shohan",
+        studentId: "2610647104",
+        session: "2025-2026",
         date: "",
       };
-      directBindings.forEach(({ input }) => {
-        const el = document.getElementById(input);
-        if (el) defaults[input] = el.value;
-      });
 
-      // Normalize Department name so it cleanly updates Header + Submitted To + Submitted By
-      function syncDepartment() {
-        const raw = deptInput.value.trim();
-        const cleanName = raw.replace(/^department\s+of\s+/i, "").trim();
-        const fullTitle = cleanName ? `Department of ${cleanName}` : "Department of [Department Name]";
-        document.getElementById("out-dept-header").textContent = fullTitle.toUpperCase();
-        document.getElementById("out-teacher-dept").textContent = fullTitle;
-        document.getElementById("out-student-dept").textContent = fullTitle;
+      function syncCourse() {
+        const code = courseSelect.value;
+        const title = COURSE_MAP[code] || "";
+        hintCourseTitle.textContent = title;
+        outCourseCode.textContent = code;
+        outCourseTitle.textContent = title;
       }
 
-      // Format YYYY-MM-DD from calendar input into DD/MM/YYYY
       function syncDate() {
         const val = dateInput.value;
         if (!val) {
@@ -935,115 +867,104 @@
         }
       }
 
-      function applyTopicSize(px) {
-        outTopic.style.fontSize = `${px}px`;
-        topicSizeVal.textContent = `${px}px`;
+      function syncAll() {
+        syncCourse();
+        outTopic.textContent = topicInput.value;
+        outTeacherName.textContent = teacherNameInput.value;
+        outTeacherDesig.textContent = teacherDesigSelect.value;
+        outStudentName.textContent = studentNameInput.value;
+        outStudentId.textContent = studentIdInput.value;
+        outSession.textContent = sessionSelect.value;
+        syncDate();
       }
 
-      function applyTransparentMode(isTransparent) {
-        if (isTransparent) {
-          topicBox.classList.add("is-transparent");
-        } else {
-          topicBox.classList.remove("is-transparent");
-        }
-      }
-
-      function applyCoverFont(fontStack) {
-        coverPage.style.fontFamily = fontStack;
-      }
-
-      // Save all state automatically to localStorage
-      function saveState() {
+      function saveToStorage() {
         try {
-          const state = {
-            dept: deptInput.value,
+          const payload = {
+            courseCode: courseSelect.value,
+            topic: topicInput.value,
+            teacherName: teacherNameInput.value,
+            teacherDesig: teacherDesigSelect.value,
+            studentName: studentNameInput.value,
+            studentId: studentIdInput.value,
+            session: sessionSelect.value,
             date: dateInput.value,
-            font: fontSelect.value,
-            topicSize: topicSlider.value,
-            transparent: toggleTransparent.checked,
-            customLogo: logoImg.dataset.isCustom === "true" ? logoImg.src : "",
           };
-          directBindings.forEach(({ input }) => {
-            const el = document.getElementById(input);
-            if (el) state[input] = el.value;
-          });
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
         } catch (err) {
-          console.warn("Auto-save skipped:", err);
+          console.warn("Storage save skipped:", err);
         }
       }
 
-      // Restore state on page refresh
-      function loadState() {
+      function loadFromStorage() {
         try {
           const raw = localStorage.getItem(STORAGE_KEY);
           if (!raw) return;
           const saved = JSON.parse(raw);
 
-          if (typeof saved.dept === "string") deptInput.value = saved.dept;
-          if (typeof saved.date === "string") dateInput.value = saved.date;
-          if (typeof saved.font === "string") fontSelect.value = saved.font;
-          if (saved.topicSize) topicSlider.value = saved.topicSize;
-          if (typeof saved.transparent === "boolean") toggleTransparent.checked = saved.transparent;
-
-          directBindings.forEach(({ input }) => {
-            const el = document.getElementById(input);
-            if (el && typeof saved[input] === "string") {
-              el.value = saved[input];
-            }
-          });
-
-          if (saved.customLogo) {
-            logoImg.src = saved.customLogo;
-            logoImg.dataset.isCustom = "true";
+          if (saved.courseCode && COURSE_MAP[saved.courseCode]) {
+            courseSelect.value = saved.courseCode;
           }
+          if (typeof saved.topic === "string") topicInput.value = saved.topic;
+          if (typeof saved.teacherName === "string") teacherNameInput.value = saved.teacherName;
+          if (typeof saved.teacherDesig === "string") teacherDesigSelect.value = saved.teacherDesig;
+          if (typeof saved.studentName === "string") studentNameInput.value = saved.studentName;
+          if (typeof saved.studentId === "string") studentIdInput.value = saved.studentId;
+          if (saved.session === "2024-2025" || saved.session === "2025-2026") {
+            sessionSelect.value = saved.session;
+          }
+          if (typeof saved.date === "string") dateInput.value = saved.date;
         } catch (err) {
-          console.warn("Could not restore saved state:", err);
+          console.warn("Storage load skipped:", err);
         }
       }
 
-      function syncAllUI() {
-        directBindings.forEach(({ input, target }) => {
-          const inEl = document.getElementById(input);
-          const outEl = document.getElementById(target);
-          if (inEl && outEl) outEl.textContent = inEl.value;
-        });
-        syncDepartment();
-        syncDate();
-        applyTopicSize(topicSlider.value);
-        applyTransparentMode(toggleTransparent.checked);
-        applyCoverFont(fontSelect.value);
-      }
-
-      // Event Listeners
-      directBindings.forEach(({ input, target }) => {
-        const inEl = document.getElementById(input);
-        const outEl = document.getElementById(target);
-        if (!inEl || !outEl) return;
-        inEl.addEventListener("input", () => {
-          outEl.textContent = inEl.value;
-          saveState();
-        });
-        inEl.addEventListener("change", () => {
-          outEl.textContent = inEl.value;
-          saveState();
-        });
+      // Bind live events + auto-save
+      courseSelect.addEventListener("change", () => {
+        syncCourse();
+        saveToStorage();
       });
 
-      deptInput.addEventListener("input", () => {
-        syncDepartment();
-        saveState();
+      topicInput.addEventListener("input", () => {
+        outTopic.textContent = topicInput.value;
+        saveToStorage();
+      });
+
+      teacherNameInput.addEventListener("input", () => {
+        outTeacherName.textContent = teacherNameInput.value;
+        saveToStorage();
+      });
+
+      teacherDesigSelect.addEventListener("change", () => {
+        outTeacherDesig.textContent = teacherDesigSelect.value;
+        saveToStorage();
+      });
+
+      studentNameInput.addEventListener("input", () => {
+        outStudentName.textContent = studentNameInput.value;
+        saveToStorage();
+      });
+
+      studentIdInput.addEventListener("input", () => {
+        outStudentId.textContent = studentIdInput.value;
+        saveToStorage();
+      });
+
+      sessionSelect.addEventListener("change", () => {
+        outSession.textContent = sessionSelect.value;
+        saveToStorage();
       });
 
       dateInput.addEventListener("input", () => {
         syncDate();
-        saveState();
+        saveToStorage();
       });
       dateInput.addEventListener("change", () => {
         syncDate();
-        saveState();
+        saveToStorage();
       });
 
+      // Today button
       document.getElementById("btn-today").addEventListener("click", () => {
         const now = new Date();
         const yyyy = now.getFullYear();
@@ -1051,67 +972,26 @@
         const dd = String(now.getDate()).padStart(2, "0");
         dateInput.value = `${yyyy}-${mm}-${dd}`;
         syncDate();
-        saveState();
+        saveToStorage();
       });
 
-      toggleTransparent.addEventListener("change", () => {
-        applyTransparentMode(toggleTransparent.checked);
-        saveState();
-      });
-
-      fontSelect.addEventListener("change", () => {
-        applyCoverFont(fontSelect.value);
-        saveState();
-      });
-
-      topicSlider.addEventListener("input", () => {
-        applyTopicSize(topicSlider.value);
-        saveState();
-      });
-
-      // Custom Logo Upload & Official RU Logo Reset
-      const logoUpload = document.getElementById("logo-upload");
-      logoUpload.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          logoImg.src = ev.target.result;
-          logoImg.dataset.isCustom = "true";
-          saveState();
-          setStatus("Custom logo saved!");
-        };
-        reader.readAsDataURL(file);
-      });
-
-      document.getElementById("btn-reset-logo").addEventListener("click", () => {
-        logoImg.src = OFFICIAL_LOGO_URL;
-        logoImg.dataset.isCustom = "false";
-        logoUpload.value = "";
-        saveState();
-        setStatus("Official RU logo restored.");
-      });
-
-      // Reset All
+      // Reset button
       document.getElementById("btn-reset").addEventListener("click", () => {
         if (!confirm("Reset all fields to default values?")) return;
         localStorage.removeItem(STORAGE_KEY);
-        deptInput.value = defaults.dept;
-        dateInput.value = defaults.date;
-        fontSelect.value = defaults.font;
-        topicSlider.value = defaults.topicSize;
-        toggleTransparent.checked = defaults.transparent;
-        directBindings.forEach(({ input }) => {
-          const el = document.getElementById(input);
-          if (el) el.value = defaults[input];
-        });
-        logoImg.src = OFFICIAL_LOGO_URL;
-        logoImg.dataset.isCustom = "false";
-        syncAllUI();
-        setStatus("All fields reset.");
+        courseSelect.value = DEFAULTS.courseCode;
+        topicInput.value = DEFAULTS.topic;
+        teacherNameInput.value = DEFAULTS.teacherName;
+        teacherDesigSelect.value = DEFAULTS.teacherDesig;
+        studentNameInput.value = DEFAULTS.studentName;
+        studentIdInput.value = DEFAULTS.studentId;
+        sessionSelect.value = DEFAULTS.session;
+        dateInput.value = DEFAULTS.date;
+        syncAll();
+        setStatus("Form reset to defaults.");
       });
 
-      // Responsive Scaling for Preview Sheet
+      // Responsive Scaling for A4 Preview
       const scaler = document.getElementById("sheet-scaler");
       function fitPreviewScale() {
         const stage = document.querySelector(".preview-stage");
@@ -1129,7 +1009,7 @@
       }
       window.addEventListener("resize", fitPreviewScale);
 
-      // Status Notification
+      // Status Message Helper
       const statusMsg = document.getElementById("status-msg");
       let statusTimer;
       function setStatus(msg) {
@@ -1140,33 +1020,36 @@
         }, 3500);
       }
 
-      // Helper: Convert external RU logo URL to CORS-safe DataURL if server permits, otherwise fallback cleanly on export
-      function getCorsSafeLogoDataUrl(url) {
+      // Fetch CORS-safe DataURL for external RU logo so PNG/PDF exports cleanly
+      function loadCorsSafeLogo(url) {
         return new Promise((resolve) => {
-          const testImg = new Image();
-          testImg.crossOrigin = "anonymous";
-          testImg.onload = () => {
-            try {
-              const c = document.createElement("canvas");
-              c.width = testImg.naturalWidth;
-              c.height = testImg.naturalHeight;
-              c.getContext("2d").drawImage(testImg, 0, 0);
-              resolve(c.toDataURL("image/png"));
-            } catch (e) {
-              resolve(null);
-            }
+          const tryLoad = (srcUrl) => {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.onload = () => {
+              try {
+                const c = document.createElement("canvas");
+                c.width = img.naturalWidth;
+                c.height = img.naturalHeight;
+                c.getContext("2d").drawImage(img, 0, 0);
+                resolve(c.toDataURL("image/png"));
+              } catch (e) {
+                resolve(null);
+              }
+            };
+            img.onerror = () => resolve(null);
+            img.src = srcUrl;
           };
-          testImg.onerror = () => resolve(null);
-          testImg.src = url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+          tryLoad(url);
         });
       }
 
-      // Capture HD 3x Canvas for PNG & PDF Export
       async function renderHighResCanvas() {
         await document.fonts.ready;
-        let corsSafeDataUrl = null;
-        if (logoImg.dataset.isCustom !== "true") {
-          corsSafeDataUrl = await getCorsSafeLogoDataUrl(logoImg.src);
+        let safeLogoData = await loadCorsSafeLogo(logoImg.src);
+        if (!safeLogoData) {
+          // Fallback CORS proxy attempt for ru.ac.bd image export
+          safeLogoData = await loadCorsSafeLogo(`https://corsproxy.io/?${encodeURIComponent(logoImg.src)}`);
         }
 
         return await html2canvas(coverPage, {
@@ -1182,13 +1065,12 @@
               clonedScaler.style.transform = "none";
               clonedScaler.style.height = "auto";
             }
-            const clonedLogo = clonedDoc.getElementById("cover-logo-img");
-            if (clonedLogo && logoImg.dataset.isCustom !== "true") {
-              if (corsSafeDataUrl) {
-                clonedLogo.src = corsSafeDataUrl;
+            const clonedImg = clonedDoc.getElementById("cover-logo-img");
+            if (clonedImg) {
+              if (safeLogoData) {
+                clonedImg.src = safeLogoData;
               } else {
-                // Prevent tainted canvas if ru.ac.bd blocks cross-origin pixel read
-                clonedLogo.removeAttribute("src");
+                clonedImg.removeAttribute("src");
               }
             }
           },
@@ -1201,14 +1083,14 @@
         try {
           const canvas = await renderHighResCanvas();
           const link = document.createElement("a");
-          const code = document.getElementById("in-course-code").value.replace(/[^a-zA-Z0-9_-]/g, "");
-          link.download = code && !code.includes("INSERT") ? `RU_Cover_${code}.png` : "RU_Assignment_Cover.png";
+          const cleanCode = courseSelect.value.replace(/\s+/g, "_");
+          link.download = `RU_ISLM_Cover_${cleanCode}.png`;
           link.href = canvas.toDataURL("image/png");
           link.click();
           setStatus("PNG downloaded!");
         } catch (err) {
           console.error(err);
-          setStatus("Export failed. Try Print → Save as PDF.");
+          setStatus("Export failed. Use Print A4 → Save as PDF.");
         }
       });
 
@@ -1225,12 +1107,12 @@
             format: "a4",
           });
           pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-          const code = document.getElementById("in-course-code").value.replace(/[^a-zA-Z0-9_-]/g, "");
-          pdf.save(code && !code.includes("INSERT") ? `RU_Cover_${code}.pdf` : "RU_Assignment_Cover.pdf");
+          const cleanCode = courseSelect.value.replace(/\s+/g, "_");
+          pdf.save(`RU_ISLM_Cover_${cleanCode}.pdf`);
           setStatus("PDF downloaded!");
         } catch (err) {
           console.error(err);
-          setStatus("Export failed. Try Print → Save as PDF.");
+          setStatus("Export failed. Use Print A4 → Save as PDF.");
         }
       });
 
@@ -1239,9 +1121,9 @@
         window.print();
       });
 
-      // Initialize App
-      loadState();
-      syncAllUI();
+      // Initialize
+      loadFromStorage();
+      syncAll();
       fitPreviewScale();
     });
   </script>
