@@ -1,0 +1,41 @@
+{
+  "byCourse": {
+    "0322ISLM 121": [
+      {
+        "name": "Dr. Purnima Banik",
+        "designation": "Associate Professor"
+      },
+      {
+        "name": "Dr. Jayanti Rani Basak",
+        "designation": "Professor"
+      }
+    ],
+    "0322ISLM 122": [
+      {
+        "name": "Dr. Md. Nazmul Islam",
+        "designation": "Professor"
+      },
+      {
+        "name": "Dr. Md. Armanul Haque",
+        "designation": "Professor"
+      }
+    ],
+    "0611ISLM 124": [
+      {
+        "name": "Md Arman Hossain",
+        "designation": "Associate Professor"
+      }
+    ]
+  },
+  "defaultDesignations": [
+    "Professor",
+    "Associate Professor",
+    "Assistant Professor",
+    "Lecturer",
+    "Professor & Chairman",
+    "Associate Professor & Chairman",
+    "Assistant Professor & Chairman",
+    "Emeritus Professor",
+    "Adjunct Faculty"
+  ]
+}
