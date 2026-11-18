@@ -30,12 +30,6 @@
   "defaultDesignations": [
     "Professor",
     "Associate Professor",
-    "Assistant Professor",
-    "Lecturer",
-    "Professor & Chairman",
-    "Associate Professor & Chairman",
-    "Assistant Professor & Chairman",
-    "Emeritus Professor",
-    "Adjunct Faculty"
+    "Professor & Chairman"
   ]
 }
