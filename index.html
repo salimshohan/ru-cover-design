@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ISLM Cover Page Generator | University of Rajshahi</title>
-  <!-- Geometric sans-serif web fallback (Jost) for Tw Cen MT + crisp UI font (Plus Jakarta Sans) -->
+  <!-- Geometric sans-serif web fallback (Jost) for Tw Cen MT + clean UI font (Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -50,7 +50,7 @@
 
     .app-layout {
       display: grid;
-      grid-template-columns: 420px 1fr;
+      grid-template-columns: 425px 1fr;
       min-height: 100vh;
     }
 
@@ -267,6 +267,12 @@
       transition: border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
     }
 
+    input::placeholder,
+    textarea::placeholder {
+      color: #94A3B8;
+      font-weight: 400;
+    }
+
     input[type="text"]:hover,
     input[type="date"]:hover,
     select:hover,
@@ -339,6 +345,10 @@
       background: var(--brand-green);
       border-color: var(--brand-green);
       color: #FFFFFF;
+    }
+
+    .hidden {
+      display: none !important;
     }
 
     /* =========================================================
@@ -615,7 +625,7 @@
           <span class="save-indicator"><span class="save-dot"></span> Auto-Saved</span>
         </div>
         <h1>Assignment Cover Generator</h1>
-        <p>Select course code, enter details &amp; export PNG or A4 PDF.</p>
+        <p>Select course code, fill details &amp; download PNG or A4 PDF.</p>
       </header>
 
       <!-- Action Buttons -->
@@ -646,9 +656,9 @@
             <label for="in-course-select">Select Course Code</label>
             <select id="in-course-select">
               <option value="0322ISLM 121">0322ISLM 121 — Information Resources Development</option>
-              <option value="0322ISLM">0322ISLM — Referencing and Citation Management</option>
+              <option value="0322ISLM 122">0322ISLM 122 — Referencing and Citation Management</option>
               <option value="0222ISLM 123">0222ISLM 123 — Bangladesh Studies</option>
-              <option value="0611ISLM">0611ISLM — Computer Applications (Practical)</option>
+              <option value="0611ISLM 124">0611ISLM 124 — Computer Applications (Practical)</option>
               <option value="0232ISLM 125">0232ISLM 125 — English Skills Development</option>
             </select>
             <div class="auto-filled-hint">
@@ -659,7 +669,7 @@
 
           <div class="field-group">
             <label for="in-topic">Assignment Topic / Title</label>
-            <textarea id="in-topic" rows="2" placeholder="Write your assignment topic here...">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</textarea>
+            <textarea id="in-topic" rows="2" placeholder="Please enter your title."></textarea>
           </div>
         </section>
 
@@ -667,14 +677,17 @@
         <section class="form-card">
           <h2>Submitted To (Instructor)</h2>
           <div class="field-group">
-            <label for="in-teacher-name">Instructor's Name</label>
-            <input type="text" id="in-teacher-name" value="[INSTRUCTOR'S NAME]" placeholder="e.g., Dr. Md. ..." />
+            <label for="in-teacher-select">Instructor's Name</label>
+            <!-- Course-specific preset dropdown (shown for 0322ISLM 121 & 0322ISLM 122) -->
+            <select id="in-teacher-select"></select>
+            <!-- Text input (shown for other courses or when "Custom" is selected) -->
+            <input type="text" id="in-teacher-custom" class="hidden" placeholder="Enter instructor's name" />
           </div>
           <div class="field-group">
             <label for="in-teacher-desig">Designation</label>
             <select id="in-teacher-desig">
               <option value="Professor">Professor</option>
-              <option value="Associate Professor">Associate Professor</option>
+              <option value="Associate Professor" selected>Associate Professor</option>
               <option value="Assistant Professor">Assistant Professor</option>
               <option value="Lecturer">Lecturer</option>
               <option value="Professor & Chairman">Professor &amp; Chairman</option>
@@ -691,12 +704,12 @@
           <h2>Submitted By (Student)</h2>
           <div class="field-group">
             <label for="in-student-name">Student Name</label>
-            <input type="text" id="in-student-name" value="Salim Hosen Shohan" />
+            <input type="text" id="in-student-name" value="Salim Hosen Shohan" placeholder="Enter your full name" />
           </div>
           <div class="field-row">
             <div class="field-group">
               <label for="in-student-id">Student ID</label>
-              <input type="text" id="in-student-id" value="2610647104" />
+              <input type="text" id="in-student-id" value="2610647104" placeholder="Enter student ID" />
             </div>
             <div class="field-group">
               <label for="in-session">Session</label>
@@ -752,380 +765,4 @@
 
               <!-- 5. Compact Transparent Assignment Topic Box -->
               <div class="topic-box">
-                <div id="out-topic" class="topic-text">[INSERT ASSIGNMENT TOPIC / TITLE HERE]</div>
-              </div>
-
-              <!-- 6. Auto-Filled Course Title & Course Code -->
-              <div class="course-meta">
-                <p><strong>COURSE TITLE:</strong> <span id="out-course-title">Information Resources Development</span></p>
-                <p><strong>COURSE CODE:</strong> <span id="out-course-code">0322ISLM 121</span></p>
-              </div>
-
-              <!-- 7. Two-Column Submission Grid -->
-              <div class="submission-grid">
-                <div class="sub-col">
-                  <h3>SUBMITTED TO:</h3>
-                  <p id="out-teacher-name">[INSTRUCTOR'S NAME]</p>
-                  <p id="out-teacher-desig">Professor</p>
-                  <p>Department of Information Science and Library Management</p>
-                  <p>University of Rajshahi</p>
-                </div>
-
-                <div class="sub-col">
-                  <h3>SUBMITTED BY:</h3>
-                  <p>Name: <span id="out-student-name">Salim Hosen Shohan</span></p>
-                  <p>Student ID: <span id="out-student-id">2610647104</span></p>
-                  <p>Session: <span id="out-session">2025-2026</span></p>
-                  <p>Department of Information Science and Library Management</p>
-                  <p>University of Rajshahi</p>
-                </div>
-              </div>
-
-              <!-- 8. Submission Date Footer -->
-              <div class="date-footer">
-                <strong>DATE OF SUBMISSION:</strong> <span id="out-date">[DD/MM/YYYY]</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const STORAGE_KEY = "ru_islm_cover_data_v1";
-
-      // Course Code -> Course Title Map
-      const COURSE_MAP = {
-        "0322ISLM 121": "Information Resources Development",
-        "0322ISLM": "Referencing and Citation Management",
-        "0222ISLM 123": "Bangladesh Studies",
-        "0611ISLM": "Computer Applications (Practical)",
-        "0232ISLM 125": "English Skills Development",
-      };
-
-      const courseSelect = document.getElementById("in-course-select");
-      const hintCourseTitle = document.getElementById("hint-course-title");
-      const outCourseTitle = document.getElementById("out-course-title");
-      const outCourseCode = document.getElementById("out-course-code");
-
-      const topicInput = document.getElementById("in-topic");
-      const outTopic = document.getElementById("out-topic");
-
-      const teacherNameInput = document.getElementById("in-teacher-name");
-      const outTeacherName = document.getElementById("out-teacher-name");
-
-      const teacherDesigSelect = document.getElementById("in-teacher-desig");
-      const outTeacherDesig = document.getElementById("out-teacher-desig");
-
-      const studentNameInput = document.getElementById("in-student-name");
-      const outStudentName = document.getElementById("out-student-name");
-
-      const studentIdInput = document.getElementById("in-student-id");
-      const outStudentId = document.getElementById("out-student-id");
-
-      const sessionSelect = document.getElementById("in-session");
-      const outSession = document.getElementById("out-session");
-
-      const dateInput = document.getElementById("in-date");
-      const outDate = document.getElementById("out-date");
-
-      const coverPage = document.getElementById("cover-page");
-      const logoImg = document.getElementById("cover-logo-img");
-
-      const DEFAULTS = {
-        courseCode: "0322ISLM 121",
-        topic: "[INSERT ASSIGNMENT TOPIC / TITLE HERE]",
-        teacherName: "[INSTRUCTOR'S NAME]",
-        teacherDesig: "Professor",
-        studentName: "Salim Hosen Shohan",
-        studentId: "2610647104",
-        session: "2025-2026",
-        date: "",
-      };
-
-      function syncCourse() {
-        const code = courseSelect.value;
-        const title = COURSE_MAP[code] || "";
-        hintCourseTitle.textContent = title;
-        outCourseCode.textContent = code;
-        outCourseTitle.textContent = title;
-      }
-
-      function syncDate() {
-        const val = dateInput.value;
-        if (!val) {
-          outDate.textContent = "[DD/MM/YYYY]";
-          return;
-        }
-        const parts = val.split("-");
-        if (parts.length === 3) {
-          outDate.textContent = `${parts[2]}/${parts[1]}/${parts[0]}`;
-        } else {
-          outDate.textContent = val;
-        }
-      }
-
-      function syncAll() {
-        syncCourse();
-        outTopic.textContent = topicInput.value;
-        outTeacherName.textContent = teacherNameInput.value;
-        outTeacherDesig.textContent = teacherDesigSelect.value;
-        outStudentName.textContent = studentNameInput.value;
-        outStudentId.textContent = studentIdInput.value;
-        outSession.textContent = sessionSelect.value;
-        syncDate();
-      }
-
-      function saveToStorage() {
-        try {
-          const payload = {
-            courseCode: courseSelect.value,
-            topic: topicInput.value,
-            teacherName: teacherNameInput.value,
-            teacherDesig: teacherDesigSelect.value,
-            studentName: studentNameInput.value,
-            studentId: studentIdInput.value,
-            session: sessionSelect.value,
-            date: dateInput.value,
-          };
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-        } catch (err) {
-          console.warn("Storage save skipped:", err);
-        }
-      }
-
-      function loadFromStorage() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEY);
-          if (!raw) return;
-          const saved = JSON.parse(raw);
-
-          if (saved.courseCode && COURSE_MAP[saved.courseCode]) {
-            courseSelect.value = saved.courseCode;
-          }
-          if (typeof saved.topic === "string") topicInput.value = saved.topic;
-          if (typeof saved.teacherName === "string") teacherNameInput.value = saved.teacherName;
-          if (typeof saved.teacherDesig === "string") teacherDesigSelect.value = saved.teacherDesig;
-          if (typeof saved.studentName === "string") studentNameInput.value = saved.studentName;
-          if (typeof saved.studentId === "string") studentIdInput.value = saved.studentId;
-          if (saved.session === "2024-2025" || saved.session === "2025-2026") {
-            sessionSelect.value = saved.session;
-          }
-          if (typeof saved.date === "string") dateInput.value = saved.date;
-        } catch (err) {
-          console.warn("Storage load skipped:", err);
-        }
-      }
-
-      // Bind live events + auto-save
-      courseSelect.addEventListener("change", () => {
-        syncCourse();
-        saveToStorage();
-      });
-
-      topicInput.addEventListener("input", () => {
-        outTopic.textContent = topicInput.value;
-        saveToStorage();
-      });
-
-      teacherNameInput.addEventListener("input", () => {
-        outTeacherName.textContent = teacherNameInput.value;
-        saveToStorage();
-      });
-
-      teacherDesigSelect.addEventListener("change", () => {
-        outTeacherDesig.textContent = teacherDesigSelect.value;
-        saveToStorage();
-      });
-
-      studentNameInput.addEventListener("input", () => {
-        outStudentName.textContent = studentNameInput.value;
-        saveToStorage();
-      });
-
-      studentIdInput.addEventListener("input", () => {
-        outStudentId.textContent = studentIdInput.value;
-        saveToStorage();
-      });
-
-      sessionSelect.addEventListener("change", () => {
-        outSession.textContent = sessionSelect.value;
-        saveToStorage();
-      });
-
-      dateInput.addEventListener("input", () => {
-        syncDate();
-        saveToStorage();
-      });
-      dateInput.addEventListener("change", () => {
-        syncDate();
-        saveToStorage();
-      });
-
-      // Today button
-      document.getElementById("btn-today").addEventListener("click", () => {
-        const now = new Date();
-        const yyyy = now.getFullYear();
-        const mm = String(now.getMonth() + 1).padStart(2, "0");
-        const dd = String(now.getDate()).padStart(2, "0");
-        dateInput.value = `${yyyy}-${mm}-${dd}`;
-        syncDate();
-        saveToStorage();
-      });
-
-      // Reset button
-      document.getElementById("btn-reset").addEventListener("click", () => {
-        if (!confirm("Reset all fields to default values?")) return;
-        localStorage.removeItem(STORAGE_KEY);
-        courseSelect.value = DEFAULTS.courseCode;
-        topicInput.value = DEFAULTS.topic;
-        teacherNameInput.value = DEFAULTS.teacherName;
-        teacherDesigSelect.value = DEFAULTS.teacherDesig;
-        studentNameInput.value = DEFAULTS.studentName;
-        studentIdInput.value = DEFAULTS.studentId;
-        sessionSelect.value = DEFAULTS.session;
-        dateInput.value = DEFAULTS.date;
-        syncAll();
-        setStatus("Form reset to defaults.");
-      });
-
-      // Responsive Scaling for A4 Preview
-      const scaler = document.getElementById("sheet-scaler");
-      function fitPreviewScale() {
-        const stage = document.querySelector(".preview-stage");
-        if (!stage) return;
-        const availableWidth = stage.clientWidth - 36;
-        const sheetWidth = 794;
-        if (availableWidth < sheetWidth) {
-          const scale = Math.max(0.35, availableWidth / sheetWidth);
-          scaler.style.transform = `scale(${scale})`;
-          scaler.style.height = `${1123 * scale}px`;
-        } else {
-          scaler.style.transform = "none";
-          scaler.style.height = "auto";
-        }
-      }
-      window.addEventListener("resize", fitPreviewScale);
-
-      // Status Message Helper
-      const statusMsg = document.getElementById("status-msg");
-      let statusTimer;
-      function setStatus(msg) {
-        statusMsg.textContent = msg;
-        clearTimeout(statusTimer);
-        statusTimer = setTimeout(() => {
-          statusMsg.textContent = "";
-        }, 3500);
-      }
-
-      // Fetch CORS-safe DataURL for external RU logo so PNG/PDF exports cleanly
-      function loadCorsSafeLogo(url) {
-        return new Promise((resolve) => {
-          const tryLoad = (srcUrl) => {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.onload = () => {
-              try {
-                const c = document.createElement("canvas");
-                c.width = img.naturalWidth;
-                c.height = img.naturalHeight;
-                c.getContext("2d").drawImage(img, 0, 0);
-                resolve(c.toDataURL("image/png"));
-              } catch (e) {
-                resolve(null);
-              }
-            };
-            img.onerror = () => resolve(null);
-            img.src = srcUrl;
-          };
-          tryLoad(url);
-        });
-      }
-
-      async function renderHighResCanvas() {
-        await document.fonts.ready;
-        let safeLogoData = await loadCorsSafeLogo(logoImg.src);
-        if (!safeLogoData) {
-          // Fallback CORS proxy attempt for ru.ac.bd image export
-          safeLogoData = await loadCorsSafeLogo(`https://corsproxy.io/?${encodeURIComponent(logoImg.src)}`);
-        }
-
-        return await html2canvas(coverPage, {
-          scale: 3,
-          useCORS: true,
-          allowTaint: false,
-          backgroundColor: "#FFFFFF",
-          width: 794,
-          height: 1123,
-          onclone: (clonedDoc) => {
-            const clonedScaler = clonedDoc.getElementById("sheet-scaler");
-            if (clonedScaler) {
-              clonedScaler.style.transform = "none";
-              clonedScaler.style.height = "auto";
-            }
-            const clonedImg = clonedDoc.getElementById("cover-logo-img");
-            if (clonedImg) {
-              if (safeLogoData) {
-                clonedImg.src = safeLogoData;
-              } else {
-                clonedImg.removeAttribute("src");
-              }
-            }
-          },
-        });
-      }
-
-      // Download HD PNG
-      document.getElementById("btn-download-png").addEventListener("click", async () => {
-        setStatus("Generating HD PNG...");
-        try {
-          const canvas = await renderHighResCanvas();
-          const link = document.createElement("a");
-          const cleanCode = courseSelect.value.replace(/\s+/g, "_");
-          link.download = `RU_ISLM_Cover_${cleanCode}.png`;
-          link.href = canvas.toDataURL("image/png");
-          link.click();
-          setStatus("PNG downloaded!");
-        } catch (err) {
-          console.error(err);
-          setStatus("Export failed. Use Print A4 → Save as PDF.");
-        }
-      });
-
-      // Download A4 PDF
-      document.getElementById("btn-download-pdf").addEventListener("click", async () => {
-        setStatus("Generating A4 PDF...");
-        try {
-          const canvas = await renderHighResCanvas();
-          const imgData = canvas.toDataURL("image/jpeg", 0.98);
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF({
-            orientation: "portrait",
-            unit: "mm",
-            format: "a4",
-          });
-          pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-          const cleanCode = courseSelect.value.replace(/\s+/g, "_");
-          pdf.save(`RU_ISLM_Cover_${cleanCode}.pdf`);
-          setStatus("PDF downloaded!");
-        } catch (err) {
-          console.error(err);
-          setStatus("Export failed. Use Print A4 → Save as PDF.");
-        }
-      });
-
-      // Print A4
-      document.getElementById("btn-print").addEventListener("click", () => {
-        window.print();
-      });
-
-      // Initialize
-      loadFromStorage();
-      syncAll();
-      fitPreviewScale();
-    });
-  </script>
-</body>
-</html>
+                <div id="out-topic" class="topic-text">Please enter your title
