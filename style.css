@@ -2028,4 +2028,120 @@ textarea {
 
 .cover-page.theme-chancellor .line-green {
   height: 2px;
-  background: var(--
+  background: var(--ru-red);
+}
+
+.cover-page.theme-chancellor .line-red {
+  height: 1px;
+  background: var(--ru-green);
+}
+
+.cover-page.theme-chancellor .assign-label {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--ru-red);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.cover-page.theme-chancellor .topic-box {
+  width: 88%;
+  min-height: 74px;
+  background: transparent;
+  border: 2px solid var(--ru-green);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.cover-page.theme-chancellor .course-meta {
+  font-size: 18px;
+  line-height: 1.54;
+  margin-bottom: 26px;
+}
+
+.cover-page.theme-chancellor .submission-grid {
+  width: 92%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1.5px solid var(--ru-green);
+  text-align: left;
+  margin-bottom: auto;
+}
+
+.cover-page.theme-chancellor .sub-col {
+  padding: 16px 18px;
+}
+
+.cover-page.theme-chancellor .sub-col:first-child {
+  border-right: 1.5px solid var(--ru-green);
+}
+
+.cover-page.theme-chancellor .sub-col h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ru-red);
+  border-bottom: 1px solid #CBD5E1;
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.cover-page.theme-chancellor .sub-col p {
+  font-size: 15.5px;
+  line-height: 1.4;
+  margin-bottom: 3px;
+}
+
+.cover-page.theme-chancellor .date-footer {
+  font-size: 17.5px;
+  letter-spacing: 0.7px;
+  padding-top: 8px;
+}
+
+@media (max-width: 1024px) {
+  .app-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .editor-panel {
+    position: static;
+    height: auto;
+  }
+  .preview-stage {
+    padding: 16px 12px 40px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  body {
+    background: #FFFFFF !important;
+  }
+  .editor-panel,
+  .preview-toolbar {
+    display: none !important;
+  }
+  .app-layout,
+  .preview-stage,
+  .sheet-viewport,
+  .sheet-scaler {
+    display: block !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #FFFFFF !important;
+  }
+  .cover-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    transform: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+}
